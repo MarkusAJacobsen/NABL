@@ -1,6 +1,7 @@
 # NABL - Not a bad (time) logger
 
 #####  Background: imt3673 (Mobile development course) project.
+##### Project management: https://tree.taiga.io/project/markusja-nabl/
 
 #### Original assignement text: (Written by us) 
 
