@@ -10,7 +10,7 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 
 public interface IManageProjectClientView extends IAbstractMvcView {
     interface ResourceViewerListener {
-        void resourceSelected();
+        void resourceSelected(Object pressedObject);
     }
 
     interface ResourceSelectorListener {

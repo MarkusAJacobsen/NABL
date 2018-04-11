@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.ntnu.wip.nabl.DataModels.Project;
 import com.ntnu.wip.nabl.R;
 
 /**
@@ -56,9 +57,9 @@ public class ManageProjectClientView implements IManageProjectClientView {
     private void initializeListViewActions(){
         resourceViewer.setOnItemClickListener(new ListView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 if(resourceViewerListener != null) {
-                    resourceViewerListener.resourceSelected();
+                    resourceViewerListener.resourceSelected(adapterView.getAdapter().getItem(position));
                 }
             }
         });
