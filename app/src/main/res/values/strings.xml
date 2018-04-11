@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NABL</string>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+
+    <string-array name="sideDrawerMenuItems">
+        <item>Log hours</item>
+        <item>Register new project/client</item>
+        <item>Summary</item>
+        <item>Export</item>
+        <item>Settings</item>
+    </string-array>
 </resources>
