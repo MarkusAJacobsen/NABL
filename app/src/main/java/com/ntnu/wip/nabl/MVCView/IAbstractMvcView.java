@@ -1,5 +1,6 @@
 package com.ntnu.wip.nabl.MVCView;
 
+import android.support.v7.app.ActionBar;
 import android.view.View;
 
 /**
@@ -8,4 +9,6 @@ import android.view.View;
 
 public interface IAbstractMvcView {
     View getRootView();
+    void setActionBar(ActionBar actionbar);
+    void setActionBarTitle(String title);
 }

@@ -1,5 +1,9 @@
 package com.ntnu.wip.nabl.MVCView.MainActivity;
 
+import android.app.Activity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +15,60 @@ import com.ntnu.wip.nabl.R;
  */
 
 public class MainActivityView implements IMainActivityView {
-    View rootView;
+    private View rootView;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private ActionBar mActionBar;
 
     public MainActivityView(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.activity_main, container);
+        mDrawerLayout = rootView.findViewById(R.id.drawer_layout);
     }
 
     @Override
     public View getRootView() {
         return rootView;
+    }
+
+    @Override
+    public void setActionBar(ActionBar actionbar) {
+        this.mActionBar = actionbar;
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
+        mActionBar.setDisplayShowTitleEnabled(true);
+    }
+
+    @Override
+    public void setActionBarTitle(String title) {
+        mActionBar.setTitle(title);
+    }
+
+    @Override
+    public void createSideMenu(Activity target) {
+        mDrawerToggle = new ActionBarDrawerToggle(
+                target,
+                mDrawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mActionBar.setCustomView(mDrawerLayout);
+    }
+
+    @Override
+    public void syncDrawer() {
+        mDrawerToggle.syncState();
     }
 }
