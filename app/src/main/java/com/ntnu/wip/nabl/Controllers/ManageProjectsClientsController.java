@@ -50,12 +50,11 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
 
     @Override
     public void resourceSelected(Object pressedObject) {
-        switch(pressedObject.getClass().getName()){
-            case "Project":
-                Toast.makeText(getApplicationContext(), "Project received", Toast.LENGTH_SHORT).show();
-                break;
-            case "Client": break;
-            default: break;
+        if (pressedObject instanceof Project){
+            Toast.makeText(getApplicationContext(), "Project pressed", Toast.LENGTH_SHORT).show();
+
+        } else if (pressedObject instanceof Client) {
+            Toast.makeText(getApplicationContext(), "Client pressed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -67,8 +66,9 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
                 break;
             case 1: /*Clients, fetch clients and update ResourceViewer*/
                 mvcView.setResourceViewerAdapter(mockClientListAndAdapter());
+                break;
+            default: break;
         }
-        Toast.makeText(getApplicationContext(), "Resource selected "+position, Toast.LENGTH_SHORT).show();
     }
 
     private void fetchResourceSelectorItems(){
