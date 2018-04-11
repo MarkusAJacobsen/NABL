@@ -5,8 +5,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.ntnu.wip.nabl.R;
 
@@ -19,10 +24,12 @@ public class MainActivityView implements IMainActivityView {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
+    private ListView mDrawerList;
 
     public MainActivityView(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.activity_main, container);
         mDrawerLayout = rootView.findViewById(R.id.drawer_layout);
+        mDrawerList = rootView.findViewById(R.id.left_drawer);
     }
 
     @Override
@@ -68,7 +75,17 @@ public class MainActivityView implements IMainActivityView {
     }
 
     @Override
+    public void setSideDrawerAdapter(Adapter adapter) {
+        mDrawerList.setAdapter((ArrayAdapter) adapter);
+    }
+
+    @Override
     public void syncDrawer() {
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    public boolean checkOptionItemClicked(MenuItem item) {
+        return mDrawerToggle.onOptionsItemSelected(item);
     }
 }
