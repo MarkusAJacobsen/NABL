@@ -1,5 +1,6 @@
 # NABL - Not a bad (time) logger
-
+#### Build status 
+master: [![CircleCI](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/master.svg?style=svg)](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/master) develop: [![CircleCI](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/develop.svg?style=svg)](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/develop)
 #####  Background: imt3673 (Mobile development course) project.
 
 #### Original assignement text: (Written by us) 
