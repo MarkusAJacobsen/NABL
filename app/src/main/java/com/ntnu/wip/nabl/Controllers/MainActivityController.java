@@ -1,18 +1,18 @@
 package com.ntnu.wip.nabl.Controllers;
 
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
 import com.ntnu.wip.nabl.R;
 
-public class MainActivityController extends AppCompatActivity {
+public class MainActivityController extends AppCompatActivity implements
+                                                        MainActivityView.ChangeActivityListener,
+                                                        IChangeScreen.Activity {
     MainActivityView mvcView;
 
     @Override
@@ -24,6 +24,7 @@ public class MainActivityController extends AppCompatActivity {
         mvcView.createSideMenu(this);
 
         fetchSideMenuListItems();
+        mvcView.registerListener(this);
 
         setContentView(mvcView.getRootView());
     }
@@ -50,5 +51,29 @@ public class MainActivityController extends AppCompatActivity {
         final String[] sideMenuItems = getResources().getStringArray(R.array.sideDrawerMenuItems);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sideMenuItems);
         mvcView.setSideDrawerAdapter(adapter);
+    }
+
+    @Override
+    public void changeActivity(int position) {
+        Class activityClass = null;
+        switch(position){
+            case 0: break;
+            case 1: activityClass = ManageProjectsClientsController.class; break;
+            case 2: break;
+            case 3: break;
+            case 4: break;
+            default: break;
+        }
+
+        if(activityClass != null){
+            createAndLaunchNewActivity(activityClass);
+        }
+    }
+
+
+    @Override
+    public void createAndLaunchNewActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 }
