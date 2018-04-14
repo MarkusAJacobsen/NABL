@@ -3,11 +3,18 @@
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
 
+    <string name="manageProjectsClientsTitle">Manage projects/clients</string>
+
     <string-array name="sideDrawerMenuItems">
         <item>Log hours</item>
-        <item>Register new project/client</item>
+        <item>Manage projects/clients</item>
         <item>Summary</item>
         <item>Export</item>
         <item>Settings</item>
+    </string-array>
+
+    <string-array name="manageProjectAndClientsSpinner">
+        <item>Projects</item>
+        <item>Clients</item>
     </string-array>
 </resources>

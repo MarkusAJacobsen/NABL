@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -21,6 +22,7 @@ import com.ntnu.wip.nabl.R;
 
 public class MainActivityView implements IMainActivityView {
     private View rootView;
+    private ChangeActivityListener listener;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
@@ -51,6 +53,11 @@ public class MainActivityView implements IMainActivityView {
     }
 
     @Override
+    public void registerListener(ChangeActivityListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
     public void createSideMenu(Activity target) {
         mDrawerToggle = new ActionBarDrawerToggle(
                 target,
@@ -77,6 +84,15 @@ public class MainActivityView implements IMainActivityView {
     @Override
     public void setSideDrawerAdapter(Adapter adapter) {
         mDrawerList.setAdapter((ArrayAdapter) adapter);
+
+        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if(listener != null) {
+                    listener.changeActivity(position);
+                }
+            }
+        });
     }
 
     @Override

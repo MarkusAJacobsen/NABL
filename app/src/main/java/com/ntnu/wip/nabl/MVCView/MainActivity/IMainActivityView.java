@@ -13,6 +13,11 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
  */
 
 public interface IMainActivityView extends IAbstractMvcView {
+    interface ChangeActivityListener{
+        void changeActivity(int position);
+    }
+
+    void registerListener(ChangeActivityListener listener);
     void createSideMenu(Activity target);
     void setSideDrawerAdapter(Adapter adapter);
     void syncDrawer();
