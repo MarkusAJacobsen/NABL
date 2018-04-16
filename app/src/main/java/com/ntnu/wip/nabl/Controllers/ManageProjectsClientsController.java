@@ -1,12 +1,14 @@
 package com.ntnu.wip.nabl.Controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.DataModels.Address;
 import com.ntnu.wip.nabl.DataModels.Client;
 import com.ntnu.wip.nabl.DataModels.ContactInformation;
@@ -24,7 +26,8 @@ import java.util.List;
 
 public class ManageProjectsClientsController extends AppCompatActivity implements
                                         IManageProjectClientView.ResourceViewerListener,
-                                        IManageProjectClientView.ResourceSelectorListener {
+                                        IManageProjectClientView.ResourceSelectorListener,
+                                        IChangeScreen.Activity {
     private ManageProjectClientView mvcView;
 
     @Override
@@ -38,7 +41,6 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
         mvcView.setActionBarTitle(getString(R.string.manageProjectsClientsTitle));
         fetchResourceSelectorItems();
 
-
         setContentView(mvcView.getRootView());
     }
 
@@ -50,11 +52,22 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
 
     @Override
     public void resourceSelected(Object pressedObject) {
-        if (pressedObject instanceof Project){
-            Toast.makeText(getApplicationContext(), "Project pressed", Toast.LENGTH_SHORT).show();
+        Class target = null;
+        String poststamp = null;
+        final String parcel = new Gson().toJson(pressedObject);
 
+        if (pressedObject instanceof Project){
+            target = OverviewProjectController.class;
+            poststamp = Poststamp.PROJECT;
         } else if (pressedObject instanceof Client) {
-            Toast.makeText(getApplicationContext(), "Client pressed", Toast.LENGTH_SHORT).show();
+            target = OverviewClientController.class;
+            poststamp = Poststamp.CLIENT;
+        }
+
+        if(target != null && poststamp != null && parcel != null) {
+            Intent intent = new Intent(this, target);
+            intent.putExtra(poststamp, parcel);
+            createAndLaunchNewActivity(intent);
         }
     }
 
@@ -106,5 +119,10 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
         mockedClients.add(client1);
 
         return new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, mockedClients);
+    }
+
+    @Override
+    public void createAndLaunchNewActivity(Intent intent) {
+        startActivity(intent);
     }
 }

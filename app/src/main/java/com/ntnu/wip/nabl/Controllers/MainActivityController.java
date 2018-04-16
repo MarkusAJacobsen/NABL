@@ -3,12 +3,16 @@ package com.ntnu.wip.nabl.Controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
 import com.ntnu.wip.nabl.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivityController extends AppCompatActivity implements
                                                         MainActivityView.ChangeActivityListener,

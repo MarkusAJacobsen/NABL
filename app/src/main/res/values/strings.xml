@@ -17,4 +17,7 @@
         <item>Projects</item>
         <item>Clients</item>
     </string-array>
+
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
 </resources>

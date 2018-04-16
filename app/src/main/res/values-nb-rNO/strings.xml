@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NABL</string>
+    <string name="manageProjectsClientsTitle">Administer prosjekter/klienter</string>
+    <string name="modify">Endre</string>
+    <string name="delete">Slett</string>
+</resources>

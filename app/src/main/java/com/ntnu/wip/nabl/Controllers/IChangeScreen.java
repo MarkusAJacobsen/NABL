@@ -1,5 +1,6 @@
 package com.ntnu.wip.nabl.Controllers;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -8,7 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 
 public interface IChangeScreen {
     interface Activity {
-        void createAndLaunchNewActivity(Class activity);
+        default void createAndLaunchNewActivity(Intent intent){}
+        default void createAndLaunchNewActivity(Class activity){}
     }
 
 }
