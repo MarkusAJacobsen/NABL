@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.ManageProjectsClientsController" />
-        <activity android:name=".Controllers.OverviewClientController" />
+        <activity android:name=".Controllers.ProjectClientSelectorController" />
+        <activity android:name=".Controllers.ManageProjectClientInteraction.OverviewClientController" />
     </application>
 
 </manifest>

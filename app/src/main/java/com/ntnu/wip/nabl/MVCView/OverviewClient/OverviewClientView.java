@@ -11,13 +11,13 @@ import com.ntnu.wip.nabl.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OverviewClient implements IOverviewClient{
+public class OverviewClientView implements IOverviewClientView {
     private View rootView;
 
     @BindView(R.id.modify) Button modify;
     @BindView(R.id.delete) Button delete;
 
-    public OverviewClient(LayoutInflater inflater, ViewGroup container){
+    public OverviewClientView(LayoutInflater inflater, ViewGroup container){
         rootView = inflater.inflate(R.layout.manage_client, container);
         ButterKnife.bind(this, rootView);
     }

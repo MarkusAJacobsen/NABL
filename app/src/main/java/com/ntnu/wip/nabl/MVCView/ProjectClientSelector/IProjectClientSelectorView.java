@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.MVCView.ManageProjectClient;
+package com.ntnu.wip.nabl.MVCView.ProjectClientSelector;
 
 import android.widget.Adapter;
 
@@ -8,7 +8,7 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
  * Created by markusja on 4/11/18.
  */
 
-public interface IManageProjectClientView extends IAbstractMvcView {
+public interface IProjectClientSelectorView extends IAbstractMvcView {
     interface ResourceViewerListener {
         void resourceSelected(Object pressedObject);
     }

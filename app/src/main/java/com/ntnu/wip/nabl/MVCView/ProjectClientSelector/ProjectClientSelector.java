@@ -1,6 +1,5 @@
-package com.ntnu.wip.nabl.MVCView.ManageProjectClient;
+package com.ntnu.wip.nabl.MVCView.ProjectClientSelector;
 
-import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.ntnu.wip.nabl.Controllers.IChangeScreen;
-import com.ntnu.wip.nabl.DataModels.Project;
 import com.ntnu.wip.nabl.R;
 
 import butterknife.BindView;
@@ -22,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by markusja on 4/11/18.
  */
 
-public class ManageProjectClientView implements IManageProjectClientView {
+public class ProjectClientSelector implements IProjectClientSelectorView {
     private View rootView;
     @BindView(R.id.resourceType) Spinner resourceSelector;
     @BindView(R.id.resource) ListView resourceViewer;
@@ -30,7 +27,7 @@ public class ManageProjectClientView implements IManageProjectClientView {
     private ResourceViewerListener resourceViewerListener;
     private ActionBar actionBar;
 
-    public ManageProjectClientView(LayoutInflater inflater, ViewGroup container) {
+    public ProjectClientSelector(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.manage_projects_and_clients, container);
         ButterKnife.bind(this, rootView);
         initialize();

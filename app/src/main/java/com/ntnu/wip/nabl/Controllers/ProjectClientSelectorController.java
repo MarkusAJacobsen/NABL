@@ -9,12 +9,14 @@ import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction.OverviewClientController;
+import com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction.OverviewProjectController;
 import com.ntnu.wip.nabl.DataModels.Address;
 import com.ntnu.wip.nabl.DataModels.Client;
 import com.ntnu.wip.nabl.DataModels.ContactInformation;
 import com.ntnu.wip.nabl.DataModels.Project;
-import com.ntnu.wip.nabl.MVCView.ManageProjectClient.IManageProjectClientView;
-import com.ntnu.wip.nabl.MVCView.ManageProjectClient.ManageProjectClientView;
+import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorView;
+import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
@@ -24,17 +26,17 @@ import java.util.List;
  * Created by markusja on 4/11/18.
  */
 
-public class ManageProjectsClientsController extends AppCompatActivity implements
-                                        IManageProjectClientView.ResourceViewerListener,
-                                        IManageProjectClientView.ResourceSelectorListener,
+public class ProjectClientSelectorController extends AppCompatActivity implements
+                                        IProjectClientSelectorView.ResourceViewerListener,
+                                        IProjectClientSelectorView.ResourceSelectorListener,
                                         IChangeScreen.Activity {
-    private ManageProjectClientView mvcView;
+    private ProjectClientSelector mvcView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mvcView = new ManageProjectClientView(getLayoutInflater(), null);
+        mvcView = new ProjectClientSelector(getLayoutInflater(), null);
         mvcView.registerResourceSelectorListener(this);
         mvcView.registerResourceViewerListener(this);
         mvcView.setActionBar(getSupportActionBar());
