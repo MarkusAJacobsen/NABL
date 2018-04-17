@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.Controllers;
+package com.ntnu.wip.nabl.MVCControllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,11 @@ import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
-import com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction.OverviewController;
-import com.ntnu.wip.nabl.DataModels.Address;
-import com.ntnu.wip.nabl.DataModels.Client;
-import com.ntnu.wip.nabl.DataModels.ContactInformation;
-import com.ntnu.wip.nabl.DataModels.Project;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.OverviewController;
+import com.ntnu.wip.nabl.Models.Address;
+import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.ContactInformation;
+import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorView;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
 import com.ntnu.wip.nabl.R;

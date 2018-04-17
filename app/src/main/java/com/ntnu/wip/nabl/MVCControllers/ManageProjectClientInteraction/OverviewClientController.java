@@ -1,23 +1,20 @@
-package com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction;
+package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
 import android.app.Fragment;
-import android.content.Intent;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ntnu.wip.nabl.Consts.Poststamp;
-import com.ntnu.wip.nabl.Controllers.IChangeScreen;
-import com.ntnu.wip.nabl.DataModels.Client;
-import com.ntnu.wip.nabl.MVCView.ModifyClient.ModifyClientView;
+import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
+import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.IOverviewClientView;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.OverviewClientView;
+import com.ntnu.wip.nabl.R;
 
-import java.lang.reflect.Type;
 import java.util.Locale;
 
 public class OverviewClientController extends Fragment implements IOverviewClientView.ButtonListener,
@@ -35,6 +32,7 @@ public class OverviewClientController extends Fragment implements IOverviewClien
                              Bundle savedInstanceState) {
 
         mvcView = new OverviewClientView(inflater, null);
+        mvcView.registerListener(this);
 
         getDataFromArguments(getArguments());
 
@@ -47,6 +45,9 @@ public class OverviewClientController extends Fragment implements IOverviewClien
     //
     // End of fragment Lifecycle
     //---------------------------------------------------------------------------------------------
+    // Listener Implementations
+    //
+
     @Override
     public void modifyPressed() {
         final String parcel = new Gson().toJson(model);
@@ -65,6 +66,29 @@ public class OverviewClientController extends Fragment implements IOverviewClien
     public void deletePressed() {
 
     }
+
+    //
+    // End Listener Implementation
+    //---------------------------------------------------------------------------------------------
+    // IChangeScreen Implementation
+    //
+
+    @Override
+    public void transactionManager(Class <? extends Fragment> frag, Bundle args) throws
+                                                                           IllegalAccessException,
+                                                                java.lang.InstantiationException {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment newFragment;
+
+        newFragment = frag.newInstance();
+        if(args != null) {
+            newFragment.setArguments(args);
+        }
+
+        ft.replace(R.id.contentFrame, newFragment);
+        ft.commit();
+    }
+
 
     private void getDataFromArguments(Bundle args){
         if(args.containsKey(Poststamp.CLIENT)) {

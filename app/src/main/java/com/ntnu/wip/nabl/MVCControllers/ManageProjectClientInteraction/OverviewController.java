@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction;
+package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ntnu.wip.nabl.Consts.Poststamp;
-import com.ntnu.wip.nabl.Controllers.IChangeScreen;
+import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.R;
 
 public class OverviewController extends AppCompatActivity implements IChangeScreen.Fragment {
@@ -51,7 +51,9 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
             parcel = intent.getStringExtra(stamp);
             target = OverviewClientController.class;
         } else if(intent.hasExtra(Poststamp.PROJECT)){
-            parcel = intent.getStringExtra(Poststamp.PROJECT);
+            stamp = Poststamp.PROJECT;
+            parcel = intent.getStringExtra(stamp);
+            target = OverviewProjectController.class;
         }
 
         Bundle args = new Bundle();

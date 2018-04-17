@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.DataModels;
+package com.ntnu.wip.nabl.Models;
 
 import android.support.v4.content.ContextCompat;
 

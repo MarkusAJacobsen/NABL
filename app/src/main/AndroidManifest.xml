@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controllers.MainActivityController">
+        <activity android:name=".MVCControllers.MainActivityController">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.ProjectClientSelectorController" />
-        <activity android:name=".Controllers.ManageProjectClientInteraction.OverviewController" />
+        <activity android:name=".MVCControllers.ProjectClientSelectorController" />
+        <activity android:name=".MVCControllers.ManageProjectClientInteraction.OverviewController" />
     </application>
 
 </manifest>

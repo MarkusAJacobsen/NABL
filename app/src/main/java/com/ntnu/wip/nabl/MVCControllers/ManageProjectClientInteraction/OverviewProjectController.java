@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction;
+package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
 import android.app.Fragment;
 

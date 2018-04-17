@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.Controllers;
+package com.ntnu.wip.nabl.MVCControllers;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.DataModels;
+package com.ntnu.wip.nabl.Models;
 
 /**
  * Created by markusja on 4/11/18.

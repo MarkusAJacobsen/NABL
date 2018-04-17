@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.Controllers;
+package com.ntnu.wip.nabl.MVCControllers;
 
 import android.app.Fragment;
 import android.content.Intent;
