@@ -1,5 +1,7 @@
 package com.ntnu.wip.nabl.MVCView.OverviewClient;
 
+import android.view.View;
+
 import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 
 public interface IOverviewClientView extends IAbstractMvcView {
@@ -7,4 +9,10 @@ public interface IOverviewClientView extends IAbstractMvcView {
         void modifyPressed();
         void deletePressed();
     }
+
+    void registerListener(ButtonListener listener);
+    void setName(String name);
+    void setEmail(String email);
+    void setPhone(String phone);
+    void setAddress(String address);
 }

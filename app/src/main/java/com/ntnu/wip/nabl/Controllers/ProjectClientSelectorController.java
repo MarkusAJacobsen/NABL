@@ -9,8 +9,7 @@ import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
-import com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction.OverviewClientController;
-import com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction.OverviewProjectController;
+import com.ntnu.wip.nabl.Controllers.ManageProjectClientInteraction.OverviewController;
 import com.ntnu.wip.nabl.DataModels.Address;
 import com.ntnu.wip.nabl.DataModels.Client;
 import com.ntnu.wip.nabl.DataModels.ContactInformation;
@@ -27,9 +26,8 @@ import java.util.List;
  */
 
 public class ProjectClientSelectorController extends AppCompatActivity implements
-                                        IProjectClientSelectorView.ResourceViewerListener,
-                                        IProjectClientSelectorView.ResourceSelectorListener,
-                                        IChangeScreen.Activity {
+                                                        IProjectClientSelectorView.ResourceListener,
+                                                        IChangeScreen.Activity {
     private ProjectClientSelector mvcView;
 
     @Override
@@ -37,8 +35,7 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
 
         mvcView = new ProjectClientSelector(getLayoutInflater(), null);
-        mvcView.registerResourceSelectorListener(this);
-        mvcView.registerResourceViewerListener(this);
+        mvcView.registerResourceListener(this);
         mvcView.setActionBar(getSupportActionBar());
         mvcView.setActionBarTitle(getString(R.string.manageProjectsClientsTitle));
         fetchResourceSelectorItems();
@@ -57,20 +54,24 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         Class target = null;
         String poststamp = null;
         final String parcel = new Gson().toJson(pressedObject);
+        target = OverviewController.class;
 
         if (pressedObject instanceof Project){
-            target = OverviewProjectController.class;
             poststamp = Poststamp.PROJECT;
         } else if (pressedObject instanceof Client) {
-            target = OverviewClientController.class;
             poststamp = Poststamp.CLIENT;
         }
 
-        if(target != null && poststamp != null && parcel != null) {
+        if(poststamp != null && parcel != null) {
             Intent intent = new Intent(this, target);
             intent.putExtra(poststamp, parcel);
             createAndLaunchNewActivity(intent);
         }
+    }
+
+    @Override
+    public void registerPressed() {
+
     }
 
     @Override

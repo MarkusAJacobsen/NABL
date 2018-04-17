@@ -4,4 +4,5 @@
     <string name="manageProjectsClientsTitle">Administer prosjekter/klienter</string>
     <string name="modify">Endre</string>
     <string name="delete">Slett</string>
+    <string name="register">Registrer</string>
 </resources>

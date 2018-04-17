@@ -5,21 +5,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class OverviewClientView implements IOverviewClientView {
     private View rootView;
+    private ButtonListener listener;
 
     @BindView(R.id.modify) Button modify;
     @BindView(R.id.delete) Button delete;
+    @BindView(R.id.name) TextView mName;
+    @BindView(R.id.address) TextView mAddress;
+    @BindView(R.id.phone) TextView mPhone;
+    @BindView(R.id.email) TextView mEmail;
 
     public OverviewClientView(LayoutInflater inflater, ViewGroup container){
         rootView = inflater.inflate(R.layout.manage_client, container);
         ButterKnife.bind(this, rootView);
+
+        activateModifyButton();
+        activateDeleteButton();
+    }
+
+    private void activateModifyButton(){
+        modify.setOnClickListener(view -> {
+           if(listener != null) {
+               listener.modifyPressed();
+           }
+        });
+    }
+
+    private void activateDeleteButton(){
+        delete.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.deletePressed();
+            }
+        });
     }
 
     @Override
@@ -35,5 +62,30 @@ public class OverviewClientView implements IOverviewClientView {
     @Override
     public void setActionBarTitle(String title) {
 
+    }
+
+    @Override
+    public void registerListener(ButtonListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void setName(String name) {
+        mName.setText(name);
+    }
+
+    @Override
+    public void setEmail(String email) {
+        mEmail.setText(email);
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        mPhone.setText(phone);
+    }
+
+    @Override
+    public void setAddress(String address) {
+        mAddress.setText(address);
     }
 }

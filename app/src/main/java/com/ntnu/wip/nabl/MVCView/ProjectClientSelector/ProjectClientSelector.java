@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -23,8 +24,8 @@ public class ProjectClientSelector implements IProjectClientSelectorView {
     private View rootView;
     @BindView(R.id.resourceType) Spinner resourceSelector;
     @BindView(R.id.resource) ListView resourceViewer;
-    private ResourceSelectorListener resourceSelectorListener;
-    private ResourceViewerListener resourceViewerListener;
+    @BindView(R.id.register) Button mRegister;
+    private ResourceListener resourceListener;
     private ActionBar actionBar;
 
     public ProjectClientSelector(LayoutInflater inflater, ViewGroup container) {
@@ -36,14 +37,23 @@ public class ProjectClientSelector implements IProjectClientSelectorView {
     private void initialize(){
         initializeSpinnerActions();
         initializeListViewActions();
+        activateRegisterButton();
+    }
+
+    private void activateRegisterButton(){
+        mRegister.setOnClickListener(view -> {
+            if(resourceListener != null) {
+                resourceListener.registerPressed();
+            }
+        });
     }
 
     private void initializeSpinnerActions(){
         resourceSelector.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if(resourceSelectorListener != null) {
-                    resourceSelectorListener.OnSpinnerResourceSelected(position);
+                if(resourceListener != null) {
+                    resourceListener.OnSpinnerResourceSelected(position);
                 }
             }
 
@@ -55,12 +65,9 @@ public class ProjectClientSelector implements IProjectClientSelectorView {
     }
 
     private void initializeListViewActions(){
-        resourceViewer.setOnItemClickListener(new ListView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if(resourceViewerListener != null) {
-                    resourceViewerListener.resourceSelected(adapterView.getAdapter().getItem(position));
-                }
+        resourceViewer.setOnItemClickListener((adapterView, view, position, l) -> {
+            if(resourceListener != null) {
+                resourceListener.resourceSelected(adapterView.getAdapter().getItem(position));
             }
         });
     }
@@ -82,13 +89,8 @@ public class ProjectClientSelector implements IProjectClientSelectorView {
     }
 
     @Override
-    public void registerResourceSelectorListener(ResourceSelectorListener listener) {
-        resourceSelectorListener = listener;
-    }
-
-    @Override
-    public void registerResourceViewerListener(ResourceViewerListener listener) {
-        resourceViewerListener = listener;
+    public void registerResourceListener(ResourceListener listener) {
+        resourceListener = listener;
     }
 
     @Override

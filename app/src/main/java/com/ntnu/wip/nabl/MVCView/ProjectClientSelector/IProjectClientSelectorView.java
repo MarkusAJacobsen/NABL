@@ -9,16 +9,13 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
  */
 
 public interface IProjectClientSelectorView extends IAbstractMvcView {
-    interface ResourceViewerListener {
+    interface ResourceListener {
         void resourceSelected(Object pressedObject);
-    }
-
-    interface ResourceSelectorListener {
         void OnSpinnerResourceSelected(int position);
+        void registerPressed();
     }
 
-    void registerResourceSelectorListener(ResourceSelectorListener listener);
-    void registerResourceViewerListener(ResourceViewerListener listener);
+    void registerResourceListener(ResourceListener listener);
     void setResourceViewerAdapter(Adapter adapter);
     void setResourceSelectorAdapter(Adapter adapter);
 

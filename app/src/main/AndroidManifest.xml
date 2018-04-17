@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controllers.ProjectClientSelectorController" />
-        <activity android:name=".Controllers.ManageProjectClientInteraction.OverviewClientController" />
+        <activity android:name=".Controllers.ManageProjectClientInteraction.OverviewController" />
     </application>
 
 </manifest>
