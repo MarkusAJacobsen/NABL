@@ -1,11 +1,9 @@
-package com.ntnu.wip.nabl.MVCView.ModifyProject;
+package com.ntnu.wip.nabl.MVCView.Register;
 
 import android.support.v7.app.ActionBar;
 import android.view.View;
 
-import com.ntnu.wip.nabl.MVCView.ModifyClient.IModifyClientView;
-
-public class ModifyProjectView implements IModifyProjectView {
+public class Register implements IRegisterView {
     @Override
     public View getRootView() {
         return null;
@@ -20,5 +18,4 @@ public class ModifyProjectView implements IModifyProjectView {
     public void setActionBarTitle(String title) {
 
     }
-
 }

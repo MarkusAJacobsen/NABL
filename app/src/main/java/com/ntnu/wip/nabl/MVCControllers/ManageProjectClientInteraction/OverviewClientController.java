@@ -1,7 +1,7 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +74,7 @@ public class OverviewClientController extends Fragment implements IOverviewClien
     //
 
     @Override
-    public void transactionManager(Class <? extends Fragment> frag, Bundle args) throws
+    public void transactionManager(Class <? extends android.support.v4.app.Fragment> frag, Bundle args) throws
                                                                            IllegalAccessException,
                                                                 java.lang.InstantiationException {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -103,7 +103,7 @@ public class OverviewClientController extends Fragment implements IOverviewClien
             return;
         }
 
-        mvcView.setName(String.format("%s %s", model.getGivenName(), model.getSurname()));
+        mvcView.setName(model.getName());
         mvcView.setEmail(model.getContactInformation().getEmail());
         mvcView.setPhone(String.valueOf(model.getContactInformation().getPhoneNumber()));
 

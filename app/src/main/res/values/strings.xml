@@ -21,4 +21,11 @@
     <string name="modify">Modify</string>
     <string name="delete">Delete</string>
     <string name="register">Register</string>
+    <string name="phone">Phone</string>
+    <string name="street">Street</string>
+    <string name="zipcode">Zipcode</string>
+    <string name="number">Street Number</string>
+    <string name="email">Email</string>
+    <string name="city">City</string>
+    <string name="save">Save</string>
 </resources>

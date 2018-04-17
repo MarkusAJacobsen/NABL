@@ -1,6 +1,6 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 public class OverviewProjectController extends Fragment {
 }

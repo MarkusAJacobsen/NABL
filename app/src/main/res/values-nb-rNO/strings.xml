@@ -5,4 +5,12 @@
     <string name="modify">Endre</string>
     <string name="delete">Slett</string>
     <string name="register">Registrer</string>
+    <string name="phoen">Telefon</string>
+    <string name="street">Gate</string>
+    <string name="zipcode">Zipcode</string>
+    <string name="number">Gatenumber</string>
+    <string name="email">Epost</string>
+    <string name="city">By</string>
+    <string name="phone">Telefon</string>
+    <string name="save">Lagre</string>
 </resources>

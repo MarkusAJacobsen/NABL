@@ -16,7 +16,7 @@ public interface IChangeScreen {
     }
 
     interface Fragment {
-        default void transactionManager(Class <? extends android.app.Fragment> frag, Bundle args) throws IllegalAccessException, InstantiationException {}
+        default void transactionManager(Class <? extends android.support.v4.app.Fragment> frag, Bundle args) throws IllegalAccessException, InstantiationException {}
     }
 
 }

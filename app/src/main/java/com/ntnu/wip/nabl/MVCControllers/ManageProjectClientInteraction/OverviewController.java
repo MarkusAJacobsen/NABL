@@ -1,9 +1,9 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ntnu.wip.nabl.Consts.Poststamp;
@@ -28,8 +28,10 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
     //---------------------------------------------------------------------------------------------
 
     @Override
-    public void transactionManager(Class <? extends Fragment> frag, Bundle args) throws IllegalAccessException, InstantiationException {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+    public void transactionManager(Class <? extends android.support.v4.app.Fragment> frag, Bundle args) throws
+                                                                IllegalAccessException,
+                                                                java.lang.InstantiationException {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment newFragment;
 
         newFragment = frag.newInstance();

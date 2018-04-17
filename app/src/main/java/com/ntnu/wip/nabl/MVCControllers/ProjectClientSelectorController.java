@@ -117,7 +117,7 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
 
         Address address = new Address("Andeby", 10, 1313, "Andeby");
         ContactInformation contactInformation = new ContactInformation("foo@bar.com", 1212121212);
-        Client client1 = new Client(0, "Donald", "Duck", contactInformation, address);
+        Client client1 = new Client(0, "Donald Duck", contactInformation, address);
 
         mockedClients.add(client1);
 
