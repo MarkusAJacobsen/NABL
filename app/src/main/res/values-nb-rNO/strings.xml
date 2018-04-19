@@ -19,4 +19,7 @@
     <string name="phone">Telefon</string>
     <string name="save">Lagre</string>
     <string name="options">Valg</string>
+    <string name="projectId">Prosjektid</string>
+    <string name="project">Prosjekt</string>
+    <string name="client">Klient</string>
 </resources>

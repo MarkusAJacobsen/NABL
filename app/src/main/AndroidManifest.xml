@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".MVCControllers.ProjectClientSelectorController" />
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.OverviewController" />
+        <activity android:name=".MVCControllers.ManageProjectClientInteraction.RegisterController" />
     </application>
 
 </manifest>

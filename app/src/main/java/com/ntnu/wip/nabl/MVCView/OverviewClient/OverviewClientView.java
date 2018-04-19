@@ -34,6 +34,10 @@ public class OverviewClientView implements IOverviewClientView {
         rootView = inflater.inflate(R.layout.manage_client, container);
         ButterKnife.bind(this, rootView);
 
+        activateButtons();
+    }
+
+    private void activateButtons(){
         activateModifyButton();
         activateDeleteButton();
         activateCallButton();

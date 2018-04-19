@@ -34,4 +34,7 @@
     <string name="city">City</string>
     <string name="save">Save</string>
     <string name="options">Options</string>
+    <string name="projectId">Project Id</string>
+    <string name="project">Project</string>
+    <string name="client">Client</string>
 </resources>

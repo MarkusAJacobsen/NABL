@@ -10,15 +10,20 @@ import android.widget.ArrayAdapter;
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.OverviewController;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.RegisterController;
 import com.ntnu.wip.nabl.Models.Address;
+import com.ntnu.wip.nabl.Models.Category;
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorView;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
+import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,7 +76,8 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
 
     @Override
     public void registerPressed() {
-
+        Intent intent = new Intent(this, RegisterController.class);
+        createAndLaunchNewActivity(intent);
     }
 
     @Override
@@ -100,11 +106,10 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
     private Adapter mockProjectListAndAdapter(){
         List<Project> mockedProjects = new ArrayList<>();
 
-        Project project1 = new Project(0, 1000, new Address("Andeby", 10, 2609, "Lillehammer"));
-        Project project2 = new Project(1, 1001, new Address("Andeby", 15, 2609, "Lillehammer"));
+        Project project1 = new Project(0, 1000, new Address("Andeby", 10, 2609, "Lillehammer"),
+                "foo", "foo", State.PLANNING, Category.NULL, new Date(), new Date(), new Company("Foo", "1337"));
 
         mockedProjects.add(project1);
-        mockedProjects.add(project2);
 
         return new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, mockedProjects);
     }
