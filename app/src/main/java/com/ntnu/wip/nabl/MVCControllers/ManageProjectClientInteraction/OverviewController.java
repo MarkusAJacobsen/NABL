@@ -19,13 +19,22 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_content_frame);
+        configureActionBar();
         handleIntent(getIntent());
     }
 
-
     //
     // End of Activity Life Cycle
+    // --------------------------------------------------------------------------------------------
+    // Fragment overrides
+    //
+
+
+    //
+    // End Fragment overrides
     //---------------------------------------------------------------------------------------------
+    // IChangeScreen impl
+    //
 
     @Override
     public void transactionManager(Class <? extends android.support.v4.app.Fragment> frag, Bundle args) throws
@@ -43,7 +52,13 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
         ft.commit();
     }
 
-    public void handleIntent(Intent intent){
+    //
+    // End IChangeScreen
+    //---------------------------------------------------------------------------------------------
+    // Privates
+    //
+
+    private void handleIntent(Intent intent){
         String parcel = null;
         Class target = null;
         String stamp = null;
@@ -67,4 +82,12 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
             e.printStackTrace();
         }
     }
+
+    private void configureActionBar(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    //
+    // End Privates
+    //---------------------------------------------------------------------------------------------
 }

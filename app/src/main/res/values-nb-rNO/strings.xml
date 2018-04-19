@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="manageProjectAndClientsSpinner">
+        <item>Prosjekter</item>
+        <item>Klienter</item>
+    </string-array>
+
     <string name="app_name">NABL</string>
     <string name="manageProjectsClientsTitle">Administer prosjekter/klienter</string>
     <string name="modify">Endre</string>
@@ -13,4 +18,5 @@
     <string name="city">By</string>
     <string name="phone">Telefon</string>
     <string name="save">Lagre</string>
+    <string name="options">Valg</string>
 </resources>

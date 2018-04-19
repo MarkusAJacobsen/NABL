@@ -1,11 +1,22 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
+import android.Manifest;
+import android.app.ActionBar;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.PermissionChecker;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
@@ -14,6 +25,7 @@ import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.IOverviewClientView;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.OverviewClientView;
 import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.Locale;
 
@@ -35,15 +47,46 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         mvcView.registerListener(this);
 
         getDataFromArguments(getArguments());
-
         populateView();
 
         return mvcView.getRootView();
     }
 
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     //
-    // End of fragment Lifecycle
+    // End Fragment lifecycle
+    // --------------------------------------------------------------------------------------------
+    // Other fragment overrides
+    //
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.overview_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getTitle() == getString(R.string.options)) {
+            Toast.makeText(getContext(), "Menu pressed", Toast.LENGTH_SHORT).show();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResult){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResult);
+        call();
+    }
+
+    //
+    // End other fragment overrides
     //---------------------------------------------------------------------------------------------
     // Listener Implementations
     //
@@ -65,6 +108,21 @@ public class OverviewClientController extends Fragment implements IOverviewClien
     @Override
     public void deletePressed() {
 
+    }
+
+    @Override
+    public void callPressed() {
+        call();
+    }
+
+    @Override
+    public void messagePressed() {
+        message();
+    }
+
+    @Override
+    public void emailPressed() {
+        email();
     }
 
     //
@@ -89,6 +147,11 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         ft.commit();
     }
 
+    //
+    // End IChangeScreen
+    //---------------------------------------------------------------------------------------------
+    //
+    //
 
     private void getDataFromArguments(Bundle args){
         if(args.containsKey(Poststamp.CLIENT)) {
@@ -115,4 +178,21 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         mvcView.setAddress(address);
     }
 
+    private void call(){
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:"+model.getContactInformation().getPhoneNumber()));
+        startActivity(callIntent);
+    }
+
+    private void message(){
+        Intent messageIntent = new Intent(Intent.ACTION_VIEW);
+        messageIntent.setData(Uri.parse("sms:" +model.getContactInformation().getPhoneNumber()));
+        startActivity(messageIntent);
+    }
+
+    private void email(){
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto",model.getContactInformation().getEmail(), null));
+        startActivity(emailIntent);
+    }
 }

@@ -14,4 +14,11 @@ public interface IModifyClientView extends IAbstractMvcView {
     void setHouseNumber(String number);
     void setZipCode(int zipcode);
     void setCity(String city);
+    String getName();
+    String getPhone();
+    String getEmail();
+    String getStreet();
+    String getHouseNumber();
+    String getZipcode();
+    String getCity();
 }

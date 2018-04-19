@@ -80,6 +80,41 @@ public class ModifyClientView implements IModifyClientView {
         mCity.setText(city);
     }
 
+    @Override
+    public String getName() {
+        return mName.getText().toString();
+    }
+
+    @Override
+    public String getPhone() {
+        return mPhone.getText().toString();
+    }
+
+    @Override
+    public String getEmail() {
+        return mEmail.getText().toString();
+    }
+
+    @Override
+    public String getStreet() {
+        return mStreet.getText().toString();
+    }
+
+    @Override
+    public String getHouseNumber() {
+        return mHouseNumber.getText().toString();
+    }
+
+    @Override
+    public String getZipcode() {
+        return mZipcode.getText().toString();
+    }
+
+    @Override
+    public String getCity() {
+        return mCity.getText().toString();
+    }
+
     //
     // End Interface implementation
     //---------------------------------------------------------------------------------------------

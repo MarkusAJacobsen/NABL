@@ -8,6 +8,9 @@ public interface IOverviewClientView extends IAbstractMvcView {
     interface ButtonListener {
         void modifyPressed();
         void deletePressed();
+        void callPressed();
+        void messagePressed();
+        void emailPressed();
     }
 
     void registerListener(ButtonListener listener);

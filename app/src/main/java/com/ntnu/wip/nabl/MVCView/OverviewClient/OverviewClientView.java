@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
@@ -24,6 +26,9 @@ public class OverviewClientView implements IOverviewClientView {
     @BindView(R.id.address) TextView mAddress;
     @BindView(R.id.phone) TextView mPhone;
     @BindView(R.id.email) TextView mEmail;
+    @BindView(R.id.callAction) ImageView mCallButton;
+    @BindView(R.id.messageAction) ImageView mMessageButton;
+    @BindView(R.id.emailAction) ImageView mEmailButton;
 
     public OverviewClientView(LayoutInflater inflater, ViewGroup container){
         rootView = inflater.inflate(R.layout.manage_client, container);
@@ -31,6 +36,9 @@ public class OverviewClientView implements IOverviewClientView {
 
         activateModifyButton();
         activateDeleteButton();
+        activateCallButton();
+        activateMessageButton();
+        activateEmailButton();
     }
 
     private void activateModifyButton(){
@@ -45,6 +53,30 @@ public class OverviewClientView implements IOverviewClientView {
         delete.setOnClickListener(view -> {
             if(listener != null) {
                 listener.deletePressed();
+            }
+        });
+    }
+
+    private void activateCallButton(){
+        mCallButton.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.callPressed();
+            }
+        });
+    }
+
+    private void activateMessageButton(){
+        mMessageButton.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.messagePressed();
+            }
+        });
+    }
+
+    private void activateEmailButton(){
+        mEmailButton.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.emailPressed();
             }
         });
     }

@@ -2,6 +2,7 @@ package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.Menu;
@@ -11,11 +12,13 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCView.ModifyClient.ModifyClientView;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.R;
 
-public class ModifyClientController extends Fragment {
+
+public class ModifyClientController extends Fragment implements IChangeScreen.Fragment {
     private ModifyClientView mvcView;
     private Client model;
 
@@ -54,12 +57,38 @@ public class ModifyClientController extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //TODO save entry
-        return true;
+        if(item.getTitle() ==  getString(R.string.save)){
+          updateModel();
+        } else {
+           switchToOverViewClient();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //
     // End other fragment overrides
+    //---------------------------------------------------------------------------------------------
+    // Interfaces
+    //
+
+    @Override
+    public void transactionManager(Class <? extends android.support.v4.app.Fragment> frag, Bundle args) throws
+            IllegalAccessException,
+            java.lang.InstantiationException {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment newFragment;
+
+        newFragment = frag.newInstance();
+        if(args != null) {
+            newFragment.setArguments(args);
+        }
+
+        ft.replace(R.id.contentFrame, newFragment);
+        ft.commit();
+    }
+
+    //
+    // End of interfaces
     //---------------------------------------------------------------------------------------------
     // Privates
     //
@@ -79,6 +108,39 @@ public class ModifyClientController extends Fragment {
         mvcView.setHouseNumber(String.valueOf(model.getAddress().getNumber()));
         mvcView.setZipCode(model.getAddress().getZipcode());
         mvcView.setStreet(model.getAddress().getStreet());
+    }
+
+    private void updateModel(){
+        model.setName(mvcView.getName());
+        model.getAddress().setStreet(mvcView.getStreet());
+        model.getAddress().setNumber(Integer.parseInt(mvcView.getHouseNumber()));
+        model.getAddress().setCity(mvcView.getCity());
+        model.getAddress().setZipcode(Integer.parseInt(mvcView.getZipcode()));
+        model.getContactInformation().setEmail(mvcView.getEmail());
+        model.getContactInformation().setPhoneNumber(Integer.parseInt(mvcView.getPhone()));
+
+        //TODO update firebase
+
+        switchToOverViewClient();
+
+    }
+
+
+    private Bundle constructArgsFromClient(){
+        Bundle args = new Bundle();
+
+        final String parcel = new Gson().toJson(this.model);
+        args.putString(Poststamp.CLIENT, parcel);
+
+        return args;
+    }
+
+    private void switchToOverViewClient(){
+        try {
+            transactionManager(OverviewClientController.class, constructArgsFromClient());
+        } catch (IllegalAccessException | java.lang.InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 
     //
