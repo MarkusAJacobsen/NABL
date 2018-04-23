@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
-import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.ModifyClientController;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.ModifyProjectController;
 import com.ntnu.wip.nabl.MVCView.OverviewProject.OverviewProjectView;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.Locale;
 
@@ -116,6 +117,21 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
                 model.getAddress().getCity());
 
         mvcView.setAddress(address);
+        mvcView.setProjectName(model.getName());
+        mvcView.setState(State.getName(model.getState(), getContext()));
+        mvcView.setDescription(model.getDescription());
+
+        if(model.getStart() != null) {
+            mvcView.setStart(Utils.getHumanReadableDate(model.getStart()));
+        } else {
+            mvcView.setStart("-");
+        }
+
+        if(model.getEnd() != null) {
+            mvcView.setEnd(Utils.getHumanReadableDate(model.getEnd()));
+        } else {
+            mvcView.setEnd("-");
+        }
     }
 
     private void modifyPressed() {

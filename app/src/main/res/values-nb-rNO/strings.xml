@@ -33,4 +33,5 @@
     <string name="started">Startet</string>
     <string name="finished">Avsluttet</string>
     <string name="inputInvalid">Noen felter er ugyldige/ikke fylt ut</string>
+    <string name="address">Addresse</string>
 </resources>

@@ -26,7 +26,10 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onBackPressed();
+        if(item.getTitle() == null) {       //Ergo, all xml items needs a title, this option can only correspond to back icon in actionbar
+            onBackPressed();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

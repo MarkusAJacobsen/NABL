@@ -15,6 +15,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -175,11 +176,13 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
     @Override
     public void setStart(String start) {
         mDateStart.setText(start);
+        establishDate(WhichDate.START, start);
     }
 
     @Override
     public void setEnd(String end) {
         mDateEnd.setText(end);
+        establishDate(WhichDate.END, end);
     }
 
     @Override
@@ -347,4 +350,21 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
             view.setCompoundDrawables(null, null, null, null);
         }
     }
+
+    private void establishDate(WhichDate whichDate, String dateStringFormat) {
+        Calendar cal = Calendar.getInstance();
+
+        List<Integer> decodedDate = Utils.decodeDateString(dateStringFormat);
+
+        cal.set(Calendar.DAY_OF_MONTH, decodedDate.get(0));
+        cal.set(Calendar.MONTH, (decodedDate.get(1)-1)); // January is considered JANUARY(0)
+        cal.set(Calendar.YEAR, decodedDate.get(2));
+
+        switch(whichDate){
+            case START: startDate = cal.getTime(); break;
+            case END: endDate = cal.getTime(); break;
+            default: break;
+        }
+    }
 }
+
