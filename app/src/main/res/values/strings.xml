@@ -37,4 +37,15 @@
     <string name="projectId">Project Id</string>
     <string name="project">Project</string>
     <string name="client">Client</string>
+    <string name="name">Name</string>
+    <string name="projectName">Project name</string>
+    <string name="description">Description</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="status">Status</string>
+    <string name="organisation">Organisation</string>
+    <string name="planning">Planning</string>
+    <string name="started">Started</string>
+    <string name="finished">Finished</string>
+    <string name="inputInvalid">Some fields are invalid/not filled</string>
 </resources>

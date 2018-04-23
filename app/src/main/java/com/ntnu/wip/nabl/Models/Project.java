@@ -19,6 +19,13 @@ public class Project {
     private Company company;
     private Address address;
 
+    public Project(){
+        state = State.PLANNING;
+        category = Category.NULL;
+        company = new Company();
+        address = new Address();
+    }
+
     public Project(int id, int projectId, Address address, String name, String description, State state,
                    Category category, Date start, Date end, Company company) {
         this.id = id;

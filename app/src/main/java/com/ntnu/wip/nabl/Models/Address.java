@@ -10,6 +10,10 @@ public class Address {
     private int zipcode;
     private String city;
 
+    public Address(){
+        //NO.OP
+    }
+
     public Address(String street, int number, int zipcode, String city) {
         this.street = street;
         this.number = number;

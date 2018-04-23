@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
+package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview;
 
 import android.content.Intent;
 import android.os.Bundle;

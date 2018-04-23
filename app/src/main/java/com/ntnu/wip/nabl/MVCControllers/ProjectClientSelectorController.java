@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
-import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.OverviewController;
-import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.RegisterController;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewController;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Register.RegisterController;
 import com.ntnu.wip.nabl.Models.Address;
 import com.ntnu.wip.nabl.Models.Category;
 import com.ntnu.wip.nabl.Models.Client;

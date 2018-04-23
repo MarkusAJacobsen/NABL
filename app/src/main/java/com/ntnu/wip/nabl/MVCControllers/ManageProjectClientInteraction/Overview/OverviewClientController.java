@@ -1,15 +1,10 @@
-package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
+package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview;
 
-import android.Manifest;
-import android.app.ActionBar;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.PermissionChecker;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +16,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.ModifyClientController;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.IOverviewClientView;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.OverviewClientView;
 import com.ntnu.wip.nabl.R;
-import com.ntnu.wip.nabl.Utils;
 
 import java.util.Locale;
 

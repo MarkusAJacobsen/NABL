@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MVCControllers.ProjectClientSelectorController" />
-        <activity android:name=".MVCControllers.ManageProjectClientInteraction.OverviewController" />
-        <activity android:name=".MVCControllers.ManageProjectClientInteraction.RegisterController" />
+        <activity android:name=".MVCControllers.ManageProjectClientInteraction.Overview.OverviewController" />
+        <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController" />
     </application>
 
 </manifest>

@@ -4,7 +4,6 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
@@ -24,7 +23,7 @@ public class ModifyClientView implements IModifyClientView {
     @BindView(R.id.modifyCity) TextView mCity;
 
     public ModifyClientView(LayoutInflater inflater, ViewGroup container) {
-        rootView = inflater.inflate(R.layout.modify_client, container);
+        rootView = inflater.inflate(R.layout.client_input, container);
         ButterKnife.bind(this, rootView);
 
 
@@ -120,6 +119,15 @@ public class ModifyClientView implements IModifyClientView {
     //---------------------------------------------------------------------------------------------
     // Privates
     //
+
+    /**
+     * Check if a TextView is empty, if empty return true, of filled return false
+     * @param toCheckEmpty TextView
+     * @return boolean
+     */
+    private boolean checkEmpty(TextView toCheckEmpty) {
+        return toCheckEmpty.getText().toString().trim().equals("");
+    }
 
     //
     // End Privates

@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
+package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewClientController;
 import com.ntnu.wip.nabl.MVCView.ModifyClient.ModifyClientView;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.R;
@@ -21,6 +22,7 @@ import com.ntnu.wip.nabl.R;
 public class ModifyClientController extends Fragment implements IChangeScreen.Fragment {
     private ModifyClientView mvcView;
     private Client model;
+    private boolean modelPresent;
 
 
     //---------------------------------------------------------------------------------------------
@@ -94,13 +96,20 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
     //
 
     private void getDataFromArguments(Bundle args) {
-        if(args.containsKey(Poststamp.CLIENT)) {
-            final String parcel = args.getString(Poststamp.CLIENT);
-            model = new Gson().fromJson(parcel, Client.class);
+        if(args != null) {
+            if(args.containsKey(Poststamp.CLIENT)) {
+                final String parcel = args.getString(Poststamp.CLIENT);
+                model = new Gson().fromJson(parcel, Client.class);
+                modelPresent = true;
+            }
         }
     }
 
     private void populateView() {
+        if(!modelPresent){
+            return;
+        }
+
         mvcView.setName(model.getName());
         mvcView.setPhone(model.getContactInformation().getPhoneNumber());
         mvcView.setCity(model.getAddress().getCity());
@@ -111,6 +120,10 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
     }
 
     private void updateModel(){
+        if(model == null) {
+            model = new Client();
+        }
+
         model.setName(mvcView.getName());
         model.getAddress().setStreet(mvcView.getStreet());
         model.getAddress().setNumber(Integer.parseInt(mvcView.getHouseNumber()));

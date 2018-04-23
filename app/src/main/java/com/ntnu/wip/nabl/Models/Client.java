@@ -13,6 +13,11 @@ public class Client {
     private ContactInformation contactInformation;
     private Address address;
 
+    public Client(){
+        this.contactInformation = new ContactInformation();
+        this.address = new Address();
+    }
+
     public Client(int id, String name, ContactInformation contactInformation, Address address) {
         this.id = id;
         this.name = name;

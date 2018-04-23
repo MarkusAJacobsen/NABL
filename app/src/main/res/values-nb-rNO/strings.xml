@@ -22,4 +22,15 @@
     <string name="projectId">Prosjektid</string>
     <string name="project">Prosjekt</string>
     <string name="client">Klient</string>
+    <string name="name">Name</string>
+    <string name="projectName">Prosjektnavn</string>
+    <string name="start">Start</string>
+    <string name="end">Slutt</string>
+    <string name="status">Status</string>
+    <string name="description">Beskrivelse</string>
+    <string name="organisation">Organisasjon</string>
+    <string name="planning">Planlegges</string>
+    <string name="started">Startet</string>
+    <string name="finished">Avsluttet</string>
+    <string name="inputInvalid">Noen felter er ugyldige/ikke fylt ut</string>
 </resources>

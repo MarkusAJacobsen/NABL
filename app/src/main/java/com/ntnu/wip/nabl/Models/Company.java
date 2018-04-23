@@ -4,6 +4,10 @@ public class Company {
     private String name;
     private String orgnr;
 
+    public Company() {
+        //NO-OP
+    }
+
     public Company(String name, String orgnr) {
         this.name = name;
         this.orgnr = orgnr;

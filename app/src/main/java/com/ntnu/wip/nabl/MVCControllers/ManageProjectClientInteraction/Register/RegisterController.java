@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction;
+package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Register;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
