@@ -18,13 +18,14 @@ import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewProjectController;
+import com.ntnu.wip.nabl.MVCView.projectInput.IProjectInputView;
 import com.ntnu.wip.nabl.MVCView.projectInput.ProjectInputView;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.R;
 import com.ntnu.wip.nabl.Utils;
 
-public class ModifyProjectController extends Fragment implements IChangeScreen.Fragment, ProjectInputView.RegisterProjectListener {
+public class ModifyProjectController extends Fragment implements IChangeScreen.Fragment, IProjectInputView.ProjectInputListener {
     private ProjectInputView mvcView;
     private Project model;
     private boolean modelPresent;

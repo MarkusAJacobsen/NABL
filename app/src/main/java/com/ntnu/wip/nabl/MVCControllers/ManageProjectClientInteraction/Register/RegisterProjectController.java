@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.ntnu.wip.nabl.MVCView.projectInput.IProjectInputView;
 import com.ntnu.wip.nabl.MVCView.projectInput.ProjectInputView;
 import com.ntnu.wip.nabl.Models.Address;
 import com.ntnu.wip.nabl.Models.Project;
@@ -21,7 +22,7 @@ import com.ntnu.wip.nabl.R;
 
 import java.util.Date;
 
-public class RegisterProjectController extends Fragment implements ProjectInputView.RegisterProjectListener {
+public class RegisterProjectController extends Fragment implements IProjectInputView.ProjectInputListener {
     ProjectInputView mvcView;
     Project newModel;
 
@@ -49,14 +50,16 @@ public class RegisterProjectController extends Fragment implements ProjectInputV
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.register){
-            if(mvcView.checkValidity()) {
-                registerModel();
-                finishFragment();
-            } else {
-                Toast.makeText(getContext(), getString(R.string.inputInvalid), Toast.LENGTH_SHORT).show();
-            }
-
+        switch (item.getItemId()) {
+            case R.id.register:
+                if(mvcView.checkValidity()) {
+                    registerModel();
+                    finishFragment();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.inputInvalid), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default: break;
         }
 
         return super.onOptionsItemSelected(item);

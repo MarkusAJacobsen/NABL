@@ -20,8 +20,6 @@ public class OverviewClientView implements IOverviewClientView {
     private View rootView;
     private ButtonListener listener;
 
-    @BindView(R.id.modify) Button modify;
-    @BindView(R.id.delete) Button delete;
     @BindView(R.id.name) TextView mName;
     @BindView(R.id.address) TextView mAddress;
     @BindView(R.id.phone) TextView mPhone;

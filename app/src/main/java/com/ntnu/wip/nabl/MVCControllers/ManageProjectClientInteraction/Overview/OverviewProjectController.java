@@ -60,6 +60,7 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
                 break;
             case R.id.delete:
                 break; //TODO
+            default: break;
         }
 
         return super.onOptionsItemSelected(item);

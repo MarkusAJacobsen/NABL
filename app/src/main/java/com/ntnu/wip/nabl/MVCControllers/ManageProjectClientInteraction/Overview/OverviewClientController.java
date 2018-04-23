@@ -75,6 +75,7 @@ public class OverviewClientController extends Fragment implements IOverviewClien
                 break;
             case R.id.delete:
                 break; //TODO
+            default: break;
         }
 
         return super.onOptionsItemSelected(item);

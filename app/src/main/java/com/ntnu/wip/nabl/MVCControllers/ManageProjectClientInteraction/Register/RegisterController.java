@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCView.Register.IRegisterView;
@@ -21,7 +22,14 @@ public class RegisterController extends AppCompatActivity implements IRegisterVi
         mvcView.registerListener(this);
 
         configureViewButtons();
+        configureActionBar();
         setContentView(mvcView.getRootView());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -41,6 +49,8 @@ public class RegisterController extends AppCompatActivity implements IRegisterVi
             e.printStackTrace();
         }
     }
+
+
 
     // IChangeScreen impl
     //
@@ -67,5 +77,9 @@ public class RegisterController extends AppCompatActivity implements IRegisterVi
     private void configureViewButtons(){
         mvcView.setClientText(getString(R.string.client));
         mvcView.setProjectText(getString(R.string.project));
+    }
+
+    private void configureActionBar(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

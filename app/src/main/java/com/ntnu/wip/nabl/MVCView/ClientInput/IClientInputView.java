@@ -1,12 +1,15 @@
-package com.ntnu.wip.nabl.MVCView.ModifyClient;
+package com.ntnu.wip.nabl.MVCView.ClientInput;
+
+import android.graphics.drawable.Drawable;
 
 import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 
-public interface IModifyClientView extends IAbstractMvcView {
-    interface ModifyClientListener {
-        void savePressed();
+public interface IClientInputView extends IAbstractMvcView {
+    interface ClientInputListener {
+        void getWarningDrawable();
     }
 
+    void registerListener(ClientInputListener listener);
     void setName(String name);
     void setPhone(int phone);
     void setEmail(String email);
@@ -21,4 +24,7 @@ public interface IModifyClientView extends IAbstractMvcView {
     String getHouseNumber();
     String getZipcode();
     String getCity();
+    boolean checkValidity();
+    void setWarningColor(int color);
+    void setEditWarning(Drawable editWarningIcon);
 }

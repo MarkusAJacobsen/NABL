@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnDateSetListener {
     private View rootView;
-    private RegisterProjectListener listener;
+    private ProjectInputListener listener;
     private int warningColor = Color.RED;
     private Drawable editWarning;
 
@@ -83,7 +83,7 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
     }
 
     @Override
-    public void registerListener(RegisterProjectListener listener) {
+    public void registerListener(ProjectInputListener listener) {
         this.listener = listener;
     }
 

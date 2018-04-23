@@ -1,5 +1,6 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,13 +15,14 @@ import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewClientController;
-import com.ntnu.wip.nabl.MVCView.ModifyClient.ModifyClientView;
+import com.ntnu.wip.nabl.MVCView.ClientInput.ClientInputView;
+import com.ntnu.wip.nabl.MVCView.ClientInput.IClientInputView;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.R;
 
 
-public class ModifyClientController extends Fragment implements IChangeScreen.Fragment {
-    private ModifyClientView mvcView;
+public class ModifyClientController extends Fragment implements IChangeScreen.Fragment, IClientInputView.ClientInputListener {
+    private ClientInputView mvcView;
     private Client model;
     private boolean modelPresent;
 
@@ -31,7 +33,8 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mvcView = new ModifyClientView(inflater, null);
+        mvcView = new ClientInputView(inflater, null);
+        mvcView.registerListener(this);
 
         getDataFromArguments(getArguments());
         populateView();
@@ -60,7 +63,9 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.save){
-          updateModel();
+            if(mvcView.checkValidity()){
+                updateModel();
+            }
         } else {
            switchToOverViewClient();
         }
@@ -154,6 +159,12 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
         } catch (IllegalAccessException | java.lang.InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void getWarningDrawable() {
+        final Drawable icon = getResources().getDrawable(R.drawable.ic_error_black_18dp);
+        mvcView.setEditWarning(icon);
     }
 
     //

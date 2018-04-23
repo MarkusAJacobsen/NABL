@@ -9,13 +9,13 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 import java.util.Date;
 
 public interface IProjectInputView extends IAbstractMvcView{
-    interface RegisterProjectListener {
+    interface ProjectInputListener {
         void dateFieldPressed();
         void invalidDateSupplied();
         void getEditWarningDrawable();
     }
 
-    void registerListener(RegisterProjectListener listener);
+    void registerListener(ProjectInputListener listener);
     String getProjectId();
     String getProjectName();
     String getStreet();

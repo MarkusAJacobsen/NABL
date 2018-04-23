@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
@@ -23,18 +24,11 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
         handleIntent(getIntent());
     }
 
-    //
-    // End of Activity Life Cycle
-    // --------------------------------------------------------------------------------------------
-    // Fragment overrides
-    //
-
-
-    //
-    // End Fragment overrides
-    //---------------------------------------------------------------------------------------------
-    // IChangeScreen impl
-    //
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void transactionManager(Class <? extends android.support.v4.app.Fragment> frag, Bundle args) throws
