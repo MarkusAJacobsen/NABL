@@ -184,7 +184,19 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
 
     @Override
     public void setStatus(String status) {
+        SpinnerAdapter adapter = mStatus.getAdapter();
+        adapter.getCount();
+        List<String> spinnerItems = new ArrayList<>();
 
+        for(int i = 0; i < adapter.getCount(); i++) {
+            spinnerItems.add((String) adapter.getItem(i));
+        }
+
+        for(String item : spinnerItems) {
+            if(status.equals(item)) {
+                mStatus.setSelection(spinnerItems.indexOf(item));
+            }
+        }
     }
 
     @Override

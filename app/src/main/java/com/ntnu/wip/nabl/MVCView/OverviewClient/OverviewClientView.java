@@ -38,27 +38,9 @@ public class OverviewClientView implements IOverviewClientView {
     }
 
     private void activateButtons(){
-        activateModifyButton();
-        activateDeleteButton();
         activateCallButton();
         activateMessageButton();
         activateEmailButton();
-    }
-
-    private void activateModifyButton(){
-        modify.setOnClickListener(view -> {
-           if(listener != null) {
-               listener.modifyPressed();
-           }
-        });
-    }
-
-    private void activateDeleteButton(){
-        delete.setOnClickListener(view -> {
-            if(listener != null) {
-                listener.deletePressed();
-            }
-        });
     }
 
     private void activateCallButton(){

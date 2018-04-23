@@ -1,9 +1,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menuSort"
-        android:actionLayout="@layout/option_menu_spinner"
-        android:icon="@drawable/ic_more_vert_white_24dp"
-        android:title="@string/options"
-        app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/modify"
+            android:title="@string/modify"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/delete"
+            android:title="@string/delete"
+            app:showAsAction="never" />
 </menu>

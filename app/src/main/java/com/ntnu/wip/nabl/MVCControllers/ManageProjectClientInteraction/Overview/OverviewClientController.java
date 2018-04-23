@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ public class OverviewClientController extends Fragment implements IOverviewClien
     private OverviewClientView mvcView;
     private Client model;
     private boolean modelPresent = false;
+    private Spinner menuOptionsSpinner;
 
     //---------------------------------------------------------------------------------------------
     // Fragment lifecycle
@@ -67,17 +69,15 @@ public class OverviewClientController extends Fragment implements IOverviewClien
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getTitle() == getString(R.string.options)) {
-            Toast.makeText(getContext(), "Menu pressed", Toast.LENGTH_SHORT).show();
-
+        switch (item.getItemId()) {
+            case R.id.modify:
+                modifyPressed();
+                break;
+            case R.id.delete:
+                break; //TODO
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResult){
-        super.onRequestPermissionsResult(requestCode, permissions, grantResult);
-        call();
+        return super.onOptionsItemSelected(item);
     }
 
     //
@@ -85,26 +85,6 @@ public class OverviewClientController extends Fragment implements IOverviewClien
     //---------------------------------------------------------------------------------------------
     // Listener Implementations
     //
-
-    @Override
-    public void modifyPressed() {
-        final String parcel = new Gson().toJson(model);
-        Bundle args = new Bundle();
-        args.putString(Poststamp.CLIENT, parcel);
-
-
-        try {
-            transactionManager(ModifyClientController.class, args);
-        } catch (IllegalAccessException | java.lang.InstantiationException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void deletePressed() {
-
-    }
-
     @Override
     public void callPressed() {
         call();
@@ -189,5 +169,18 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto",model.getContactInformation().getEmail(), null));
         startActivity(emailIntent);
+    }
+
+    private void modifyPressed() {
+        final String parcel = new Gson().toJson(model);
+        Bundle args = new Bundle();
+        args.putString(Poststamp.CLIENT, parcel);
+
+
+        try {
+            transactionManager(ModifyClientController.class, args);
+        } catch (IllegalAccessException | java.lang.InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }

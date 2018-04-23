@@ -107,7 +107,7 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         List<Project> mockedProjects = new ArrayList<>();
 
         Project project1 = new Project(0, 1000, new Address("Andeby", 10, 2609, "Lillehammer"),
-                "foo", "foo", State.PLANNING, Category.NULL, new Date(), new Date(), new Company("Foo", "1337"));
+                "foo", "foo", State.STARTED, Category.NULL, new Date(), new Date(), new Company("Foo", "1337"));
 
         mockedProjects.add(project1);
 

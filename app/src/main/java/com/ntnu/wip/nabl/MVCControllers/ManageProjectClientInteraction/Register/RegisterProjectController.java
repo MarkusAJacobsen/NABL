@@ -49,7 +49,7 @@ public class RegisterProjectController extends Fragment implements ProjectInputV
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getTitle() ==  getString(R.string.register)){
+        if(item.getItemId() == R.id.register){
             if(mvcView.checkValidity()) {
                 registerModel();
                 finishFragment();

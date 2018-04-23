@@ -59,7 +59,7 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getTitle() ==  getString(R.string.save)){
+        if(item.getItemId() == R.id.save){
           updateModel();
         } else {
            switchToOverViewClient();

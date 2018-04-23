@@ -5,7 +5,7 @@
 
 
     <item
-        android:id="@+id/action_filter"
+        android:id="@+id/register"
         android:orderInCategory="10"
         android:title="@string/register"
         app:showAsAction="ifRoom" />

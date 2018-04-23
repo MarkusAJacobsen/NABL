@@ -36,6 +36,15 @@ public enum State {
         }
     }
 
+    public static String getName(State state, Context context) {
+        switch (state) {
+            case PLANNING: return context.getString(R.string.planning);
+            case STARTED: return context.getString(R.string.started);
+            case FINISHED: return context.getString(R.string.finished);
+            default: return null;
+        }
+    }
+
     public static State getState(String value, Context context) {
         List<String> options = new ArrayList<>();
         options.add(context.getString(R.string.planning));
