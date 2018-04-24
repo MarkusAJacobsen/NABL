@@ -18,6 +18,7 @@ import com.ntnu.wip.nabl.MVCView.projectInput.ProjectInputView;
 import com.ntnu.wip.nabl.Models.Address;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
 
 import java.util.Date;
@@ -72,7 +73,12 @@ public class RegisterProjectController extends Fragment implements IProjectInput
         getOrganisationInformation();
         getAddressInformation();
 
-        //TODO save model
+        saveModel();
+    }
+
+    private void saveModel(){
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.writeNewProject(newModel);
     }
 
     private void getCoreInformation(){

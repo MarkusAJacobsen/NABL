@@ -49,4 +49,7 @@
     <string name="finished">Finished</string>
     <string name="inputInvalid">Some fields are invalid/not filled</string>
     <string name="address">Address</string>
+    <string name="successDeleted">Deletion successful</string>
+    <string name="updateComplete">Update complete</string>
+    <string name="unableTofetchResource">Unable to fetch resource</string>
 </resources>
