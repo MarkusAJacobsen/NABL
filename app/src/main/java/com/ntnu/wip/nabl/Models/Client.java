@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.DataModels;
+package com.ntnu.wip.nabl.Models;
 
 
 import java.util.Locale;
@@ -9,15 +9,18 @@ import java.util.Locale;
 
 public class Client {
     private int id;
-    private String givenName;
-    private String surname;
+    private String name;
     private ContactInformation contactInformation;
     private Address address;
 
-    public Client(int id, String givenName, String surname, ContactInformation contactInformation, Address address) {
+    public Client(){
+        this.contactInformation = new ContactInformation();
+        this.address = new Address();
+    }
+
+    public Client(int id, String name, ContactInformation contactInformation, Address address) {
         this.id = id;
-        this.givenName = givenName;
-        this.surname = surname;
+        this.name = name;
         this.contactInformation = contactInformation;
         this.address = address;
     }
@@ -30,20 +33,12 @@ public class Client {
         this.id = id;
     }
 
-    public String getGivenName() {
-        return givenName;
+    public String getName() {
+        return name;
     }
 
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Address getAddress() {
@@ -64,6 +59,6 @@ public class Client {
 
     @Override
     public String toString(){
-        return String.format(Locale.getDefault(), "%s %s", this.givenName, this.surname);
+        return this.name;
     }
 }

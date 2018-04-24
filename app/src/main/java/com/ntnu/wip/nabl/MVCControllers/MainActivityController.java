@@ -1,11 +1,10 @@
-package com.ntnu.wip.nabl.Controllers;
+package com.ntnu.wip.nabl.MVCControllers;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
 import com.ntnu.wip.nabl.R;
@@ -58,7 +57,7 @@ public class MainActivityController extends AppCompatActivity implements
         Class activityClass = null;
         switch(position){
             case 0: break;
-            case 1: activityClass = ManageProjectsClientsController.class; break;
+            case 1: activityClass = ProjectClientSelectorController.class; break;
             case 2: break;
             case 3: break;
             case 4: break;

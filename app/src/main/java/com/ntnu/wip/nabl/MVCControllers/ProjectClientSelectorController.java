@@ -1,43 +1,49 @@
-package com.ntnu.wip.nabl.Controllers;
+package com.ntnu.wip.nabl.MVCControllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import com.ntnu.wip.nabl.DataModels.Address;
-import com.ntnu.wip.nabl.DataModels.Client;
-import com.ntnu.wip.nabl.DataModels.ContactInformation;
-import com.ntnu.wip.nabl.DataModels.Project;
-import com.ntnu.wip.nabl.MVCView.ManageProjectClient.IManageProjectClientView;
-import com.ntnu.wip.nabl.MVCView.ManageProjectClient.ManageProjectClientView;
+import com.google.gson.Gson;
+import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewController;
+import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Register.RegisterController;
+import com.ntnu.wip.nabl.Models.Address;
+import com.ntnu.wip.nabl.Models.Category;
+import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.Company;
+import com.ntnu.wip.nabl.Models.ContactInformation;
+import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorView;
+import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
+import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by markusja on 4/11/18.
  */
 
-public class ManageProjectsClientsController extends AppCompatActivity implements
-                                        IManageProjectClientView.ResourceViewerListener,
-                                        IManageProjectClientView.ResourceSelectorListener {
-    private ManageProjectClientView mvcView;
+public class ProjectClientSelectorController extends AppCompatActivity implements
+                                                        IProjectClientSelectorView.ResourceListener,
+                                                        IChangeScreen.Activity {
+    private ProjectClientSelector mvcView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mvcView = new ManageProjectClientView(getLayoutInflater(), null);
-        mvcView.registerResourceSelectorListener(this);
-        mvcView.registerResourceViewerListener(this);
+        mvcView = new ProjectClientSelector(getLayoutInflater(), null);
+        mvcView.registerResourceListener(this);
         mvcView.setActionBar(getSupportActionBar());
         mvcView.setActionBarTitle(getString(R.string.manageProjectsClientsTitle));
         fetchResourceSelectorItems();
-
 
         setContentView(mvcView.getRootView());
     }
@@ -50,12 +56,28 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
 
     @Override
     public void resourceSelected(Object pressedObject) {
-        if (pressedObject instanceof Project){
-            Toast.makeText(getApplicationContext(), "Project pressed", Toast.LENGTH_SHORT).show();
+        Class target = null;
+        String poststamp = null;
+        final String parcel = new Gson().toJson(pressedObject);
+        target = OverviewController.class;
 
+        if (pressedObject instanceof Project){
+            poststamp = Poststamp.PROJECT;
         } else if (pressedObject instanceof Client) {
-            Toast.makeText(getApplicationContext(), "Client pressed", Toast.LENGTH_SHORT).show();
+            poststamp = Poststamp.CLIENT;
         }
+
+        if(poststamp != null && parcel != null) {
+            Intent intent = new Intent(this, target);
+            intent.putExtra(poststamp, parcel);
+            createAndLaunchNewActivity(intent);
+        }
+    }
+
+    @Override
+    public void registerPressed() {
+        Intent intent = new Intent(this, RegisterController.class);
+        createAndLaunchNewActivity(intent);
     }
 
     @Override
@@ -84,11 +106,10 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
     private Adapter mockProjectListAndAdapter(){
         List<Project> mockedProjects = new ArrayList<>();
 
-        Project project1 = new Project(0, 1000, new Address("Andeby", 10, 2609, "Lillehammer"));
-        Project project2 = new Project(1, 1001, new Address("Andeby", 15, 2609, "Lillehammer"));
+        Project project1 = new Project(0, 1000, new Address("Andeby", 10, 2609, "Lillehammer"),
+                "foo", "foo", State.STARTED, Category.NULL, new Date(), new Date(), new Company("Foo", "1337"));
 
         mockedProjects.add(project1);
-        mockedProjects.add(project2);
 
         return new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, mockedProjects);
     }
@@ -101,10 +122,15 @@ public class ManageProjectsClientsController extends AppCompatActivity implement
 
         Address address = new Address("Andeby", 10, 1313, "Andeby");
         ContactInformation contactInformation = new ContactInformation("foo@bar.com", 1212121212);
-        Client client1 = new Client(0, "Donald", "Duck", contactInformation, address);
+        Client client1 = new Client(0, "Donald Duck", contactInformation, address);
 
         mockedClients.add(client1);
 
         return new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, mockedClients);
+    }
+
+    @Override
+    public void createAndLaunchNewActivity(Intent intent) {
+        startActivity(intent);
     }
 }

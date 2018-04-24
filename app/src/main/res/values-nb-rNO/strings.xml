@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="manageProjectAndClientsSpinner">
+        <item>Prosjekter</item>
+        <item>Klienter</item>
+    </string-array>
+
+    <string name="app_name">NABL</string>
+    <string name="manageProjectsClientsTitle">Administer prosjekter/klienter</string>
+    <string name="modify">Endre</string>
+    <string name="delete">Slett</string>
+    <string name="register">Registrer</string>
+    <string name="phoen">Telefon</string>
+    <string name="street">Gate</string>
+    <string name="zipcode">Zipcode</string>
+    <string name="number">Gatenumber</string>
+    <string name="email">Epost</string>
+    <string name="city">By</string>
+    <string name="phone">Telefon</string>
+    <string name="save">Lagre</string>
+    <string name="options">Valg</string>
+    <string name="projectId">Prosjektid</string>
+    <string name="project">Prosjekt</string>
+    <string name="client">Klient</string>
+    <string name="name">Name</string>
+    <string name="projectName">Prosjektnavn</string>
+    <string name="start">Start</string>
+    <string name="end">Slutt</string>
+    <string name="status">Status</string>
+    <string name="description">Beskrivelse</string>
+    <string name="organisation">Organisasjon</string>
+    <string name="planning">Planlegges</string>
+    <string name="started">Startet</string>
+    <string name="finished">Avsluttet</string>
+    <string name="inputInvalid">Noen felter er ugyldige/ikke fylt ut</string>
+    <string name="address">Addresse</string>
+</resources>
