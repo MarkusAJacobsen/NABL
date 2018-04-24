@@ -21,8 +21,8 @@ public interface IClient {
     void newCompany(Company company);
     void updateCompany(Company company);
     void deleteCompany(Company company);
-    List<Project> getAllProjects();
-    List<Client> getAllClients();
+    void getAllProjects();
+    void getAllClients();
     List<Company> getAllCompanies();
     List<LogEntry> getAllLogEntries();
     List<LogEntry> getProjectSpecificLogEntries(Project project);

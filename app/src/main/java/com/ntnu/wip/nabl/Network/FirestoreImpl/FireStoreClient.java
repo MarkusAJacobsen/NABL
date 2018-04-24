@@ -8,12 +8,12 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
 import com.ntnu.wip.nabl.Models.Project;
-import com.ntnu.wip.nabl.Network.IClient;
+import com.ntnu.wip.nabl.Network.AbstractClient;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.QuerySnapshotCallback;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.CLIENT_CO
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_COLLECTION;
 
-public class FireStoreClient implements IClient, OnFailureListener {
+public class FireStoreClient extends AbstractClient implements OnFailureListener {
     private FirebaseFirestore db;
     private Context context;
 
@@ -98,21 +98,31 @@ public class FireStoreClient implements IClient, OnFailureListener {
     }
 
     @Override
-    public List<Project> getAllProjects() {
-        List<Project> toBeReturned = new ArrayList<>();
-        QuerySnapshot snapshot = fetchCollection(PROJECT_COLLECTION);
+    public void getAllProjects() {
+        fetchCollection(PROJECT_COLLECTION, snapshot -> {
+            List<Project> toBeReturned = new ArrayList<>();
 
-        for(QueryDocumentSnapshot doc : snapshot) {
-            Project project = doc.toObject(Project.class);
-            toBeReturned.add(project);
-        }
+            for(QueryDocumentSnapshot doc : snapshot) {
+                Project project = doc.toObject(Project.class);
+                toBeReturned.add(project);
+            }
 
-        return toBeReturned;
+            this.setProjects(toBeReturned);
+        });
     }
 
     @Override
-    public List<Client> getAllClients() {
-        return null;
+    public void getAllClients() {
+        fetchCollection(CLIENT_COLLECTION, snapshot -> {
+            List<Client> toBeReturned = new ArrayList<>();
+
+            for(QueryDocumentSnapshot doc : snapshot) {
+                Client client = doc.toObject(Client.class);
+                toBeReturned.add(client);
+            }
+
+            this.setClients(toBeReturned);
+        });
     }
 
     @Override
@@ -135,6 +145,11 @@ public class FireStoreClient implements IClient, OnFailureListener {
         return null;
     }
 
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        Log.w("FireStoreClient", e);
+    }
+
     private void add(String collection, Object toWrite, String id){
         db.collection(collection).document(id).set(toWrite).addOnFailureListener(this);
     }
@@ -149,22 +164,15 @@ public class FireStoreClient implements IClient, OnFailureListener {
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.successDeleted, Toast.LENGTH_SHORT).show());
     }
 
-    private QuerySnapshot fetchCollection(String collection) {
-        final QuerySnapshot[] toBeReturned = new QuerySnapshot[1];
-        db.collection("users")
+    private void fetchCollection(String collection, QuerySnapshotCallback callback) {
+        db.collection(collection)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        toBeReturned[0] =  task.getResult();
+                        callback.trigger(task.getResult());
                     } else {
                        Toast.makeText(context, R.string.unableTofetchResource, Toast.LENGTH_SHORT).show();
                     }
                 });
-        return toBeReturned[0];
-    }
-
-    @Override
-    public void onFailure(@NonNull Exception e) {
-        Log.w("FireStoreClient", e);
     }
 }

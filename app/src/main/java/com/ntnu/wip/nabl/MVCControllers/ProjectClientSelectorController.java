@@ -20,6 +20,10 @@ import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorView;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
 import com.ntnu.wip.nabl.Models.State;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.ClientCollectionObserver;
+import com.ntnu.wip.nabl.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
@@ -34,6 +38,8 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
                                                         IProjectClientSelectorView.ResourceListener,
                                                         IChangeScreen.Activity {
     private ProjectClientSelector mvcView;
+    List<Project> projects = new ArrayList<>();
+    List<Client> clients = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,12 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         fetchResourceSelectorItems();
 
         setContentView(mvcView.getRootView());
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        checkSpinnerSelected();
     }
 
     @Override
@@ -84,13 +96,36 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
     public void OnSpinnerResourceSelected(int position) {
         switch(position) {
             case 0: /*Projects, fetch projects and update ResourceViewer*/
-                mvcView.setResourceViewerAdapter(mockProjectListAndAdapter());
+                projectSelected();
                 break;
             case 1: /*Clients, fetch clients and update ResourceViewer*/
-                mvcView.setResourceViewerAdapter(mockClientListAndAdapter());
+                clientSelected();
                 break;
             default: break;
         }
+    }
+
+    private void projectSelected(){
+        FireStoreClient client = new FireStoreClient(getApplicationContext());
+        client.getAllProjects();
+        ProjectCollectionObserver observer = new ProjectCollectionObserver(client);
+
+        observer.setOnUpdateListener(projects -> {
+            this.projects = projects;
+            Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.projects);
+            mvcView.setResourceViewerAdapter(adapter);
+        });
+    }
+
+    private void clientSelected(){
+        FireStoreClient client = new FireStoreClient(getApplicationContext());
+        client.getAllClients();
+
+        new ClientCollectionObserver(client).setOnUpdateListener(clients -> {
+            this.clients = clients;
+            Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.clients);
+            mvcView.setResourceViewerAdapter(adapter);
+        });
     }
 
     private void fetchResourceSelectorItems(){
@@ -100,33 +135,17 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         mvcView.setResourceSelectorAdapter(adapter);
     }
 
-    /**
-     * TMP TODO
-     */
-    private Adapter mockProjectListAndAdapter(){
-        List<Project> mockedProjects = new ArrayList<>();
-
-        Project project1 = new Project("mLh9hx57xg9JZMmvo07y", 1000, new Address("Andeby", 10, 2609, "Lillehammer"),
-                "foo", "foo", State.STARTED, Category.NULL, new Date(), new Date(), new Company("Foo", "1337"));
-
-        mockedProjects.add(project1);
-
-        return new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, mockedProjects);
-    }
-
-    /**
-     * TMP TODO
-     */
-    private Adapter mockClientListAndAdapter(){
-        List<Client> mockedClients = new ArrayList<>();
-
-        Address address = new Address("Andeby", 10, 1313, "Andeby");
-        ContactInformation contactInformation = new ContactInformation("foo@bar.com", 1212121212);
-        Client client1 = new Client("Fy5VAmoRoH99lOvPORDOCcAG", "Donald Duck", contactInformation, address);
-
-        mockedClients.add(client1);
-
-        return new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, mockedClients);
+    private void checkSpinnerSelected(){
+        final int position = mvcView.getSpinnerSelected();
+        switch(position) {
+            case 0:
+                projectSelected();
+                break;
+            case 1:
+                clientSelected();
+                break;
+            default: break;
+        }
     }
 
     @Override
