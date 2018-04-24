@@ -152,8 +152,8 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
     private Bundle constructArgsFromClient(){
         Bundle args = new Bundle();
 
-        final String parcel = new Gson().toJson(this.model);
-        args.putString(Poststamp.CLIENT, parcel);
+        final String id = model.getId();
+        args.putString(Poststamp.CLIENT, id);
 
         return args;
     }

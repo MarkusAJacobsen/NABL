@@ -7,27 +7,19 @@ import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 
-import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewController;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Register.RegisterController;
-import com.ntnu.wip.nabl.Models.Address;
-import com.ntnu.wip.nabl.Models.Category;
 import com.ntnu.wip.nabl.Models.Client;
-import com.ntnu.wip.nabl.Models.Company;
-import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorView;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
-import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
-import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
-import com.ntnu.wip.nabl.Observers.ClientCollectionObserver;
-import com.ntnu.wip.nabl.Observers.ProjectCollectionObserver;
+import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
+import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,20 +60,21 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
 
     @Override
     public void resourceSelected(Object pressedObject) {
-        Class target = null;
         String poststamp = null;
-        final String parcel = new Gson().toJson(pressedObject);
-        target = OverviewController.class;
+        Class target = OverviewController.class;
+        String id = null;
 
         if (pressedObject instanceof Project){
             poststamp = Poststamp.PROJECT;
+            id = ((Project) pressedObject).getId();
         } else if (pressedObject instanceof Client) {
             poststamp = Poststamp.CLIENT;
+            id = ((Client) pressedObject).getId();
         }
 
-        if(poststamp != null && parcel != null) {
+        if(poststamp != null && id != null) {
             Intent intent = new Intent(this, target);
-            intent.putExtra(poststamp, parcel);
+            intent.putExtra(poststamp, id);
             createAndLaunchNewActivity(intent);
         }
     }

@@ -8,13 +8,15 @@ import com.ntnu.wip.nabl.Models.Project;
 import java.util.List;
 
 public interface IClient {
-    void registerListener();
+    void getProject(String id);
     void writeNewProject(Project project);
     void updateProject(Project project);
     void deleteProject(Project project);
+    void getClient(String id);
     void writeNewClient(Client client);
     void updateClient(Client client);
     void deleteClient(Client client);
+    void getLogEntry(String id);
     void newLogEntry(LogEntry entry);
     void updateLogEntry(LogEntry entry);
     void deleteLogEntry(LogEntry entry);
@@ -23,8 +25,8 @@ public interface IClient {
     void deleteCompany(Company company);
     void getAllProjects();
     void getAllClients();
-    List<Company> getAllCompanies();
-    List<LogEntry> getAllLogEntries();
-    List<LogEntry> getProjectSpecificLogEntries(Project project);
-    List<LogEntry> getClientSpecificLogEntries(Client client);
+    void getAllCompanies();
+    void getAllLogEntries();
+    void getProjectSpecificLogEntries(Project project);
+    void getClientSpecificLogEntries(Client client);
 }

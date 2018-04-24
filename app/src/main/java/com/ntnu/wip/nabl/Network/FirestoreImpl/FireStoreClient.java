@@ -13,6 +13,7 @@ import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Network.AbstractClient;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.DocumentSnapshotCallback;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.QuerySnapshotCallback;
 import com.ntnu.wip.nabl.R;
 
@@ -33,8 +34,11 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void registerListener() {
-
+    public void getProject(String id) {
+        get(PROJECT_COLLECTION, id, snapshot -> {
+            Project project = snapshot.toObject(Project.class);
+            setLastFetchedProject(project);
+        });
     }
 
     @Override
@@ -53,6 +57,14 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
+    public void getClient(String id) {
+        get(CLIENT_COLLECTION, id, snapshot -> {
+            Client client = snapshot.toObject(Client.class);
+            setLastFetchedClient(client);
+        });
+    }
+
+    @Override
     public void writeNewClient(Client client) {
         this.add(CLIENT_COLLECTION, client, client.getId());
     }
@@ -65,6 +77,11 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     @Override
     public void deleteClient(Client client) {
         this.delete(CLIENT_COLLECTION, client.getId());
+    }
+
+    @Override
+    public void getLogEntry(String id) {
+
     }
 
     @Override
@@ -126,28 +143,31 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public List<Company> getAllCompanies() {
-        return null;
+    public void getAllCompanies() {
+
     }
 
     @Override
-    public List<LogEntry> getAllLogEntries() {
-        return null;
+    public void getAllLogEntries() {
     }
 
     @Override
-    public List<LogEntry> getProjectSpecificLogEntries(Project project) {
-        return null;
+    public void getProjectSpecificLogEntries(Project project) {
     }
 
     @Override
-    public List<LogEntry> getClientSpecificLogEntries(Client client) {
-        return null;
+    public void getClientSpecificLogEntries(Client client) {
+
     }
 
     @Override
     public void onFailure(@NonNull Exception e) {
         Log.w("FireStoreClient", e);
+    }
+
+    private void get(String collection, String id, DocumentSnapshotCallback callback) {
+        db.collection(collection).document(id).get().addOnFailureListener(this)
+                .addOnSuccessListener(callback::trigger);
     }
 
     private void add(String collection, Object toWrite, String id){
