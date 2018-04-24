@@ -106,7 +106,7 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
     private Adapter mockProjectListAndAdapter(){
         List<Project> mockedProjects = new ArrayList<>();
 
-        Project project1 = new Project(0, 1000, new Address("Andeby", 10, 2609, "Lillehammer"),
+        Project project1 = new Project("mLh9hx57xg9JZMmvo07y", 1000, new Address("Andeby", 10, 2609, "Lillehammer"),
                 "foo", "foo", State.STARTED, Category.NULL, new Date(), new Date(), new Company("Foo", "1337"));
 
         mockedProjects.add(project1);
@@ -122,7 +122,7 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
 
         Address address = new Address("Andeby", 10, 1313, "Andeby");
         ContactInformation contactInformation = new ContactInformation("foo@bar.com", 1212121212);
-        Client client1 = new Client(0, "Donald Duck", contactInformation, address);
+        Client client1 = new Client("Fy5VAmoRoH99lOvPORDOCcAG", "Donald Duck", contactInformation, address);
 
         mockedClients.add(client1);
 

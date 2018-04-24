@@ -20,6 +20,7 @@ import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.Date;
 
@@ -69,6 +70,7 @@ public class RegisterProjectController extends Fragment implements IProjectInput
     private void registerModel(){
         newModel = new Project();
 
+        newModel.setId(Utils.generateUniqueId(24));
         getCoreInformation();
         getOrganisationInformation();
         getAddressInformation();

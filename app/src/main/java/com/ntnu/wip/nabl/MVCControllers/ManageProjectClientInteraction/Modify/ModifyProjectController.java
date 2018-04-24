@@ -22,6 +22,7 @@ import com.ntnu.wip.nabl.MVCView.projectInput.IProjectInputView;
 import com.ntnu.wip.nabl.MVCView.projectInput.ProjectInputView;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
 import com.ntnu.wip.nabl.Utils;
 
@@ -175,9 +176,14 @@ public class ModifyProjectController extends Fragment implements IChangeScreen.F
         // TODO model.setCompany(mvcView.getOrganisation());
         //TODO update firebase
 
+        saveModel();
         switchToOverViewProject();
     }
 
+    private void saveModel(){
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.updateProject(model);
+    }
 
     private Bundle constructArgsFromClient(){
         Bundle args = new Bundle();

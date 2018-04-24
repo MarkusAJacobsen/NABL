@@ -8,7 +8,7 @@ import java.util.Locale;
  */
 
 public class Project {
-    private int id;             //Internal id
+    private String id;             //Internal id
     private int projectId;      //Human defined project id, still has to be unique
     private String name;
     private String description;
@@ -26,7 +26,7 @@ public class Project {
         address = new Address();
     }
 
-    public Project(int id, int projectId, Address address, String name, String description, State state,
+    public Project(String id, int projectId, Address address, String name, String description, State state,
                    Category category, Date start, Date end, Company company) {
         this.id = id;
         this.projectId = projectId;
@@ -40,11 +40,11 @@ public class Project {
         this.company = company;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

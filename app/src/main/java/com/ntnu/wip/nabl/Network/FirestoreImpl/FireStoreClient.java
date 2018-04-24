@@ -5,11 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -43,37 +39,37 @@ public class FireStoreClient implements IClient, OnFailureListener {
 
     @Override
     public void writeNewProject(Project project) {
-        this.add(PROJECT_COLLECTION, project);
+        this.add(PROJECT_COLLECTION, project, project.getId());
     }
 
     @Override
     public void updateProject(Project project) {
-
+        this.update(PROJECT_COLLECTION, project, project.getId());
     }
 
     @Override
     public void deleteProject(Project project) {
-
+        this.delete(PROJECT_COLLECTION, project.getId());
     }
 
     @Override
     public void writeNewClient(Client client) {
-        this.add(CLIENT_COLLECTION, client);
+        this.add(CLIENT_COLLECTION, client, client.getId());
     }
 
     @Override
     public void updateClient(Client client) {
-
+        this.update(CLIENT_COLLECTION, client, client.getId());
     }
 
     @Override
     public void deleteClient(Client client) {
-
+        this.delete(CLIENT_COLLECTION, client.getId());
     }
 
     @Override
     public void newLogEntry(LogEntry entry) {
-        add(LOG_ENTRY_COLLECTION, entry);
+        add(LOG_ENTRY_COLLECTION, entry, entry.getId());
     }
 
     @Override
@@ -139,8 +135,8 @@ public class FireStoreClient implements IClient, OnFailureListener {
         return null;
     }
 
-    private void add(String collection, Object toWrite){
-        db.collection(collection).add(toWrite).addOnFailureListener(this);
+    private void add(String collection, Object toWrite, String id){
+        db.collection(collection).document(id).set(toWrite).addOnFailureListener(this);
     }
 
     private void update(String collection, Object toUpdate, String documentId) {
@@ -148,7 +144,7 @@ public class FireStoreClient implements IClient, OnFailureListener {
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.updateComplete, Toast.LENGTH_SHORT).show());
     }
 
-    private void delete(String collection, Object toDelete, String documentId) {
+    private void delete(String collection, String documentId) {
         db.collection(collection).document(documentId).delete().addOnFailureListener(this)
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.successDeleted, Toast.LENGTH_SHORT).show());
     }

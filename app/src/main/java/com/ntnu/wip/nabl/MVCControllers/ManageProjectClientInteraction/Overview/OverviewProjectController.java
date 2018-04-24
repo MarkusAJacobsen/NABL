@@ -17,6 +17,7 @@ import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.Mo
 import com.ntnu.wip.nabl.MVCView.OverviewProject.OverviewProjectView;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
 import com.ntnu.wip.nabl.Utils;
 
@@ -60,7 +61,8 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
                 modifyPressed();
                 break;
             case R.id.delete:
-                break; //TODO
+                deleteModel();
+                break;
             default: break;
         }
 
@@ -145,6 +147,11 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
         } catch (IllegalAccessException | java.lang.InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteModel(){
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.deleteProject(model);
     }
 
     //

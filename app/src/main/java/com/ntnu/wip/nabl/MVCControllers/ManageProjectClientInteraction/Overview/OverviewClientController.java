@@ -21,6 +21,7 @@ import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.Mo
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.IOverviewClientView;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.OverviewClientView;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
 
 import java.util.Locale;
@@ -74,7 +75,8 @@ public class OverviewClientController extends Fragment implements IOverviewClien
                 modifyPressed();
                 break;
             case R.id.delete:
-                break; //TODO
+                deleteModel();
+                break;
             default: break;
         }
 
@@ -183,5 +185,10 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         } catch (IllegalAccessException | java.lang.InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteModel(){
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.deleteClient(model);
     }
 }

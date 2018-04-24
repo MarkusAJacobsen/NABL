@@ -18,6 +18,7 @@ import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.
 import com.ntnu.wip.nabl.MVCView.ClientInput.ClientInputView;
 import com.ntnu.wip.nabl.MVCView.ClientInput.IClientInputView;
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
 
 
@@ -137,10 +138,14 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
         model.getContactInformation().setEmail(mvcView.getEmail());
         model.getContactInformation().setPhoneNumber(Integer.parseInt(mvcView.getPhone()));
 
-        //TODO update firebase
-
+        saveModel();
         switchToOverViewClient();
 
+    }
+
+    private void saveModel(){
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.updateClient(model);
     }
 
 
