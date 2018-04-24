@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.DataModels;
+package com.ntnu.wip.nabl.Models;
 
 /**
  * Created by markusja on 4/11/18.
@@ -9,6 +9,10 @@ public class Address {
     private int number;
     private int zipcode;
     private String city;
+
+    public Address(){
+        //NO.OP
+    }
 
     public Address(String street, int number, int zipcode, String city) {
         this.street = street;

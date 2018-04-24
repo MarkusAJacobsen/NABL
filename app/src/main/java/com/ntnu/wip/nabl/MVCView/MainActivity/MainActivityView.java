@@ -16,6 +16,9 @@ import android.widget.ListView;
 
 import com.ntnu.wip.nabl.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by markusja on 4/10/18.
  */
@@ -24,14 +27,13 @@ public class MainActivityView implements IMainActivityView {
     private View rootView;
     private ChangeActivityListener listener;
     private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
+    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
-    private ListView mDrawerList;
+    @BindView(R.id.left_drawer) ListView mDrawerList;
 
     public MainActivityView(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.activity_main, container);
-        mDrawerLayout = rootView.findViewById(R.id.drawer_layout);
-        mDrawerList = rootView.findViewById(R.id.left_drawer);
+        ButterKnife.bind(this, rootView);
     }
 
     @Override
@@ -85,12 +87,9 @@ public class MainActivityView implements IMainActivityView {
     public void setSideDrawerAdapter(Adapter adapter) {
         mDrawerList.setAdapter((ArrayAdapter) adapter);
 
-        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if(listener != null) {
-                    listener.changeActivity(position);
-                }
+        mDrawerList.setOnItemClickListener((adapterView, view, position, l) -> {
+            if(listener != null) {
+                listener.changeActivity(position);
             }
         });
     }

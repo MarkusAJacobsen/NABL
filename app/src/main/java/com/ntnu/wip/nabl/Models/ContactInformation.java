@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.DataModels;
+package com.ntnu.wip.nabl.Models;
 
 import android.support.v4.content.ContextCompat;
 
@@ -9,6 +9,10 @@ import android.support.v4.content.ContextCompat;
 public class ContactInformation {
     private String email;
     private int phoneNumber;
+
+    public ContactInformation() {
+        //NO-OP
+    }
 
     public ContactInformation(String email, int phoneNumber) {
         this.email = email;
