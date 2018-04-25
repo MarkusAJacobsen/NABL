@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/exportToCloud"
+        android:layout_width="162dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="112dp"
+        android:layout_marginEnd="111dp"
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/exportCloud"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exportToMail" />
+
+    <Button
+        android:id="@+id/exportToMail"
+        android:layout_width="162dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="111dp"
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="113dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/exportEmail"
+        app:layout_constraintBottom_toTopOf="@+id/exportToCloud"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEndDate" />
+
+    <Spinner
+        android:id="@+id/projectsList"
+        android:layout_width="366dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginStart="9dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewStartDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewProjects" />
+
+    <TextView
+        android:id="@+id/textViewProjects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="232dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/projectList"
+        app:layout_constraintBottom_toTopOf="@+id/projectsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="134dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/start"
+        app:layout_constraintBottom_toTopOf="@+id/editTextStartDate"
+        app:layout_constraintEnd_toStartOf="@+id/textViewEndDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/projectsList" />
+
+    <TextView
+        android:id="@+id/textViewEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="71dp"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/end"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEndDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewStartDate"
+        app:layout_constraintTop_toBottomOf="@+id/projectsList" />
+
+    <EditText
+        android:id="@+id/editTextEndDate"
+        android:layout_width="163dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="26dp"
+        android:ems="10"
+        android:focusable="false"
+        android:fontFamily="@font/roboto"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/exportToMail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextStartDate"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEndDate" />
+
+    <EditText
+        android:id="@+id/editTextStartDate"
+        android:layout_width="163dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="113dp"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:focusable="false"
+        android:fontFamily="@font/roboto"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/exportToMail"
+        app:layout_constraintEnd_toStartOf="@+id/editTextEndDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStartDate" />
+
+</android.support.constraint.ConstraintLayout>
