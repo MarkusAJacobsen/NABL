@@ -5,6 +5,9 @@ jobs:
       - image: circleci/android:api-25-alpha
     environment:
       JVM_OPTS: -Xmx3200m
+    dependencies:
+      post:
+        echo $GOOGLE_SERVICES | base64 --decode > ${HOME}/app/google-services.json
     steps:
       - checkout
       - restore_cache:
@@ -22,9 +25,6 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: GoogleServiceDecode
-          command: echo $GOOGLE_SERVICES | base64 --decode > ${HOME}/app/google-services.json
       - run:
           name: Run Tests
           command: ./gradlew lint test
