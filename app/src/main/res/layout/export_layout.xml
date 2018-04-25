@@ -6,35 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/exportToCloud"
-        android:layout_width="162dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="112dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginTop="25dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/exportCloud"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exportToMail" />
-
-    <Button
-        android:id="@+id/exportToMail"
-        android:layout_width="162dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginTop="113dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/exportEmail"
-        app:layout_constraintBottom_toTopOf="@+id/exportToCloud"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEndDate" />
-
     <Spinner
         android:id="@+id/projectsList"
         android:layout_width="366dp"
@@ -97,7 +68,7 @@
         android:focusable="false"
         android:fontFamily="@font/roboto"
         android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/exportToMail"
+        app:layout_constraintBottom_toTopOf="@+id/exportBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editTextStartDate"
         app:layout_constraintTop_toBottomOf="@+id/textViewEndDate" />
@@ -106,15 +77,30 @@
         android:id="@+id/editTextStartDate"
         android:layout_width="163dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="113dp"
+        android:layout_marginBottom="281dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:focusable="false"
         android:fontFamily="@font/roboto"
         android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/exportToMail"
+        app:layout_constraintBottom_toTopOf="@+id/exportBtn"
         app:layout_constraintEnd_toStartOf="@+id/editTextEndDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewStartDate" />
+
+    <Button
+        android:id="@+id/exportBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="281dp"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="@string/export"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEndDate" />
 
 </android.support.constraint.ConstraintLayout>

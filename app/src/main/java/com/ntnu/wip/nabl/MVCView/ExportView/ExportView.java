@@ -1,8 +1,6 @@
 package com.ntnu.wip.nabl.MVCView.ExportView;
 
 import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.ntnu.wip.nabl.MVCView.projectInput.ProjectInputView;
 import com.ntnu.wip.nabl.R;
 
 import java.util.Calendar;
@@ -28,11 +25,8 @@ import butterknife.ButterKnife;
 public class ExportView implements IExportView, DatePickerDialog.OnDateSetListener {
     private View rootView;
     private ExportInputListener listener;
-    private int warningColor = Color.RED;
-    private Drawable editWarning;
 
-    @BindView(R.id.exportToCloud) Button exportToCloadBtn;
-    @BindView(R.id.exportToMail) Button exportToMailBtn;
+    @BindView(R.id.exportBtn) Button exportBtn;
     @BindView(R.id.projectsList) Spinner projectsList;
     @BindView(R.id.editTextStartDate) TextView startDate;
     @BindView(R.id.editTextEndDate) TextView endDate;
@@ -55,33 +49,69 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
 
         fetchProjects();
         configureDatePickers();
+        configureButton();
     }
 
+    //---------------------------------------------------------------------------------------------
+    // Private functions
+    //
+
+    /**
+     * Function to fetch project from firebase
+     */
     private void fetchProjects() {
-
+        //TODO Fetch projects
     }
 
-    private void configureDatePickers(){
-        startDate.setOnClickListener(view -> {
+    private void configureButton() {
+        this.exportBtn.setOnClickListener(View -> {
             if(listener != null) {
-                listener.dateFieldPressed();
+                this.listener.exportBtnPressed();
+            }
+        });
+    }
+
+    /**
+     * Function to show the calendar dialog when clicking on Start and End Dates fields
+     */
+    private void configureDatePickers(){
+        this.startDate.setOnClickListener(view -> {
+            if(listener != null) {
+                this.listener.dateFieldPressed();
                 if(dateDialog != null) {
                     whichDate = ExportView.WhichDate.START;
-                    dateDialog.show();
+                    this.dateDialog.show();
                 }
             }
         });
 
-        endDate.setOnClickListener(view -> {
+        this.endDate.setOnClickListener(view -> {
             if(listener != null) {
-                listener.dateFieldPressed();
+                this.listener.dateFieldPressed();
                 if(dateDialog != null) {
                     whichDate = ExportView.WhichDate.END;
-                    dateDialog.show();
+                    this.dateDialog.show();
                 }
             }
         });
     }
+
+    /**
+     * Function to check if dates are valid, Start date shouldn't pass the End date.
+     */
+    private void checkDateCorrectness(){
+        if(sDate != null && eDate != null) {
+            if(sDate.after(eDate) && listener != null) {
+                this.listener.invalidDateSupplied();
+            }
+        }
+    }
+
+    //
+    // End of privates functions
+    //---------------------------------------------------------------------------------------------
+    // Interface Implementation
+    //
 
     @Override
     public View getRootView() {
@@ -114,6 +144,22 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     }
 
     @Override
+    public Date getStart() {
+        return sDate;
+    }
+
+    @Override
+    public Date getEnd() {
+        return eDate;
+    }
+
+    @Override
+    public String getProjectName() {
+        //TODO get project name and send it further
+        return null;
+    }
+
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         final String date = String.format(Locale.getDefault(), "%s.%s.%s",
                 String.valueOf(dayOfMonth),
@@ -138,5 +184,6 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
         }
 
         whichDate = ExportView.WhichDate.NULL;
+        checkDateCorrectness();
     }
 }
