@@ -17,7 +17,7 @@ jobs:
           command: ls -la
       - run:
           name: Esablish google services
-          command: echo GOOGLE_SERVICES | base64 --decode > ${HOME}/google-services.json
+          command: echo $GOOGLE_SERVICES | base64 --decode --ignore-garbage > ${HOME}/google-services.json
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
