@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Dir
           command: ls -la
-      -run:
+      - run:
           name: Esablish google services
           command: cat $GOOGLE_SERVICES | base64 --decode > ${HOME}/google-services.json
       - run:
