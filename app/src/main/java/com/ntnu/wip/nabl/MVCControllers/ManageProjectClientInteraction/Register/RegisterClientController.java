@@ -17,6 +17,7 @@ import com.ntnu.wip.nabl.Models.Address;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Network.IClient;
 import com.ntnu.wip.nabl.R;
 import com.ntnu.wip.nabl.Utils;
 
@@ -79,7 +80,7 @@ public class RegisterClientController extends Fragment implements IClientInputVi
     }
 
     private void saveModel(){
-        FireStoreClient client = new FireStoreClient(getContext());
+        IClient client = new FireStoreClient(getContext());
         client.writeNewClient(newModel);
     }
 
