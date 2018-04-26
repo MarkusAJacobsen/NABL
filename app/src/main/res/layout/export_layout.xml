@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp">
 
     <Spinner
         android:id="@+id/projectsList"
-        android:layout_width="307dp"
+        android:layout_width="0dp"
         android:layout_height="47dp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewStartDate"
-        app:layout_constraintTop_toBottomOf="@+id/textViewChoose"
-        tools:layout_editor_absoluteX="9dp" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/selectorBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChoose" />
 
     <TextView
         android:id="@+id/textViewChoose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="232dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/projectList"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,13 +31,10 @@
         android:id="@+id/textViewStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="134dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto"
         android:text="@string/start"
-        app:layout_constraintBottom_toTopOf="@+id/editTextStartDate"
-        app:layout_constraintEnd_toStartOf="@+id/textViewEndDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/projectsList" />
 
@@ -45,43 +42,39 @@
         android:id="@+id/textViewEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="71dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto"
         android:text="@string/end"
-        app:layout_constraintBottom_toTopOf="@+id/editTextEndDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewStartDate"
+        app:layout_constraintStart_toStartOf="@+id/editTextEndDate"
         app:layout_constraintTop_toBottomOf="@+id/projectsList" />
 
     <EditText
         android:id="@+id/editTextEndDate"
-        android:layout_width="163dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:focusable="false"
         android:fontFamily="@font/roboto"
         android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/exportBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editTextStartDate"
         app:layout_constraintTop_toBottomOf="@+id/textViewEndDate" />
 
     <EditText
         android:id="@+id/editTextStartDate"
-        android:layout_width="163dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="281dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:focusable="false"
         android:fontFamily="@font/roboto"
         android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/exportBtn"
         app:layout_constraintEnd_toStartOf="@+id/editTextEndDate"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewStartDate"
         app:layout_constraintTop_toBottomOf="@+id/textViewStartDate" />
 
     <Button
@@ -91,28 +84,21 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="281dp"
         android:backgroundTint="@android:color/holo_green_dark"
         android:text="@string/export"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEndDate" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/selectorBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="59dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginEnd="16dp"
         android:background="@null"
         android:src="@drawable/project_button"
         android:tag="@string/project"
-        app:layout_constraintBottom_toTopOf="@+id/editTextEndDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/projectsList"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewChoose" />
 
 </android.support.constraint.ConstraintLayout>
