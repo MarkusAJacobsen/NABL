@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractClient implements IClient {
-    private List<Observer> projectObservers = new ArrayList<>();
-    private List<Observer> clientObservers = new ArrayList<>();
-    private List<Observer> singluarProjectObserver = new ArrayList<>();
-    private List<Observer> singularClientObserver = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
 
     private List<Project> projects;
     private List<Client> clients;
@@ -28,12 +25,12 @@ public abstract class AbstractClient implements IClient {
 
     protected void setProjects(List<Project> projects) {
         this.projects = projects;
-        notifyAllProjectObservers();
+        notifyAllObservers(Subscriptions.PROJECTS);
     }
 
     protected void setClients(List<Client> clients) {
         this.clients = clients;
-        notifyAllClientObservers();
+        notifyAllObservers(Subscriptions.CLIENTS);
     }
 
     public Project getLastFetchedProject() {
@@ -42,7 +39,7 @@ public abstract class AbstractClient implements IClient {
 
     public void setLastFetchedProject(Project lastFetchedProject) {
         this.lastFetchedProject = lastFetchedProject;
-        notifyAllSingularProjectObservers();
+        notifyAllObservers(Subscriptions.PROJECT_SINGULAR);
     }
 
     public Client getLastFetchedClient() {
@@ -51,40 +48,16 @@ public abstract class AbstractClient implements IClient {
 
     public void setLastFetchedClient(Client lastFetchedClient) {
         this.lastFetchedClient = lastFetchedClient;
-        notifyAllSingularClientObservers();
+        notifyAllObservers(Subscriptions.CLIENT_SINGULAR);
     }
 
-    public void attach(Observer observer, Subscriptions subscription){
-        switch (subscription) {
-            case PROJECT: projectObservers.add(observer); break;
-            case CLIENT: clientObservers.add(observer); break;
-            case PROJECT_SINGULAR: singluarProjectObserver.add(observer); break;
-            case CLIENT_SINGULAR: singularClientObserver.add(observer); break;
-            default: break; //Default drop request
-        }
+    public void attach(Observer observer){
+        observers.add(observer);
     }
 
-    private void notifyAllProjectObservers(){
-        for (Observer observer : projectObservers) {
-            observer.update();
-        }
-    }
-
-    private void notifyAllClientObservers(){
-        for (Observer observer : projectObservers) {
-            observer.update();
-        }
-    }
-
-    private void notifyAllSingularProjectObservers(){
-        for (Observer observer : singluarProjectObserver) {
-            observer.update();
-        }
-    }
-
-    private void notifyAllSingularClientObservers(){
-        for (Observer observer : singularClientObserver) {
-            observer.update();
+    private void notifyAllObservers(Subscriptions sub) {
+        for (Observer observer : observers) {
+            observer.update(sub);
         }
     }
 }

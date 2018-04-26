@@ -166,21 +166,33 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     private void get(String collection, String id, DocumentSnapshotCallback callback) {
-        db.collection(collection).document(id).get().addOnFailureListener(this)
+        db.collection(collection)
+                .document(id)
+                .get()
+                .addOnFailureListener(this)
                 .addOnSuccessListener(callback::trigger);
     }
 
     private void add(String collection, Object toWrite, String id){
-        db.collection(collection).document(id).set(toWrite).addOnFailureListener(this);
+        db.collection(collection)
+                .document(id).
+                set(toWrite).
+                addOnFailureListener(this);
     }
 
     private void update(String collection, Object toUpdate, String documentId) {
-        db.collection(collection).document(documentId).set(toUpdate).addOnFailureListener(this)
+        db.collection(collection)
+                .document(documentId)
+                .set(toUpdate)
+                .addOnFailureListener(this)
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.updateComplete, Toast.LENGTH_SHORT).show());
     }
 
     private void delete(String collection, String documentId) {
-        db.collection(collection).document(documentId).delete().addOnFailureListener(this)
+        db.collection(collection)
+                .document(documentId)
+                .delete()
+                .addOnFailureListener(this)
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.successDeleted, Toast.LENGTH_SHORT).show());
     }
 

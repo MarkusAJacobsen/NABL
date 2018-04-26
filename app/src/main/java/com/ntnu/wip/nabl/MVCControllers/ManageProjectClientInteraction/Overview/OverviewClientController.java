@@ -145,7 +145,7 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         FireStoreClient client = new FireStoreClient(getContext());
         client.getClient(id);
         new ClientObserver(client).setOnUpdateListener(obj -> {
-            model = (Client) obj.get(0);
+            model = (Client) obj;
             modelPresent = true;
             populateView();
         });

@@ -1,9 +1,9 @@
 package com.ntnu.wip.nabl.Network;
 
 public enum Subscriptions {
-    PROJECT,
+    PROJECTS,
     PROJECT_SINGULAR,
-    CLIENT,
+    CLIENTS,
     CLIENT_SINGULAR,
     LOG_ENTRIES
 }

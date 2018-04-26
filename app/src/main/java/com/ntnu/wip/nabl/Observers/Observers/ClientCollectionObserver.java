@@ -8,13 +8,15 @@ import com.ntnu.wip.nabl.Observers.Observer;
 public class ClientCollectionObserver extends Observer {
     public ClientCollectionObserver(AbstractClient client) {
         subject = client;
-        subject.attach(this, Subscriptions.PROJECT);
+        subject.attach(this);
     }
 
     @Override
-    public void update() {
+    public void update(Subscriptions sub) {
         if(listener != null) {
-            listener.onUpdate(subject.getClients());
+            if (sub == Subscriptions.CLIENTS) {
+                listener.onUpdate(subject.getClients());
+            }
         }
     }
 

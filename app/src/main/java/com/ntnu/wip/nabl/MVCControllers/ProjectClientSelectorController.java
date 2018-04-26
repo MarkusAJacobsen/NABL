@@ -104,7 +104,7 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         ProjectCollectionObserver observer = new ProjectCollectionObserver(client);
 
         observer.setOnUpdateListener(projects -> {
-            this.projects = projects;
+            this.projects = (List) projects;
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);
         });
@@ -115,7 +115,7 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         client.getAllClients();
 
         new ClientCollectionObserver(client).setOnUpdateListener(clients -> {
-            this.clients = clients;
+            this.clients = (List) clients;
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.clients);
             mvcView.setResourceViewerAdapter(adapter);
         });

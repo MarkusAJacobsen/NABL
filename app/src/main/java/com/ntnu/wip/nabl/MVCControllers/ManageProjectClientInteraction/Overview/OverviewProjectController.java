@@ -18,6 +18,7 @@ import com.ntnu.wip.nabl.MVCView.OverviewProject.OverviewProjectView;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Observers.Observers.ProjectObserver;
 import com.ntnu.wip.nabl.R;
 import com.ntnu.wip.nabl.Utils;
 
@@ -99,10 +100,20 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
 
     private void getDataFromArguments(Bundle args) {
         if(args.containsKey(Poststamp.PROJECT)) {
-            final String parcel = args.getString(Poststamp.PROJECT);
-            model = new Gson().fromJson(parcel, Project.class);
-            modelPresent = true;
+            final String id = args.getString(Poststamp.PROJECT);
+            fetchModel(id);
         }
+    }
+
+
+    private void fetchModel(String id) {
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.getProject(id);
+        new ProjectObserver(client).setOnUpdateListener(obj -> {
+            model = (Project) obj;
+            modelPresent = true;
+            populateView();
+        });
     }
 
     private void populateView(){

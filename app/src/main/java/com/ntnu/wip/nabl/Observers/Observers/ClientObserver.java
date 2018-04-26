@@ -12,15 +12,16 @@ import java.util.List;
 public class ClientObserver extends Observer {
     public ClientObserver(AbstractClient client) {
         subject = client;
-        subject.attach(this, Subscriptions.CLIENT_SINGULAR);
+        subject.attach(this);
     }
 
     @Override
-    public void update() {
+    public void update(Subscriptions sub) {
         if(listener != null) {
-            List<Client> foo = new ArrayList<>();
-            foo.add(subject.getLastFetchedClient());
-            listener.onUpdate(foo);
+            if(sub == Subscriptions.CLIENT_SINGULAR) {
+                Client cli = subject.getLastFetchedClient();
+                listener.onUpdate(cli);
+            }
         }
     }
 
