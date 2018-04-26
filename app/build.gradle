@@ -36,4 +36,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    // What we need for creating excel-sheets
+    implementation "org.apache.poi:poi:3.17"	     // For `.xls` files
+    implementation "org.apache.poi:poi-ooxml:3.17"	 // For `.xlsx` files
 }
