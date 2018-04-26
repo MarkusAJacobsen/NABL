@@ -19,5 +19,4 @@ public interface IProjectClientSelectorView extends IAbstractMvcView {
     void setResourceViewerAdapter(Adapter adapter);
     void setResourceSelectorAdapter(Adapter adapter);
     int getSpinnerSelected();
-
 }

@@ -37,4 +37,8 @@
     <string name="successDeleted">Sletting vellykket</string>
     <string name="updateComplete">Oppdatering fullført</string>
     <string name="unableTofetchResource">Klarte ikke å hente ressurs</string>
+    <string name="projectList">Velg ønsket prosjekt</string>
+    <string name="export">Exporter fil</string>
+    <string name="exportProjectsTitle">Exporter din prosjekt</string>
+    <string name="invalidDate">Ugyldig dato</string>
 </resources>

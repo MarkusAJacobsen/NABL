@@ -164,7 +164,7 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
         FireStoreClient client = new FireStoreClient(getContext());
         client.deleteProject(model);
     }
-
+  
     //
     // End privates
     //---------------------------------------------------------------------------------------------

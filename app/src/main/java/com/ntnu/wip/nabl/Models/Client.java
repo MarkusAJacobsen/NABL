@@ -18,12 +18,14 @@ public class Client {
         this.address = new Address();
     }
 
+
     public Client(String id, String name, ContactInformation contactInformation, Address address) {
         this.id = id;
         this.name = name;
         this.contactInformation = contactInformation;
         this.address = address;
     }
+
 
     public String getId() {
         return id;

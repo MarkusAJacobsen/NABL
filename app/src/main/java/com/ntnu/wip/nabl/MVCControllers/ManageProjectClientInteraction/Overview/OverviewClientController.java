@@ -149,7 +149,6 @@ public class OverviewClientController extends Fragment implements IOverviewClien
             modelPresent = true;
             populateView();
         });
-
     }
 
     private void populateView(){
