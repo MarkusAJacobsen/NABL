@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,15 +27,22 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     private View rootView;
     private ExportInputListener listener;
 
-    @BindView(R.id.exportBtn) Button exportBtn;
-    @BindView(R.id.projectsList) Spinner projectsList;
-    @BindView(R.id.editTextStartDate) TextView startDate;
-    @BindView(R.id.editTextEndDate) TextView endDate;
-
     private Date sDate;
     private Date eDate;
     private DatePickerDialog dateDialog;
     private ExportView.WhichDate whichDate = ExportView.WhichDate.NULL;
+
+    private static final int PROJECT_ICON = R.drawable.project_button;
+    private static final int CLIENT_ICON = R.drawable.client_button;
+    private static final String PROJECT_TAG = "Project";
+    private static final String CLIENT_TAG = "Client";
+
+    @BindView(R.id.exportBtn) Button exportBtn;
+    @BindView(R.id.projectsList) Spinner projectsList;
+    @BindView(R.id.editTextStartDate) TextView startDate;
+    @BindView(R.id.editTextEndDate) TextView endDate;
+    @BindView(R.id.selectorBtn) ImageButton selectorBtn;
+    @BindView(R.id.textViewChoose) TextView spinnerTitle;
 
     private enum WhichDate {
         START,
@@ -63,10 +71,20 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
         //TODO Fetch projects
     }
 
+    private void fetchClients() {
+        //TODO Fetch Clients data
+    }
+
     private void configureButton() {
         this.exportBtn.setOnClickListener(View -> {
-            if(listener != null) {
+            if(this.listener != null) {
                 this.listener.exportBtnPressed();
+            }
+        });
+
+        this.selectorBtn.setOnClickListener(View -> {
+            if(this.listener != null) {
+                this.listener.changeSelectionBtnPressed();
             }
         });
     }
@@ -120,12 +138,12 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
 
     @Override
     public void setActionBar(ActionBar actionbar) {
-        // NO OP
+        // Implemented in ExportController
     }
 
     @Override
     public void setActionBarTitle(String title) {
-        // NO OP
+        // Implemented in ExportController
     }
 
     @Override
@@ -144,6 +162,23 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     }
 
     @Override
+    public void switchView() {
+        if (this.selectorBtn.getTag() == this.PROJECT_TAG) {
+            this.selectorBtn.setImageResource(this.CLIENT_ICON);
+            this.selectorBtn.setTag(this.CLIENT_TAG);
+            this.spinnerTitle.setText(R.string.clientList);
+
+            // TODO fetch Clients to spinner
+        } else {
+            this.selectorBtn.setImageResource(this.PROJECT_ICON);
+            this.selectorBtn.setTag(this.PROJECT_TAG);
+            this.spinnerTitle.setText(R.string.projectList);
+
+            // TODO fetch Projects to spinner
+        }
+    }
+
+    @Override
     public Date getStart() {
         return sDate;
     }
@@ -154,8 +189,14 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     }
 
     @Override
-    public String getProjectName() {
-        //TODO get project name and send it further
+    public String getProjectID() {
+        //TODO get selected project's ID
+        return null;
+    }
+
+    @Override
+    public String getClientID() {
+        //TODO get selected Client's ID
         return null;
     }
 

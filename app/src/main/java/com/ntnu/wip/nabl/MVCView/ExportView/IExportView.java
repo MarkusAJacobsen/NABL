@@ -14,11 +14,14 @@ public interface IExportView extends IAbstractMvcView {
         void dateFieldPressed();
         void invalidDateSupplied();
         void exportBtnPressed();
+        void changeSelectionBtnPressed();
     }
 
     void registerExportListner(ExportInputListener listener);
     void setDateDialog(DatePickerDialog dialog);
+    void switchView();
     Date getStart();
     Date getEnd();
-    String getProjectName();
+    String getProjectID();
+    String getClientID();
 }

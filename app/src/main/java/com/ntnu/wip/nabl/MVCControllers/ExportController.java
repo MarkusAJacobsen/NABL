@@ -49,12 +49,27 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     @Override
     public void exportBtnPressed() {
         //TODO => Generate the File
-        //TODO => String with File Name
-        //TODO => File (File Location)
-        //TODO => Start new intent and pass everything for it
-        //TODO => Follow this for the rest => https://stackoverflow.com/questions/9974987/how-to-send-an-email-with-a-file-attachment-in-android
 
-        @Deprecated
+        // Proof of concept of sending the file to Email or cloud storing
+        mockMailSender();
+
+
+        Toast.makeText(getApplicationContext(), "Pressed export button",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void changeSelectionBtnPressed() {
+        this.mvcView.switchView();
+    }
+
+    /**
+     * Proof of concept, follow this
+     * https://stackoverflow.com/questions/9974987/how-to-send-an-email-with-a-file-attachment-in-android
+     *
+     */
+    @Deprecated
+    private void mockMailSender() {
         String filename = "assignment1.pdf";
         File fileLocation = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),
                 filename);
@@ -71,10 +86,5 @@ public class ExportController extends AppCompatActivity implements IExportView.E
         // the mail subject
         emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Your Log file");
         startActivity(Intent.createChooser(emailIntent , "Send email..."));
-
-
-
-        Toast.makeText(getApplicationContext(), "Email sended !!",
-                Toast.LENGTH_SHORT).show();
     }
 }

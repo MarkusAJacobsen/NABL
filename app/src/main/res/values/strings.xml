@@ -51,6 +51,7 @@
     <string name="address">Address</string>
 
     <string name="projectList">Choose wanted project</string>
+    <string name="clientList">Choose wanted client</string>
     <string name="export">Export the file</string>
     <string name="exportProjectsTitle">Export your projects</string>
     <string name="invalidDate">Invalid date</string>
