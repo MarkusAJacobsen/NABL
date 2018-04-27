@@ -34,4 +34,11 @@
     <string name="finished">Avsluttet</string>
     <string name="inputInvalid">Noen felter er ugyldige/ikke fylt ut</string>
     <string name="address">Addresse</string>
+    <string name="headerDate">Dato</string>
+    <string name="headerHours">Timer</string>
+    <string name="headerStart">Start</string>
+    <string name="headerEnd">Slutt</string>
+    <string name="headerOverTime">Overtid</string>
+    <string name="headerBreak">Pause</string>
+    <string name="headerTotal">Total</string>
 </resources>

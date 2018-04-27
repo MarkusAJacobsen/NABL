@@ -1,8 +1,13 @@
 package com.ntnu.wip.nabl.Models;
 
+import android.content.Context;
+
+import com.ntnu.wip.nabl.R;
+
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
 
 /**
  * Created by klingen on 26.04.18.
@@ -14,9 +19,14 @@ import java.util.GregorianCalendar;
  */
 
 public class WorkDay {
-    Time startTime;
-    Time endTime;
-    Calendar day;
+    private Time startTime;
+    private Time endTime;
+    private float breakTime;
+    private float overTime;
+    private Calendar day;
+    private Context context;
+
+
 
     /**
      * Used in the case of the user inputting data from a former
@@ -43,8 +53,33 @@ public class WorkDay {
         day = GregorianCalendar.getInstance();
     }
 
+
+
     /**
      * NOT TO BE USED
      */
     private WorkDay() {}
+
+    // ################### SETTERS / GETTERS #####################
+
+
+    public Calendar getDay() {
+        return day;
+    }
+
+    public float getBreakTime() {
+        return breakTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public float getOverTime() {
+        return overTime;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
 }

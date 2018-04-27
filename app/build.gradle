@@ -40,4 +40,7 @@ dependencies {
     // What we need for creating excel-sheets
     implementation "org.apache.poi:poi:3.17"	     // For `.xls` files
     implementation "org.apache.poi:poi-ooxml:3.17"	 // For `.xlsx` files
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+
+
 }
