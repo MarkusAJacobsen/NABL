@@ -102,4 +102,9 @@ public class ProjectClientSelector implements IProjectClientSelectorView {
     public void setResourceSelectorAdapter(Adapter adapter) {
         resourceSelector.setAdapter((ArrayAdapter) adapter);
     }
+
+    @Override
+    public int getSpinnerSelected() {
+        return resourceSelector.getSelectedItemPosition();
+    }
 }

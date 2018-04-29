@@ -21,8 +21,13 @@ import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.Mo
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.IOverviewClientView;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.OverviewClientView;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.Observers.ClientObserver;
+import com.ntnu.wip.nabl.Observers.Observers.ProjectObserver;
 import com.ntnu.wip.nabl.R;
 
+import java.util.List;
 import java.util.Locale;
 
 public class OverviewClientController extends Fragment implements IOverviewClientView.ButtonListener,
@@ -44,7 +49,6 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         mvcView.registerListener(this);
 
         getDataFromArguments(getArguments());
-        populateView();
 
         return mvcView.getRootView();
     }
@@ -74,7 +78,8 @@ public class OverviewClientController extends Fragment implements IOverviewClien
                 modifyPressed();
                 break;
             case R.id.delete:
-                break; //TODO
+                deleteModel();
+                break;
             default: break;
         }
 
@@ -131,10 +136,19 @@ public class OverviewClientController extends Fragment implements IOverviewClien
 
     private void getDataFromArguments(Bundle args){
         if(args.containsKey(Poststamp.CLIENT)) {
-            final String parcel = args.getString(Poststamp.CLIENT);
-            model = new Gson().fromJson(parcel, Client.class);
-            modelPresent = true;
+            final String id = args.getString(Poststamp.CLIENT);
+            fetchModel(id);
         }
+    }
+
+    private void fetchModel(String id) {
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.getClient(id);
+        new ClientObserver(client).setOnUpdateListener(obj -> {
+            model = (Client) obj;
+            modelPresent = true;
+            populateView();
+        });
     }
 
     private void populateView(){
@@ -183,5 +197,10 @@ public class OverviewClientController extends Fragment implements IOverviewClien
         } catch (IllegalAccessException | java.lang.InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteModel(){
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.deleteClient(model);
     }
 }

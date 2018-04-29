@@ -8,7 +8,7 @@ import java.util.Locale;
  */
 
 public class Client {
-    private int id;
+    private String id;
     private String name;
     private ContactInformation contactInformation;
     private Address address;
@@ -18,18 +18,20 @@ public class Client {
         this.address = new Address();
     }
 
-    public Client(int id, String name, ContactInformation contactInformation, Address address) {
+
+    public Client(String id, String name, ContactInformation contactInformation, Address address) {
         this.id = id;
         this.name = name;
         this.contactInformation = contactInformation;
         this.address = address;
     }
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
