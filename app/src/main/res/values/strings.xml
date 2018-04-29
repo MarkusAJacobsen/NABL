@@ -49,6 +49,19 @@
     <string name="finished">Finished</string>
     <string name="inputInvalid">Some fields are invalid/not filled</string>
     <string name="address">Address</string>
+
+    <!-- EXCEL-related names -->
+    <string name="headerDate">Date</string>
+    <string name="headerHours">Hours</string>
+    <string name="headerStart">Start</string>
+    <string name="headerEnd">End</string>
+    <string name="headerOverTime">Over time</string>
+    <string name="headerBreak">Break</string>
+    <string name="headerTotal">Total</string>
+    <string name="weekendTime">Weekend</string>
+    <string name="holyTime">Holy</string>
+    <string name="sheetTitle">Time Sheet</string>
+
     <string name="successDeleted">Deletion successful</string>
     <string name="updateComplete">Update complete</string>
     <string name="unableTofetchResource">Unable to fetch resource</string>
@@ -57,4 +70,7 @@
     <string name="export">Export the file</string>
     <string name="exportProjectsTitle">Export your projects</string>
     <string name="invalidDate">Invalid date</string>
+
+    <string name="loggingView">Start Logging</string>
+
 </resources>

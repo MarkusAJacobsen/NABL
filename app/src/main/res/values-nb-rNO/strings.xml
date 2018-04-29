@@ -34,6 +34,16 @@
     <string name="finished">Avsluttet</string>
     <string name="inputInvalid">Noen felter er ugyldige/ikke fylt ut</string>
     <string name="address">Addresse</string>
+    <string name="headerDate">Dato</string>
+    <string name="headerHours">Timer</string>
+    <string name="headerStart">Start</string>
+    <string name="headerEnd">Slutt</string>
+    <string name="headerOverTime">Overtid</string>
+    <string name="headerBreak">Pause</string>
+    <string name="headerTotal">Total</string>
+    <string name="weekendTime">Helg</string>
+    <string name="holyTime">Helligdag</string>
+    <string name="sheetTitle">Timeliste</string>
     <string name="successDeleted">Sletting vellykket</string>
     <string name="updateComplete">Oppdatering fullført</string>
     <string name="unableTofetchResource">Klarte ikke å hente ressurs</string>
@@ -41,4 +51,6 @@
     <string name="export">Exporter fil</string>
     <string name="exportProjectsTitle">Exporter din prosjekt</string>
     <string name="invalidDate">Ugyldig dato</string>
+    <string name="loggingView">Start Logging</string>
+
 </resources>
