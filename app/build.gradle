@@ -51,6 +51,8 @@ dependencies {
     // Handles time very well
     implementation group: 'joda-time', name: 'joda-time', version: '2.9.4'
 
+    implementation 'junit:junit:4.12'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.59'
 
 }
 

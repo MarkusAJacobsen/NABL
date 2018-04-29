@@ -61,6 +61,8 @@
     <string name="weekendTime">Weekend</string>
     <string name="holyTime">Holy</string>
     <string name="sheetTitle">Time Sheet</string>
+    <string name="headerDescription">Work description</string>
+
 
     <string name="successDeleted">Deletion successful</string>
     <string name="updateComplete">Update complete</string>

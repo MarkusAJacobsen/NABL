@@ -31,6 +31,7 @@ public class WorkDay {
     private float overTime;
     private float holyDay;
     private float weekEnd;
+    private String description;
 
 
 
@@ -147,5 +148,13 @@ public class WorkDay {
     // Hours - break
     public double getTotal() {
         return getTotalHours()-getBreakTime();
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

@@ -52,5 +52,6 @@
     <string name="exportProjectsTitle">Exporter din prosjekt</string>
     <string name="invalidDate">Ugyldig dato</string>
     <string name="loggingView">Start Logging</string>
+    <string name="headerDescription">Arbeidsbeskrivelse</string>
 
 </resources>

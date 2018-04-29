@@ -61,6 +61,7 @@ public class TimeSheet {
     private static final int HOLY_TIME_COLUMN = 9;
     private static final int WEEKEND_TIME_COLUMN = 10;
     private static final int TOTAL_HOURS = 11;
+    private static final int DESCRIPTION_COLUMN = 12;
 
     private static final int MAIN_TITLE_ROW = 1;
     private static final int EMPLOYEE_INFORMATION_ROW = 3;
@@ -141,6 +142,7 @@ public class TimeSheet {
         headerNames.add(context.getString(R.string.weekendTime));
         headerNames.add(context.getString(R.string.holyTime));
         headerNames.add(context.getString(R.string.headerTotal));
+        headerNames.add(context.getString(R.string.headerDescription));
         return headerNames;
     }
 
@@ -163,6 +165,10 @@ public class TimeSheet {
             cell = row.createCell(DATE_COLUMN);
             cell.setCellStyle(dateCellstyle);
             cell.setCellValue(workDay.getDay());
+
+            cell = row.createCell(DESCRIPTION_COLUMN);
+            cell.setCellStyle(textCellStyle);
+            cell.setCellValue(workDay.getDescription());
 
             // Set the start-time
             cell = row.createCell(FROM_TIME_COLUMN);
@@ -526,7 +532,4 @@ public class TimeSheet {
         cell.setCellStyle(informationStyle());
         cell.setCellValue(this.client.getName()+" - "+this.client.getAddress());
     }
-
-
-
 }
