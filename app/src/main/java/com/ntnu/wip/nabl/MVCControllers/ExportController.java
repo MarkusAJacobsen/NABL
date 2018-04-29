@@ -17,7 +17,6 @@ import java.io.File;
 /**
  * Created by a7med on 25.04.18.
  */
-
 public class ExportController extends AppCompatActivity implements IExportView.ExportInputListener {
 
     private ExportView mvcView;

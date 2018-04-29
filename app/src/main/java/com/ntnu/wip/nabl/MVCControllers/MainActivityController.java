@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingController;
+import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingInputController;
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
 import com.ntnu.wip.nabl.R;
 
