@@ -20,6 +20,7 @@
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.Overview.OverviewController" />
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController" />
         <activity android:name=".MVCControllers.ExportController" />
+        <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
     </application>
 
 </manifest>

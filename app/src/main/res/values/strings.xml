@@ -56,4 +56,6 @@
     <string name="exportProjectsTitle">Export your projects</string>
     <string name="invalidDate">Invalid date</string>
 
+    <string name="loggingView">Start Logging</string>
+
 </resources>
