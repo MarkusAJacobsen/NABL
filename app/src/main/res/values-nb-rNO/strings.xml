@@ -41,4 +41,7 @@
     <string name="headerOverTime">Overtid</string>
     <string name="headerBreak">Pause</string>
     <string name="headerTotal">Total</string>
+    <string name="weekendTime">Helg</string>
+    <string name="holyTime">Helligdag</string>
+    <string name="sheetTitle">Timeliste</string>
 </resources>
