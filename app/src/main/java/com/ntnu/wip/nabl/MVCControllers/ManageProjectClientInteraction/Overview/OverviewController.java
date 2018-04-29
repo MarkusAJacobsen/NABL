@@ -56,22 +56,22 @@ public class OverviewController extends AppCompatActivity implements IChangeScre
     //
 
     private void handleIntent(Intent intent){
-        String parcel = null;
+        String id = null;
         Class target = null;
         String stamp = null;
 
         if(intent.hasExtra(Poststamp.CLIENT)) {
             stamp = Poststamp.CLIENT;
-            parcel = intent.getStringExtra(stamp);
+            id = intent.getStringExtra(stamp);
             target = OverviewClientController.class;
         } else if(intent.hasExtra(Poststamp.PROJECT)){
             stamp = Poststamp.PROJECT;
-            parcel = intent.getStringExtra(stamp);
+            id = intent.getStringExtra(stamp);
             target = OverviewProjectController.class;
         }
 
         Bundle args = new Bundle();
-        args.putString(stamp, parcel);
+        args.putString(stamp, id);
 
         try {
             transactionManager(target, args);

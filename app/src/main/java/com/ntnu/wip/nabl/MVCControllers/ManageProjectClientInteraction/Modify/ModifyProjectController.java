@@ -22,6 +22,7 @@ import com.ntnu.wip.nabl.MVCView.projectInput.IProjectInputView;
 import com.ntnu.wip.nabl.MVCView.projectInput.ProjectInputView;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
 import com.ntnu.wip.nabl.Utils;
 
@@ -173,24 +174,28 @@ public class ModifyProjectController extends Fragment implements IChangeScreen.F
         model.setEnd(mvcView.getEnd());
         model.setDescription(mvcView.getDescription());
         // TODO model.setCompany(mvcView.getOrganisation());
-        //TODO update firebase
 
+        saveModel();
         switchToOverViewProject();
     }
 
+    private void saveModel(){
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.updateProject(model);
+    }
 
-    private Bundle constructArgsFromClient(){
+    private Bundle constructArgsFromProject(){
         Bundle args = new Bundle();
 
-        final String parcel = new Gson().toJson(this.model);
-        args.putString(Poststamp.PROJECT, parcel);
+        final String id = model.getId();
+        args.putString(Poststamp.PROJECT, id);
 
         return args;
     }
 
     private void switchToOverViewProject(){
         try {
-            transactionManager(OverviewProjectController.class, constructArgsFromClient());
+            transactionManager(OverviewProjectController.class, constructArgsFromProject());
         } catch (IllegalAccessException | java.lang.InstantiationException e) {
             e.printStackTrace();
         }

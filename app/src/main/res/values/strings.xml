@@ -62,6 +62,9 @@
     <string name="holyTime">Holy</string>
     <string name="sheetTitle">Time Sheet</string>
 
+    <string name="successDeleted">Deletion successful</string>
+    <string name="updateComplete">Update complete</string>
+    <string name="unableTofetchResource">Unable to fetch resource</string>
     <string name="projectList">Choose wanted project</string>
     <string name="clientList">Choose wanted client</string>
     <string name="export">Export the file</string>
