@@ -44,4 +44,11 @@
     <string name="weekendTime">Helg</string>
     <string name="holyTime">Helligdag</string>
     <string name="sheetTitle">Timeliste</string>
+    <string name="projectList">Velg ønsket prosjekt</string>
+    <string name="export">Exporter fil</string>
+    <string name="exportProjectsTitle">Exporter din prosjekt</string>
+    <string name="invalidDate">Ugyldig dato</string>
+
+    <string name="loggingView">Start Logging</string>
+
 </resources>

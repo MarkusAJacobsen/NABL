@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
+import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingController;
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
 import com.ntnu.wip.nabl.R;
 
@@ -56,10 +57,10 @@ public class MainActivityController extends AppCompatActivity implements
     public void changeActivity(int position) {
         Class activityClass = null;
         switch(position){
-            case 0: break;
+            case 0: activityClass = LoggingController.class; break;
             case 1: activityClass = ProjectClientSelectorController.class; break;
             case 2: break;
-            case 3: break;
+            case 3: activityClass = ExportController.class; break;
             case 4: break;
             default: break;
         }
