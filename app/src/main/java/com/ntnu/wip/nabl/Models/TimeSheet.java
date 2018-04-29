@@ -7,6 +7,7 @@ import com.ntnu.wip.nabl.R;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -174,37 +175,38 @@ public class TimeSheet {
             cell.setCellValue(workDay.getEndTime().toDate());
 
             // Add the hours between start and stop
-            cell = row.createCell(HOURS_COLUMN);
-            cell.setCellStyle(textCellStyle);
-            cell.setCellValue(workDay.getTotalHours());
+            setNumericCell(row.createCell(HOURS_COLUMN), textCellStyle, workDay.getTotalHours());
 
-            // add break time
-            cell = row.createCell(BREAK_TIME_COLUMN);
-            cell.setCellStyle(textCellStyle);
-            cell.setCellValue(workDay.getBreakTime());
+            // Break time
+            setNumericCell(row.createCell(BREAK_TIME_COLUMN), textCellStyle, workDay.getBreakTime());
 
             // Holy time
-            cell = row.createCell(HOLY_TIME_COLUMN);
-            cell.setCellStyle(textCellStyle);
-            cell.setCellValue(workDay.getHolyDay());
+            setNumericCell(row.createCell(HOLY_TIME_COLUMN), textCellStyle, workDay.getHolyDay());
 
-            // WeekEndTime
-            cell = row.createCell(WEEKEND_TIME_COLUMN);
-            cell.setCellStyle(textCellStyle);
-            cell.setCellValue(workDay.getWeekEnd());
+            // WeekEnd Time
+            setNumericCell(row.createCell(WEEKEND_TIME_COLUMN), textCellStyle, workDay.getWeekEnd());
 
-            // OverTime
-            cell = row.createCell(OVER_TIME_COLUMN);
-            cell.setCellStyle(textCellStyle);
-            cell.setCellValue(workDay.getOverTime());
 
-            // Total time
-            cell = row.createCell(TOTAL_HOURS);
-            cell.setCellStyle(textCellStyle);
-            cell.setCellValue(workDay.getTotalHours());
+            setNumericCell(row.createCell(OVER_TIME_COLUMN), textCellStyle, workDay.getOverTime());
+
+            setNumericCell(row.createCell(TOTAL_HOURS), textCellStyle, workDay.getTotal());
+
         }
         return rowIndex;
     }
+
+    /**
+     * A part of code refactoring
+     * @param cell cell to be modified
+     * @param style cellStyle
+     * @param value value of the cell
+     */
+    private void setNumericCell(Cell cell, CellStyle style, double value) {
+        cell.setCellValue(value);
+        cell.setCellStyle(style);
+        cell.setCellType(CellType.NUMERIC);
+    }
+
 
     /**
      * Create the headers for the timeRows
