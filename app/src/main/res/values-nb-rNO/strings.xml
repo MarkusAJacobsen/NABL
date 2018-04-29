@@ -5,6 +5,15 @@
         <item>Klienter</item>
     </string-array>
 
+    <string-array name="sideDrawerMenuItems">
+        <item>Logg timer</item>
+        <item>Behandle prosjekter/klienter</item>
+        <item>Oppsummering</item>
+        <item>Eksporter</item>
+        <item>Innstillinger</item>
+        <item>Log ut</item>
+    </string-array>
+
     <string name="app_name">NABL</string>
     <string name="manageProjectsClientsTitle">Administer prosjekter/klienter</string>
     <string name="modify">Endre</string>

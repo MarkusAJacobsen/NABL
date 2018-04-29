@@ -2,6 +2,7 @@ package com.ntnu.wip.nabl.Network;
 
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public abstract class AbstractClient implements IClient {
         return lastFetchedProject;
     }
 
-    public void setLastFetchedProject(Project lastFetchedProject) {
+    protected void setLastFetchedProject(Project lastFetchedProject) {
         this.lastFetchedProject = lastFetchedProject;
         notifyAllObservers(Subscriptions.PROJECT_SINGULAR);
     }
@@ -46,11 +47,12 @@ public abstract class AbstractClient implements IClient {
         return lastFetchedClient;
     }
 
-    public void setLastFetchedClient(Client lastFetchedClient) {
+    protected void setLastFetchedClient(Client lastFetchedClient) {
         this.lastFetchedClient = lastFetchedClient;
         notifyAllObservers(Subscriptions.CLIENT_SINGULAR);
     }
 
+    @Override
     public void attach(Observer observer){
         observers.add(observer);
     }

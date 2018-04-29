@@ -9,10 +9,15 @@ import com.ntnu.wip.nabl.Observers.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientObserver extends Observer {
+public class ClientObserver extends Observer<AbstractClient> {
     public ClientObserver(AbstractClient client) {
         subject = client;
         subject.attach(this);
+    }
+
+    @Override
+    public void update() {
+        //NO_OP
     }
 
     @Override
