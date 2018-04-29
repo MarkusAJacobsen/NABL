@@ -42,11 +42,7 @@ public class ExcelSheetCreationTest {
 
         when (mockApplicationContext.getString(anyInt()))
                 .thenReturn("Loooooong word");
-        System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
-        System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
-        System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
         Calendar cal = new GregorianCalendar();
-        Workbook book = new XSSFWorkbook();
         Company company = new Company();
         company.setName("SuperFIrm");
         company.setOrgnr("skdjfnsdjkfsdn");

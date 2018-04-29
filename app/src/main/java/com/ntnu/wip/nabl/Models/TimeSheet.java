@@ -115,6 +115,9 @@ public class TimeSheet {
     }
 
     private void inizializeTimeSheet() {
+        System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
+        System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
+        System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
         workbook = new XSSFWorkbook();
         creationHelper = workbook.getCreationHelper();
         sheet = workbook.createSheet(this.extractPeriod());
