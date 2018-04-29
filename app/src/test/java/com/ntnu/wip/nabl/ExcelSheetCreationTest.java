@@ -60,7 +60,7 @@ public class ExcelSheetCreationTest {
         TimeSheet timeSheet = new TimeSheet(mockApplicationContext, company, user, dayList);
 
         try {
-            timeSheet.write("/home/klingen/uniqueName.xlsx");
+            timeSheet.write("uniqueName.xlsx");
         } catch (IOException e) {
             // If exception... something is wrong
             Assert.assertFalse(true);
