@@ -72,6 +72,34 @@ public class FirestoreAuthentication implements IAuthentication {
         return RC_SIGN_IN;
     }
 
+    /**
+     * Get currently logged in username
+     * @return String
+     */
+    @Override
+    public String getFullName() {
+        FirebaseUser user = getCurrentUser();
+
+        if(user != null) {
+            return user.getDisplayName();
+        }
+        return null;
+    }
+
+    /**
+     * Get currently logged in user email
+     * @return String
+     */
+    @Override
+    public String getEmail() {
+        FirebaseUser user = getCurrentUser();
+
+        if(user != null) {
+            return user.getEmail();
+        }
+        return null;
+    }
+
     @Override
     public void attach(Observer observer) {
         observers.add(observer);

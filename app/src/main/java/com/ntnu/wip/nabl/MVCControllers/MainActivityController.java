@@ -89,6 +89,8 @@ public class MainActivityController extends AppCompatActivity implements
             if (resultCode != RESULT_OK) {
                 Toast.makeText(this, "Could not login", Toast.LENGTH_SHORT).show();
                 signIn();
+            } else {
+                Toast.makeText(this, "Hello " + auth.getFullName(), Toast.LENGTH_SHORT).show();
             }
         }
     }

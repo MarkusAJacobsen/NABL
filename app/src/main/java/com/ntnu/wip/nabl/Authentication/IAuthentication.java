@@ -33,4 +33,16 @@ public interface IAuthentication extends IObserverSubject{
      * @return Int
      */
     int getResultCode();
+
+    /**
+     * Get currently logged in users full name
+     * @return String
+     */
+    String getFullName();
+
+    /**
+     * Get currently logged in user email
+     * @return String
+     */
+    String getEmail();
 }
