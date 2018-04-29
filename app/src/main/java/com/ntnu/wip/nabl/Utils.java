@@ -3,7 +3,7 @@ package com.ntnu.wip.nabl;
 import android.app.Activity;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-
+import org.apache.commons.lang3.RandomStringUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,5 +29,9 @@ public final class Utils {
         }
 
         return toReturn;
+    }
+
+    public static String generateUniqueId(int length){
+        return RandomStringUtils.random(length, true, true);
     }
 }

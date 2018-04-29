@@ -34,7 +34,9 @@
     <string name="finished">Avsluttet</string>
     <string name="inputInvalid">Noen felter er ugyldige/ikke fylt ut</string>
     <string name="address">Addresse</string>
-
+    <string name="successDeleted">Sletting vellykket</string>
+    <string name="updateComplete">Oppdatering fullført</string>
+    <string name="unableTofetchResource">Klarte ikke å hente ressurs</string>
     <string name="projectList">Velg ønsket prosjekt</string>
     <string name="export">Exporter fil</string>
     <string name="exportProjectsTitle">Exporter din prosjekt</string>
