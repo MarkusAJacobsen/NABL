@@ -6,12 +6,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Models.User;
+import com.ntnu.wip.nabl.Models.WorkDay;
 import com.ntnu.wip.nabl.Network.AbstractClient;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.DocumentSnapshotCallback;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.QuerySnapshotCallback;
@@ -21,7 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.CLIENT_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANIES_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_PROJECT_FIELD;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_COLLECTION;
 
 public class FireStoreClient extends AbstractClient implements OnFailureListener {
@@ -85,8 +92,25 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void newLogEntry(LogEntry entry) {
-        add(LOG_ENTRY_COLLECTION, entry, entry.getId());
+    public void newLogEntry(WorkDay workDay) {
+        this.add(LOG_ENTRY_COLLECTION, workDay, workDay.getId());
+    }
+
+    @Override
+    public void getLogEntriesByUser(User user) {
+        this.db.collection(LOG_ENTRY_COLLECTION).whereEqualTo(LOG_ENTRY_USER_ID, user.getId())
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+
+                    List<WorkDay> workDays = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                        WorkDay day = doc.toObject(WorkDay.class);
+                        workDays.add(day);
+                    }
+
+                    this.setLastFetchedWorkdays(workDays);
+
+                });
     }
 
     @Override
@@ -101,7 +125,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void newCompany(Company company) {
-
+        this.add(COMPANIES_COLLECTION, company, company.getId());
     }
 
     @Override
@@ -111,6 +135,57 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void deleteCompany(Company company) {
+        this.delete(COMPANIES_COLLECTION, company.getId());
+    }
+
+    /**
+     * Fetches companies based on a user
+     * @param uid the owner of the companies
+     */
+    @Override
+    public void getUserCompanies(String uid) {
+        this.db.collection(COMPANIES_COLLECTION).whereEqualTo(COMPANY_USER_ID, uid)
+        .addSnapshotListener((queryDocumentSnapshots, e) -> {
+            List<Company> companies = new ArrayList<>();
+
+            for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                Company company = snap.toObject(Company.class);
+                companies.add(company);
+            }
+
+            this.setLastFetchedCompanies(companies);
+        });
+
+    }
+
+    @Override
+    public void getCompanyProjects(Company company) {
+        this.db.collection(PROJECT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    List<Project> projects = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                        Project project = snap.toObject(Project.class);
+                        projects.add(project);
+                    }
+
+                    this.setLastFetchedProjects(projects);
+                });
+    }
+
+    @Override
+    public void getCompanyClients(Company company) {
+        this.db.collection(CLIENT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    List<Client> clients = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                        Client client = snap.toObject(Client.class);
+                        clients.add(client);
+                    }
+
+                    this.setLastFetchedClients(clients);
+                });
 
     }
 

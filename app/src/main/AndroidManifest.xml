@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ntnu.wip.nabl">
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +28,9 @@
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController" />
         <activity android:name=".MVCControllers.ExportController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
-        <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController"/>
+        <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController" />
+        <activity android:name=".MVCControllers.RegisterCompany" />
+        <activity android:name=".MVCControllers.Settings"></activity>
     </application>
 
 </manifest>
