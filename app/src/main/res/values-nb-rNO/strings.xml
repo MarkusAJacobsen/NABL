@@ -62,5 +62,9 @@
     <string name="invalidDate">Ugyldig dato</string>
     <string name="loggingView">Start Logging</string>
     <string name="headerDescription">Arbeidsbeskrivelse</string>
+    <string name="makeCompany">Lag organisasjon</string>
+    <string name="companyLabel">Organisasjonsnavn</string>
+    <string name="companyOrgNumber">Organisasjonsnummer</string>
+    <string name="createCompanyTitle">Registrer en organisasjon</string>
 
 </resources>

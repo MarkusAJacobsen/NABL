@@ -2,16 +2,14 @@ package com.ntnu.wip.nabl.Models;
 
 import android.content.Context;
 
-import com.ntnu.wip.nabl.R;
+import com.google.firebase.firestore.Exclude;
+import com.ntnu.wip.nabl.Utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
 import org.joda.time.Minutes;
 
-import java.math.RoundingMode;
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -25,6 +23,10 @@ import java.util.GregorianCalendar;
  */
 
 public class WorkDay {
+    private String id;
+    private String userId;
+    private String projectId;
+    private String clientId;
     private DateTime startTime;
     private DateTime endTime;
     private float breakTime;
@@ -45,13 +47,12 @@ public class WorkDay {
         startTime = start;
         endTime = stop;
 
-
+        id = Utils.generateUniqueId(24);
         breakTime = 0;
         holyDay = 0;
         weekEnd = 0;
         overTime = 0;
     }
-
 
     /**
      * Round to first begun half-hour
@@ -80,11 +81,6 @@ public class WorkDay {
 
         return wholeHours+halfHour;
     }
-
-    /**
-     * NOT TO BE USED
-     */
-    private WorkDay() {}
 
     // ################### SETTERS / GETTERS #####################
 
@@ -117,6 +113,7 @@ public class WorkDay {
         this.breakTime = breakTime;
     }
 
+    @Exclude
     public void setEndTime(DateTime endTime) {
         this.endTime = endTime;
     }
@@ -129,6 +126,7 @@ public class WorkDay {
         this.overTime = overTime;
     }
 
+    @Exclude
     public void setStartTime(DateTime startTime) {
         this.startTime = startTime;
     }
@@ -156,5 +154,45 @@ public class WorkDay {
 
     public String getDescription() {
         return description;
+    }
+
+    public long getStartTimeInMillis() {
+        return startTime.getMillis();
+    }
+
+    public long getEndTimeInMillis() {
+        return endTime.getMillis();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getProjectId() {
+        return projectId;
     }
 }

@@ -19,7 +19,7 @@ import com.ntnu.wip.nabl.R;
 public class MainActivityController extends AppCompatActivity implements
                                                         MainActivityView.ChangeActivityListener,
                                                         IChangeScreen.Activity {
-    MainActivityView mvcView;
+MainActivityView mvcView;
     IAuthentication auth = new FirestoreAuthentication();
 
     @Override
@@ -122,7 +122,7 @@ public class MainActivityController extends AppCompatActivity implements
             case 1: activityClass = ProjectClientSelectorController.class; break;
             case 2: break;
             case 3: activityClass = ExportController.class; break;
-            case 4: break;
+            case 4: activityClass = Settings.class; break;
             case 5: signOut(); break;
             default: break;
         }
