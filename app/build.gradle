@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:15.0.0'
     implementation 'com.google.firebase:firebase-firestore:15.0.0'
     implementation 'org.apache.commons:commons-text:1.3'
+    implementation 'com.android.support:design:27.1.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -44,9 +45,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // What we need for creating excel-sheets
-    implementation files ('./DistributedLibraries/poishadow-all.jar')
+    implementation files('./DistributedLibraries/poishadow-all.jar')
     testImplementation 'org.mockito:mockito-core:1.10.19'   // Mocking context
-
 
     // Handles time very well
     implementation group: 'joda-time', name: 'joda-time', version: '2.9.4'
@@ -57,4 +57,5 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
 

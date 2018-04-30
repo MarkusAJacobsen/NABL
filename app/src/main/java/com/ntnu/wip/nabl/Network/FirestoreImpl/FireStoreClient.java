@@ -6,12 +6,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Models.User;
+import com.ntnu.wip.nabl.Models.WorkDay;
 import com.ntnu.wip.nabl.Network.AbstractClient;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.DocumentSnapshotCallback;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.QuerySnapshotCallback;
@@ -22,6 +25,7 @@ import java.util.List;
 
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.CLIENT_COLLECTION;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_COLLECTION;
 
 public class FireStoreClient extends AbstractClient implements OnFailureListener {
@@ -85,8 +89,25 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void newLogEntry(LogEntry entry) {
-        add(LOG_ENTRY_COLLECTION, entry, entry.getId());
+    public void newLogEntry(WorkDay workDay) {
+        this.add(LOG_ENTRY_COLLECTION, workDay, workDay.getId());
+    }
+
+    @Override
+    public void getLogEntriesByUser(User user) {
+        this.db.collection(LOG_ENTRY_COLLECTION).whereEqualTo(LOG_ENTRY_USER_ID, user.getId())
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+
+                    List<WorkDay> workDays = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                        WorkDay day = doc.toObject(WorkDay.class);
+                        workDays.add(day);
+                    }
+
+                    this.setLastFetchedWorkdays(workDays);
+
+                });
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Models.User;
+import com.ntnu.wip.nabl.Models.WorkDay;
 
 import java.util.List;
 
@@ -17,7 +19,8 @@ public interface IClient {
     void updateClient(Client client);
     void deleteClient(Client client);
     void getLogEntry(String id);
-    void newLogEntry(LogEntry entry);
+    void newLogEntry(WorkDay workDay);
+    void getLogEntriesByUser(User user);
     void updateLogEntry(LogEntry entry);
     void deleteLogEntry(LogEntry entry);
     void newCompany(Company company);

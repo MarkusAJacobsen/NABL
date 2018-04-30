@@ -19,7 +19,7 @@ import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.Network.IClient;
 import com.ntnu.wip.nabl.R;
-import com.ntnu.wip.nabl.Utils;
+import com.ntnu.wip.nabl.MVCControllers.UserAuthentification.Utils;
 
 public class RegisterClientController extends Fragment implements IClientInputView.ClientInputListener {
     private ClientInputView mvcView;
