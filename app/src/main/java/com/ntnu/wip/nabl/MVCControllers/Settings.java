@@ -14,6 +14,7 @@ import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.R;
 
@@ -47,6 +48,11 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
         FirestoreAuthentication authentication = new FirestoreAuthentication();
 
         client.attach(new Observer() {
+            @Override
+            public void setSubject(IObserverSubject subject) {
+
+            }
+
             @Override
             public void update() {
             }
