@@ -21,6 +21,7 @@
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController" />
         <activity android:name=".MVCControllers.ExportController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
+        <activity android:name=".MVCControllers.ManageTimeLogging.LoggingInputController"/>
     </application>
 
 </manifest>

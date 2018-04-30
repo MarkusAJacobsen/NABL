@@ -75,5 +75,41 @@
     <string name="invalidDate">Invalid date</string>
 
     <string name="loggingView">Start Logging</string>
+    <string name="startTime">Start time</string>
+    <string name="endTime">End time</string>
+    <string name="breaks">Breaks</string>
+    <string name="overTime">Over Time</string>
+    <string name="specialTime">Special Time</string>
+    <string name="holiday">Holiday</string>
+    <string name="weekend">Weekend</string>
+    <string name="newLogging">New Log</string>
+
+    <string-array name="breakTiming">
+        <item>30 Minutes</item>
+        <item>1 Hour</item>
+        <item>1,5 Hours</item>
+        <item>2 Hours</item>
+    </string-array>
+
+    <string-array name="overTiming">
+        <item>30 Minutes</item>
+        <item>1 Hour</item>
+        <item>1,5 Hours</item>
+        <item>2 Hours</item>
+        <item>2,5 Hours</item>
+        <item>3 Hours</item>
+        <item>3,5 Hours</item>
+        <item>4 Hours</item>
+        <item>4,5 Hours</item>
+        <item>5 Hours</item>
+        <item>5,5 Hours</item>
+        <item>6 Hours</item>
+        <item>6,5 Hours</item>
+        <item>7 Hours</item>
+        <item>7,5 Hours</item>
+        <item>8 Hours</item>
+    </string-array>
+
+    <string name="descriptionHint">Write a short summary</string>
 
 </resources>

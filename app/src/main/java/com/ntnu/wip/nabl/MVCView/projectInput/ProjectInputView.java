@@ -41,7 +41,7 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
     @BindView(R.id.dateStart) TextView mDateStart;
     @BindView(R.id.dateEnd) TextView mDateEnd;
     @BindView(R.id.statusSpinner) Spinner mStatus;
-    @BindView(R.id.description) TextView mDescription;
+    @BindView(R.id.descriptionTitle) TextView mDescription;
     @BindView(R.id.organisation) Spinner mOrganisation;
 
     private DatePickerDialog dateDialog;

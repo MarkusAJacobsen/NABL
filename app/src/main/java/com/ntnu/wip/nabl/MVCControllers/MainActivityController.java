@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.Authentication.IAuthentication;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingController;
+import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingInputController;
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.Observers.SignOutObserver;

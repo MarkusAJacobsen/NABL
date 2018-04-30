@@ -1,15 +1,12 @@
 package com.ntnu.wip.nabl.MVCView.OverviewProject;
 
 import android.support.v7.app.ActionBar;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +17,7 @@ public class OverviewProjectView implements IOverviewProjectView {
     @BindView(R.id.address) TextView mAddress;
     @BindView(R.id.projectName) TextView mProjectName;
     @BindView(R.id.state) TextView mState;
-    @BindView(R.id.description) TextView mDescription;
+    @BindView(R.id.descriptionTitle) TextView mDescription;
     @BindView(R.id.start) TextView mStart;
     @BindView(R.id.end) TextView mEnd;
 
