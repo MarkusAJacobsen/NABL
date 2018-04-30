@@ -15,7 +15,9 @@ import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorView;
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
+import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
@@ -101,10 +103,11 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
     private void projectSelected(){
         FireStoreClient client = new FireStoreClient(getApplicationContext());
         client.getAllProjects();
-        ProjectCollectionObserver observer = new ProjectCollectionObserver(client);
 
-        observer.setOnUpdateListener(projects -> {
-            this.projects = (List) projects;
+        Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
+        observer.setSubject(client);
+        observer.setOnUpdateListener(receivedProjects -> {
+            this.projects = (List) receivedProjects;
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);
         });
@@ -114,8 +117,10 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         FireStoreClient client = new FireStoreClient(getApplicationContext());
         client.getAllClients();
 
-        new ClientCollectionObserver(client).setOnUpdateListener(clients -> {
-            this.clients = (List) clients;
+        Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
+        observer.setSubject(client);
+        observer.setOnUpdateListener(receivedClients -> {
+            this.clients = (List) receivedClients;
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.clients);
             mvcView.setResourceViewerAdapter(adapter);
         });

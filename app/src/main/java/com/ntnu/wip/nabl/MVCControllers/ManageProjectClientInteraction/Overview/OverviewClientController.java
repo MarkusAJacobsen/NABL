@@ -23,7 +23,9 @@ import com.ntnu.wip.nabl.MVCView.OverviewClient.IOverviewClientView;
 import com.ntnu.wip.nabl.MVCView.OverviewClient.OverviewClientView;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ClientObserver;
+import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.ProjectObserver;
 import com.ntnu.wip.nabl.R;
 
@@ -144,7 +146,10 @@ public class OverviewClientController extends Fragment implements IOverviewClien
     private void fetchModel(String id) {
         FireStoreClient client = new FireStoreClient(getContext());
         client.getClient(id);
-        new ClientObserver(client).setOnUpdateListener(obj -> {
+
+        Observer observer = ObserverFactory.create(ObserverFactory.CLIENT);
+        observer.setSubject(client);
+        observer.setOnUpdateListener(obj -> {
             model = (Client) obj;
             modelPresent = true;
             populateView();
