@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCView.LoggingView.ILoggingView;
@@ -28,6 +29,7 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
 
         this.mvcView = new LoggingView(getLayoutInflater(), null);
         this.mvcView.registerLoggingListener(this);
+
         this.mvcView.setActionBar(getSupportActionBar());
         this.mvcView.setActionBarTitle(getString(R.string.loggingView));
 
@@ -56,6 +58,12 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 
     /**

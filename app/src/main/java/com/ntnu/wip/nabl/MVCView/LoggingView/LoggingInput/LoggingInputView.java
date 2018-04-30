@@ -31,6 +31,7 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
         TimePickerDialog.OnTimeSetListener {
     private View rootView;
     private LoggingInputListener listener;
+    private ActionBar actionBar;
 
     @BindView(R.id.startingDate) TextView startingDate;
     @BindView(R.id.endingDate) TextView endingDate;
@@ -216,12 +217,13 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
 
     @Override
     public void setActionBar(ActionBar actionbar) {
-
+        this.actionBar = actionbar;
+        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void setActionBarTitle(String title) {
-
+        actionBar.setTitle(title);
     }
 
     @Override

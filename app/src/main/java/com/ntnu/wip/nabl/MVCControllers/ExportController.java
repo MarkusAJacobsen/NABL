@@ -27,6 +27,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
         this.mvcView = new ExportView(getLayoutInflater(), null);
         this.mvcView.registerExportListner(this);
+
         this.mvcView.setActionBar(getSupportActionBar());
         this.mvcView.setActionBarTitle(getString(R.string.exportProjectsTitle));
 
