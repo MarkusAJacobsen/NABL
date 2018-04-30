@@ -19,7 +19,7 @@ import com.ntnu.wip.nabl.R;
 public class MainActivityController extends AppCompatActivity implements
                                                         MainActivityView.ChangeActivityListener,
                                                         IChangeScreen.Activity {
-MainActivityView mvcView;
+    MainActivityView mvcView;
     IAuthentication auth = new FirestoreAuthentication();
 
     @Override
