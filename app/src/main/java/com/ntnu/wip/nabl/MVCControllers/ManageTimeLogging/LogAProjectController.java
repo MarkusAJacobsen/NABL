@@ -14,7 +14,6 @@ import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
-import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +54,9 @@ public class LogAProjectController extends Fragment implements IProjectListView.
 
         Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
         observer.setSubject(client);
-        observer.setOnUpdateListener(projects -> {
-            this.projects = (List) projects;
-            Adapter adapter = new ArrayAdapter<>(getContext(),
+        observer.setOnUpdateListener(receivedProjects -> {
+            this.projects = (List) receivedProjects;
+            Adapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
                     android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);
         });

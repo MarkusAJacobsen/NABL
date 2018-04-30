@@ -55,9 +55,9 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
 
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
         observer.setSubject(client);
-        observer.setOnUpdateListener(clients -> {
-            this.clients = (List) clients;
-            Adapter adapter = new ArrayAdapter<>(getContext(),
+        observer.setOnUpdateListener(receivedClients -> {
+            this.clients = (List) receivedClients;
+            Adapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
                     android.R.layout.simple_list_item_1, this.clients);
             mvcView.setResourceViewerAdapter(adapter);
         });

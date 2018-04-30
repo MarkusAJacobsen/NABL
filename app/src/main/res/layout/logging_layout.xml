@@ -35,17 +35,21 @@
 
     <TextView
         android:id="@+id/listViewTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/projectBtn"
         app:layout_constraintTop_toBottomOf="@+id/projectBtn" />
 
     <FrameLayout
         android:id="@+id/listView"
-        android:layout_width="411dp"
-        android:layout_height="392dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
