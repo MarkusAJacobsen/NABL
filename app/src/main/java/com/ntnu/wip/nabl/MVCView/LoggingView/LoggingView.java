@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 public class LoggingView implements ILoggingView {
     private View rootView;
     private LoggingViewListener listener;
+    private ActionBar actionBar;
 
     @BindView(R.id.projectBtn) ToggleButton chooseProjectView;
     @BindView(R.id.clientBtn) ToggleButton chooseClientView;
@@ -85,12 +86,13 @@ public class LoggingView implements ILoggingView {
 
     @Override
     public void setActionBar(ActionBar actionbar) {
-        // Implemented in LoggingController
+        this.actionBar = actionbar;
+        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void setActionBarTitle(String title) {
-        // Implemented in LoggingController
+        actionBar.setTitle(title);
     }
 
     @Override

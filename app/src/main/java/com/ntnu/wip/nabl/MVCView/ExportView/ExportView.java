@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 public class ExportView implements IExportView, DatePickerDialog.OnDateSetListener {
     private View rootView;
     private ExportInputListener listener;
+    private ActionBar actionBar;
 
     private Date sDate;
     private Date eDate;
@@ -138,12 +139,13 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
 
     @Override
     public void setActionBar(ActionBar actionbar) {
-        // Implemented in ExportController
+        this.actionBar = actionbar;
+        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void setActionBarTitle(String title) {
-        // Implemented in ExportController
+        actionBar.setTitle(title);
     }
 
     @Override

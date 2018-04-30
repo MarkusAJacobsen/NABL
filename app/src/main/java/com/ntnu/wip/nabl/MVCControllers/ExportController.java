@@ -17,9 +17,7 @@ import java.io.File;
 /**
  * Created by a7med on 25.04.18.
  */
-
 public class ExportController extends AppCompatActivity implements IExportView.ExportInputListener {
-
     private ExportView mvcView;
 
     @Override
@@ -28,6 +26,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
         this.mvcView = new ExportView(getLayoutInflater(), null);
         this.mvcView.registerExportListner(this);
+
         this.mvcView.setActionBar(getSupportActionBar());
         this.mvcView.setActionBarTitle(getString(R.string.exportProjectsTitle));
 
