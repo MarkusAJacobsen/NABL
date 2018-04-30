@@ -1,5 +1,6 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import java.util.List;
 public class LogAClientController extends Fragment implements IClientListView.ClientListListener {
     private ClientListView mvcView;
     private List<Client> clients = new ArrayList<>();
+    private Context context = null;
 
     /**
      * Android Fragment life cycle function, runs when the view is created
@@ -46,6 +48,16 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
     }
 
     /**
+     * Ensure that we have context via Parent activity before it is used in the fragment
+     * @param context Context
+     */
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    /**
      * Function to fetch Clients data from FireBase
      */
     private void fetchClients() {
@@ -56,10 +68,13 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
         observer.setSubject(client);
         observer.setOnUpdateListener(receivedClients -> {
-            this.clients = (List) receivedClients;
-            Adapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
-                    android.R.layout.simple_list_item_1, this.clients);
-            mvcView.setResourceViewerAdapter(adapter);
+
+            if(context != null) {
+                this.clients = (List) receivedClients;
+                Adapter adapter = new ArrayAdapter<>(context,
+                        android.R.layout.simple_list_item_1, this.clients);
+                mvcView.setResourceViewerAdapter(adapter);
+            }
         });
     }
 }

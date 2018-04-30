@@ -1,5 +1,7 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ import java.util.List;
 public class LogAProjectController extends Fragment implements IProjectListView.ProjectListListener {
     private ProjectListView mvcView;
     private List<Project> projects = new ArrayList<>();
+    private Context context = null;
 
     /**
      * Android Fragment life cycle function, runs when the view is created
@@ -45,6 +48,16 @@ public class LogAProjectController extends Fragment implements IProjectListView.
     }
 
     /**
+     * Ensure that we have context via Parent activity before it is used in the fragment
+     * @param context Context
+     */
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    /**
      * Function to fetch projects from FireBase
      */
     private void fetchProjects() {
@@ -55,10 +68,13 @@ public class LogAProjectController extends Fragment implements IProjectListView.
         Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
         observer.setSubject(client);
         observer.setOnUpdateListener(receivedProjects -> {
-            this.projects = (List) receivedProjects;
-            Adapter adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
-                    android.R.layout.simple_list_item_1, this.projects);
-            mvcView.setResourceViewerAdapter(adapter);
+
+            if(context != null) {
+                this.projects = (List) receivedProjects;
+                Adapter adapter = new ArrayAdapter<>(context,
+                        android.R.layout.simple_list_item_1, this.projects);
+                mvcView.setResourceViewerAdapter(adapter);
+            }
         });
     }
 }
