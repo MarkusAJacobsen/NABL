@@ -94,10 +94,18 @@ public class FirestoreAuthentication implements IAuthentication {
     public String getEmail() {
         FirebaseUser user = getCurrentUser();
 
-        if(user != null) {
-            return user.getEmail();
-        }
-        return null;
+        return user != null ? user.getEmail() : null;
+    }
+
+    /**
+     * Get currently logged in user id
+     * @return String
+     */
+    @Override
+    public String getUId() {
+        FirebaseUser user = getCurrentUser();
+
+        return user != null ? user.getUid() : null;
     }
 
     @Override
