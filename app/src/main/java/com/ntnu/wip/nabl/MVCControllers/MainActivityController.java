@@ -7,14 +7,10 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.Authentication.IAuthentication;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingController;
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
-import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.Observers.SignOutObserver;
 import com.ntnu.wip.nabl.R;
 

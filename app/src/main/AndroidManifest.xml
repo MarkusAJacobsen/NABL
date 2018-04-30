@@ -28,9 +28,7 @@
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController" />
         <activity android:name=".MVCControllers.ExportController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
-        <activity
-            android:name=".MVCControllers.UserAuthentification.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+        <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController"/>
     </application>
 
 </manifest>

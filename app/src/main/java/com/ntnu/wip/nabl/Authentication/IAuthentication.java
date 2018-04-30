@@ -45,4 +45,10 @@ public interface IAuthentication extends IObserverSubject{
      * @return String
      */
     String getEmail();
+
+    /**
+     * Get currently logged in user id
+     * @return String
+     */
+    String getUId();
 }
