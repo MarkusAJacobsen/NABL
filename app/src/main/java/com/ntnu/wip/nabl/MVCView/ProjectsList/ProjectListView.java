@@ -19,7 +19,7 @@ public class ProjectListView implements IProjectListView {
     private View rootView;
     private ProjectListListener listener;
 
-    @BindView(R.id.elementList) ListView projects;
+    @BindView(R.id.projectsList) ListView projects;
 
     /**
      * Constrictor that bind the layout to the view
