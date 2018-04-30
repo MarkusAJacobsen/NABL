@@ -98,6 +98,12 @@
     <string name="weekend">Weekend</string>
     <string name="newLogging">New Log</string>
 
+    <!-- Strings related to company registration -->
+    <string name="companyLabel">Company name</string>
+    <string name="companyOrgNumber">Organisation Number</string>
+    <string name="makeCompany">Submit Company</string>
+    <string name="createCompanyTitle">Register a company</string>
+
     <string-array name="breakTiming">
         <item>30 Minutes</item>
         <item>1 Hour</item>
