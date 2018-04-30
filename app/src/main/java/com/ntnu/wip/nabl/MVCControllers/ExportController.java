@@ -15,7 +15,9 @@ import com.ntnu.wip.nabl.MVCView.ExportView.IExportView;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
+import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
@@ -60,7 +62,9 @@ public class ExportController extends AppCompatActivity implements IExportView.E
         FireStoreClient client = new FireStoreClient(getApplicationContext());
         client.getAllProjects();
 
-        new ProjectCollectionObserver(client).setOnUpdateListener(projects -> {
+        Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
+        observer.setSubject(client);
+        observer.setOnUpdateListener(projects -> {
             this.projects = (List) projects;
             if (!this.projects.isEmpty() || this.projects != null) {
                 this.chosenObject = (Project) this.projects.get(0);     // First element
@@ -79,7 +83,9 @@ public class ExportController extends AppCompatActivity implements IExportView.E
         FireStoreClient client = new FireStoreClient(getApplicationContext());
         client.getAllClients();
 
-        new ClientCollectionObserver(client).setOnUpdateListener(clients -> {
+        Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
+        observer.setSubject(client);
+        observer.setOnUpdateListener(clients -> {
             this.clients = (List) clients;
             if (!this.clients.isEmpty() || this.clients != null) {
                 this.chosenObject = (Client) this.clients.get(0);     // First element
