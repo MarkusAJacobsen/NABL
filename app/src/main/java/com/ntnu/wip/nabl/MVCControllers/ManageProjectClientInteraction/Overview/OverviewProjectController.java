@@ -20,7 +20,7 @@ import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.Observers.Observers.ProjectObserver;
 import com.ntnu.wip.nabl.R;
-import com.ntnu.wip.nabl.MVCControllers.UserAuthentification.Utils;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.Locale;
 

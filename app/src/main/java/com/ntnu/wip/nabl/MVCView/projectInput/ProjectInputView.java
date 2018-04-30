@@ -15,7 +15,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
-import com.ntnu.wip.nabl.MVCControllers.UserAuthentification.Utils;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;

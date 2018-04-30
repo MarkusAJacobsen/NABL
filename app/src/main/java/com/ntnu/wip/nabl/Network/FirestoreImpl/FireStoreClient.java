@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.CLIENT_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANIES_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_PROJECT_FIELD;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_COLLECTION;
@@ -122,7 +125,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void newCompany(Company company) {
-
+        this.add(COMPANIES_COLLECTION, company, company.getId());
     }
 
     @Override
@@ -132,6 +135,57 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void deleteCompany(Company company) {
+
+    }
+
+    /**
+     * Fetches companies based on a user
+     * @param user the owner of the companies
+     */
+    @Override
+    public void getUserCompanies(User user) {
+        this.db.collection(COMPANIES_COLLECTION).whereEqualTo(COMPANY_USER_ID, user.getId())
+        .addSnapshotListener((queryDocumentSnapshots, e) -> {
+            List<Company> companies = new ArrayList<>();
+
+            for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                Company company = snap.toObject(Company.class);
+                companies.add(company);
+            }
+
+            this.setLastFetchedCompanies(companies);
+        });
+
+    }
+
+    @Override
+    public void getCompanyProjects(Company company) {
+        this.db.collection(PROJECT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    List<Project> projects = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                        Project project = snap.toObject(Project.class);
+                        projects.add(project);
+                    }
+
+                    this.setLastFetchedProjects(projects);
+                });
+    }
+
+    @Override
+    public void getCompanyClients(Company company) {
+        this.db.collection(CLIENT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    List<Project> projects = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                        Project project = snap.toObject(Project.class);
+                        projects.add(project);
+                    }
+
+                    this.setLastFetchedProjects(projects);
+                });
 
     }
 

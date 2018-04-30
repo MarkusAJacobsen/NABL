@@ -4,12 +4,9 @@ import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
 import com.ntnu.wip.nabl.Models.Project;
-<<<<<<< HEAD
 import com.ntnu.wip.nabl.Models.User;
 import com.ntnu.wip.nabl.Models.WorkDay;
-=======
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
->>>>>>> 2ae2bffe2be16556337cfefd13ca325156da47c9
 
 import java.util.List;
 
@@ -69,6 +66,12 @@ public interface IClient extends IObserverSubject {
     void newCompany(Company company);
     void updateCompany(Company company);
     void deleteCompany(Company company);
+
+    void getUserCompanies(User user);
+
+    void getCompanyProjects(Company company);
+
+    void getCompanyClients(Company company);
 
     /**
      * Get all projects in cloud

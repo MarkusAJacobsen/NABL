@@ -5,7 +5,11 @@ public interface FireStoreStatics {
     String PROJECT_COLLECTION = "projects";
     String CLIENT_COLLECTION = "clients";
     String LOG_ENTRY_COLLECTION = "logEntries";
+    String COMPANIES_COLLECTION = "companies";
 
     // Fields
     String LOG_ENTRY_USER_ID = "userId";
+    String COMPANY_USER_ID = "ownerId";
+    String COMPANY_PROJECT_FIELD = "companyId";
+    String COMPANY_CLIENT_FIELD = "";
 }

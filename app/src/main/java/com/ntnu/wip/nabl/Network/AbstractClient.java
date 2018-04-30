@@ -1,12 +1,10 @@
 package com.ntnu.wip.nabl.Network;
 
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.Project;
-<<<<<<< HEAD
 import com.ntnu.wip.nabl.Models.WorkDay;
-=======
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
->>>>>>> 2ae2bffe2be16556337cfefd13ca325156da47c9
 import com.ntnu.wip.nabl.Observers.Observer;
 
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,6 +21,9 @@ public abstract class AbstractClient implements IClient {
     private Client lastFetchedClient;
     private List<WorkDay> lastFetchedWorkdays;
     private WorkDay lastFetchedWorkday;
+    private List<Company> lastFetchedCompanies;
+    private List<Project> lastFetchedProjects;
+    private List<Client> lastFetchedClients;
 
     public List<Project> getProjects() {
         return projects;
@@ -77,5 +78,33 @@ public abstract class AbstractClient implements IClient {
 
     public void setLastFetchedWorkdays(List<WorkDay> lastFetchedWorkdays) {
         this.lastFetchedWorkdays = lastFetchedWorkdays;
+    }
+
+    public void setLastFetchedCompanies(List<Company> lastFetchedCompanies) {
+        this.lastFetchedCompanies = lastFetchedCompanies;
+    }
+
+    public void setLastFetchedClients(List<Client> lastFetchedClients) {
+        this.lastFetchedClients = lastFetchedClients;
+    }
+
+    public void setLastFetchedProjects(List<Project> lastFetchedProjects) {
+        this.lastFetchedProjects = lastFetchedProjects;
+    }
+
+    public List<Client> getLastFetchedClients() {
+        return lastFetchedClients;
+    }
+
+    public List<Company> getLastFetchedCompanies() {
+        return lastFetchedCompanies;
+    }
+
+    public List<Project> getLastFetchedProjects() {
+        return lastFetchedProjects;
+    }
+
+    public List<WorkDay> getLastFetchedWorkdays() {
+        return lastFetchedWorkdays;
     }
 }

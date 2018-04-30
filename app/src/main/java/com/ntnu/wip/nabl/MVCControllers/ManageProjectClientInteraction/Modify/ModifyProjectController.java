@@ -24,7 +24,7 @@ import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.State;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
-import com.ntnu.wip.nabl.MVCControllers.UserAuthentification.Utils;
+import com.ntnu.wip.nabl.Utils;
 
 public class ModifyProjectController extends Fragment implements IChangeScreen.Fragment, IProjectInputView.ProjectInputListener {
     private ProjectInputView mvcView;
