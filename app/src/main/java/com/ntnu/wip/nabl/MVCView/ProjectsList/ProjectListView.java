@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
 
@@ -20,7 +19,7 @@ public class ProjectListView implements IProjectListView {
     private View rootView;
     private ProjectListListener listener;
 
-    @BindView(R.id.projectsList) ListView projects;
+    @BindView(R.id.elementList) ListView projects;
 
     /**
      * Constrictor that bind the layout to the view

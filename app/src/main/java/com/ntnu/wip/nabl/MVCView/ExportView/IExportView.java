@@ -22,6 +22,4 @@ public interface IExportView extends IAbstractMvcView {
     void switchView();
     Date getStart();
     Date getEnd();
-    String getProjectID();
-    String getClientID();
 }
