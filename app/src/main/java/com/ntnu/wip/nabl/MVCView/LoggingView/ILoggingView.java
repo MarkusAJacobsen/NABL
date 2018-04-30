@@ -17,4 +17,5 @@ public interface ILoggingView extends IAbstractMvcView {
     void registerLoggingListener(LoggingViewListener listener);
     void setProjectText(String text);
     void setClientText(String text);
+    void updateTextViewTitle(String text);
 }
