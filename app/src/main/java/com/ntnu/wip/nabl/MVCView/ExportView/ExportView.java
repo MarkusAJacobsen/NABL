@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -27,6 +29,7 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     private View rootView;
     private ExportInputListener listener;
     private ActionBar actionBar;
+    private boolean switchMode = true;                 // True if Projects mode, False Clients mode
 
     private Date sDate;
     private Date eDate;
@@ -39,7 +42,7 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     private static final String CLIENT_TAG = "Client";
 
     @BindView(R.id.exportBtn) Button exportBtn;
-    @BindView(R.id.projectsList) Spinner projectsList;
+    @BindView(R.id.elementList) Spinner elementList;
     @BindView(R.id.editTextStartDate) TextView startDate;
     @BindView(R.id.editTextEndDate) TextView endDate;
     @BindView(R.id.selectorBtn) ImageButton selectorBtn;
@@ -149,7 +152,7 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     }
 
     @Override
-    public void registerExportListner(ExportInputListener listener) {
+    public void registerExportListener(ExportInputListener listener) {
         this.listener = listener;
     }
 
@@ -164,20 +167,21 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     }
 
     @Override
-    public void switchView() {
+    public boolean switchView() {
         if (this.selectorBtn.getTag() == this.PROJECT_TAG) {
             this.selectorBtn.setImageResource(this.CLIENT_ICON);
             this.selectorBtn.setTag(this.CLIENT_TAG);
             this.spinnerTitle.setText(R.string.clientList);
 
-            // TODO fetch Clients to spinner
+            this.switchMode = false;                    // Change to switch mode to client
         } else {
             this.selectorBtn.setImageResource(this.PROJECT_ICON);
             this.selectorBtn.setTag(this.PROJECT_TAG);
             this.spinnerTitle.setText(R.string.projectList);
 
-            // TODO fetch Projects to spinner
+            this.switchMode = true;                     // Change to switch mode to project
         }
+        return this.switchMode;
     }
 
     @Override
@@ -191,15 +195,8 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     }
 
     @Override
-    public String getProjectID() {
-        //TODO get selected project's ID
-        return null;
-    }
-
-    @Override
-    public String getClientID() {
-        //TODO get selected Client's ID
-        return null;
+    public void setResourceViewerAdapter(Adapter adapter) {
+        this.elementList.setAdapter((ArrayAdapter) adapter);
     }
 
     @Override
