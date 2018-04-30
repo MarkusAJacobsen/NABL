@@ -81,8 +81,6 @@ public class WorkDay {
         return wholeHours+halfHour;
     }
 
-
-
     // ################### SETTERS / GETTERS #####################
 
     // Date of the workday is decided by the first day of work

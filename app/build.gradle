@@ -45,9 +45,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // What we need for creating excel-sheets
+<<<<<<< HEAD
     implementation files('./DistributedLibraries/poishadow-all.jar')
     testImplementation 'org.mockito:mockito-core:1.10.19'   // Mocking context
 
+=======
+    implementation files ('./DistributedLibraries/poishadow-all.jar')
+    testImplementation 'org.mockito:mockito-core:1.10.19'   // Mocking context
+
+
+>>>>>>> b972eb6a08837652f07793052c6bb8adc7e53083
     // Handles time very well
     implementation group: 'joda-time', name: 'joda-time', version: '2.9.4'
 
