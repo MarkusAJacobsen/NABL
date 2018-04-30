@@ -1,28 +1,29 @@
 package com.ntnu.wip.nabl.Observers.Observers;
 
-import com.ntnu.wip.nabl.Network.AbstractClient;
+import com.ntnu.wip.nabl.Authentication.IAuthentication;
 import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.Observer;
 
-public class ProjectCollectionObserver extends Observer<AbstractClient> {
-    public ProjectCollectionObserver(AbstractClient client) {
-        subject = client;
-        subject.attach(this);
+/**
+ * Observer for when a logout event happens
+ */
+public class SignOutObserver extends Observer<IAuthentication> {
+    public SignOutObserver(IAuthentication subject) {
+        this.subject = subject;
+        this.subject.attach(this);
     }
 
     @Override
     public void update() {
-        //NO-OP
+        if(listener != null) {
+            listener.onUpdate(subject.getCurrentUser());
+        }
     }
 
     @Override
     public void update(Subscriptions sub) {
-        if(listener != null) {
-            if(sub == Subscriptions.PROJECTS) {
-                listener.onUpdate(subject.getProjects());
-            }
-        }
+        //NO-OP
     }
 
     @Override

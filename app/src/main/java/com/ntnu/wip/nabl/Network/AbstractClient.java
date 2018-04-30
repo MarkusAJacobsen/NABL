@@ -2,7 +2,11 @@ package com.ntnu.wip.nabl.Network;
 
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Project;
+<<<<<<< HEAD
 import com.ntnu.wip.nabl.Models.WorkDay;
+=======
+import com.ntnu.wip.nabl.Observers.IObserverSubject;
+>>>>>>> 2ae2bffe2be16556337cfefd13ca325156da47c9
 import com.ntnu.wip.nabl.Observers.Observer;
 
 import org.apache.poi.ss.usermodel.Workbook;
@@ -42,7 +46,7 @@ public abstract class AbstractClient implements IClient {
         return lastFetchedProject;
     }
 
-    public void setLastFetchedProject(Project lastFetchedProject) {
+    protected void setLastFetchedProject(Project lastFetchedProject) {
         this.lastFetchedProject = lastFetchedProject;
         notifyAllObservers(Subscriptions.PROJECT_SINGULAR);
     }
@@ -51,11 +55,12 @@ public abstract class AbstractClient implements IClient {
         return lastFetchedClient;
     }
 
-    public void setLastFetchedClient(Client lastFetchedClient) {
+    protected void setLastFetchedClient(Client lastFetchedClient) {
         this.lastFetchedClient = lastFetchedClient;
         notifyAllObservers(Subscriptions.CLIENT_SINGULAR);
     }
 
+    @Override
     public void attach(Observer observer){
         observers.add(observer);
     }
