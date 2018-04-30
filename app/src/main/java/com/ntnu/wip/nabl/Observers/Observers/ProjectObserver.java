@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectObserver extends Observer<AbstractClient> {
-    public ProjectObserver(AbstractClient client) {
-        subject = client;
-        subject.attach(this);
+    protected ProjectObserver() {}
+
+    @Override
+    public void setSubject(IObserverSubject subject) {
+        this.subject = (AbstractClient) subject;
+        this.subject.attach(this);
     }
 
     @Override

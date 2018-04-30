@@ -11,6 +11,8 @@ import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.Authentication.IAuthentication;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingController;
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
+import com.ntnu.wip.nabl.Observers.Observer;
+import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.SignOutObserver;
 import com.ntnu.wip.nabl.R;
 
@@ -50,7 +52,9 @@ public class MainActivityController extends AppCompatActivity implements
      * Sign out currently logged in user
      */
     private void signOut(){
-        new SignOutObserver(auth).setOnUpdateListener(obj -> {
+        Observer observer = ObserverFactory.create(ObserverFactory.SIGN_OUT);
+        observer.setSubject(auth);
+        observer.setOnUpdateListener(obj -> {
            if(auth.getCurrentUser() != null) {
                Toast.makeText(this, "Could not log out", Toast.LENGTH_SHORT).show();
            } else {
