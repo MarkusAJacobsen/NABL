@@ -39,12 +39,12 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.mvcView = new ClientListView(inflater, null);
-        this.mvcView.registerListener(this);
+        mvcView = new ClientListView(inflater, null);
+        mvcView.registerListener(this);
 
         fetchClients();
 
-        return this.mvcView.getRootView();
+        return mvcView.getRootView();
     }
 
     /**
@@ -61,7 +61,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
      * Function to fetch Clients data from FireBase
      */
     private void fetchClients() {
-        this.clients.clear();
+        clients.clear();
         FireStoreClient client = new FireStoreClient(getContext());
         client.getAllClients();
 
@@ -70,7 +70,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
         observer.setOnUpdateListener(receivedClients -> {
 
             if(context != null) {
-                this.clients = (List) receivedClients;
+                clients = (List) receivedClients;
                 Adapter adapter = new ArrayAdapter<>(context,
                         android.R.layout.simple_list_item_1, this.clients);
                 mvcView.setResourceViewerAdapter(adapter);

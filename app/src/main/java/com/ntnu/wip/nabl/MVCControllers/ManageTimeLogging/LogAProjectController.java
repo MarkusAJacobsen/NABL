@@ -39,12 +39,12 @@ public class LogAProjectController extends Fragment implements IProjectListView.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.mvcView = new ProjectListView(inflater, null);
-        this.mvcView.registerListener(this);
+        mvcView = new ProjectListView(inflater, null);
+        mvcView.registerListener(this);
 
         fetchProjects();
 
-        return this.mvcView.getRootView();
+        return mvcView.getRootView();
     }
 
     /**
@@ -61,7 +61,7 @@ public class LogAProjectController extends Fragment implements IProjectListView.
      * Function to fetch projects from FireBase
      */
     private void fetchProjects() {
-        this.projects.clear();
+        projects.clear();
         FireStoreClient client = new FireStoreClient(getContext());
         client.getAllProjects();
 
