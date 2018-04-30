@@ -71,7 +71,7 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
      * @param container
      */
     public LoggingInputView(LayoutInflater inflater, ViewGroup container) {
-        this.rootView = inflater.inflate(R.layout.new_logging_input, container);
+        this.rootView = inflater.inflate(R.layout.logging_input, container);
         ButterKnife.bind(this, rootView);
 
         configureDatePickers();
