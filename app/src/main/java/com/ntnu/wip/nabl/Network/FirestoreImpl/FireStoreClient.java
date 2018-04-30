@@ -135,16 +135,16 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void deleteCompany(Company company) {
-
+        this.delete(COMPANIES_COLLECTION, company.getId());
     }
 
     /**
      * Fetches companies based on a user
-     * @param user the owner of the companies
+     * @param uid the owner of the companies
      */
     @Override
-    public void getUserCompanies(User user) {
-        this.db.collection(COMPANIES_COLLECTION).whereEqualTo(COMPANY_USER_ID, user.getId())
+    public void getUserCompanies(String uid) {
+        this.db.collection(COMPANIES_COLLECTION).whereEqualTo(COMPANY_USER_ID, uid)
         .addSnapshotListener((queryDocumentSnapshots, e) -> {
             List<Company> companies = new ArrayList<>();
 

@@ -3,6 +3,7 @@ package com.ntnu.wip.nabl.Models;
 import android.content.Context;
 
 import com.google.firebase.firestore.Exclude;
+import com.ntnu.wip.nabl.Utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
@@ -46,7 +47,7 @@ public class WorkDay {
         startTime = start;
         endTime = stop;
 
-
+        id = Utils.generateUniqueId(24);
         breakTime = 0;
         holyDay = 0;
         weekEnd = 0;

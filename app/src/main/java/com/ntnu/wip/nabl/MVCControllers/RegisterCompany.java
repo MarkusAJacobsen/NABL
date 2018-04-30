@@ -2,14 +2,13 @@ package com.ntnu.wip.nabl.MVCControllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.MVCView.registerCompanyView.IRegistrationListener;
 import com.ntnu.wip.nabl.MVCView.registerCompanyView.RegisterCompanyView;
-import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Models.Company;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 
 public class RegisterCompany extends AppCompatActivity implements IRegistrationListener {
 
@@ -21,12 +20,8 @@ public class RegisterCompany extends AppCompatActivity implements IRegistrationL
         this.mvcView = new RegisterCompanyView(getLayoutInflater(), null);
         this.mvcView.addSubmissionListener(this);
 
-        this.mvcView.addActionBar(getActionBar());
-        this.mvcView.setActionBarTitle(getString(R.string.createCompanyTitle));
-
-        setContentView(R.layout.activity_register_company);
+        setContentView(this.mvcView.getRootView());
     }
-
 
 
     /**
@@ -34,6 +29,12 @@ public class RegisterCompany extends AppCompatActivity implements IRegistrationL
      */
     @Override
     public void submission() {
-        Toast.makeText(this, "Something", Toast.LENGTH_SHORT);
+        FireStoreClient client = new FireStoreClient(getApplicationContext());
+
+        Company company = new Company(mvcView.getCompanyName(), mvcView.getOrganisationNumber());
+        FirestoreAuthentication authentication = new FirestoreAuthentication();
+        company.setOwnerId(authentication.getUId());
+        client.newCompany(company);
+        finish();
     }
 }

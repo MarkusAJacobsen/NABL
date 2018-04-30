@@ -80,12 +80,16 @@ public class RegisterCompanyView implements IRegiserCompanyView {
     @Override
     public void addActionBar(ActionBar actionBar) {
         this.actionBar = actionBar;
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void setActionBarTitle(String title) {
         this.actionBar.setTitle(title);
+    }
+
+    @Override
+    public View getRootView() {
+        return this.rootView;
     }
 
 }

@@ -5,5 +5,6 @@ public enum Subscriptions {
     PROJECT_SINGULAR,
     CLIENTS,
     CLIENT_SINGULAR,
-    LOG_ENTRIES
+    LOG_ENTRIES,
+    COMPANIES
 }

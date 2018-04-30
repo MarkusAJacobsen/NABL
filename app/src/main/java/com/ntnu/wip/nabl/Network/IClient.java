@@ -67,7 +67,7 @@ public interface IClient extends IObserverSubject {
     void updateCompany(Company company);
     void deleteCompany(Company company);
 
-    void getUserCompanies(User user);
+    void getUserCompanies(String uid);
 
     void getCompanyProjects(Company company);
 

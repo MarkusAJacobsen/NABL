@@ -15,7 +15,7 @@ public class Company {
     public Company(String name, String orgnr) {
         this.name = name;
         this.orgnr = orgnr;
-        Utils.generateUniqueId(24);
+        this.id = Utils.generateUniqueId(24);
     }
 
     public Company(String id, String name, String orgnr) {
@@ -54,5 +54,10 @@ public class Company {
 
     public String getOwnerId() {
         return ownerId;
+    }
+
+    @Override
+    public String toString() {
+        return this.name + "- " + this.orgnr;
     }
 }

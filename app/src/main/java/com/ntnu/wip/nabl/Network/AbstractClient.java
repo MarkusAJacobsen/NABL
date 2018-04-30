@@ -82,6 +82,7 @@ public abstract class AbstractClient implements IClient {
 
     public void setLastFetchedCompanies(List<Company> lastFetchedCompanies) {
         this.lastFetchedCompanies = lastFetchedCompanies;
+        notifyAllObservers(Subscriptions.COMPANIES);
     }
 
     public void setLastFetchedClients(List<Client> lastFetchedClients) {

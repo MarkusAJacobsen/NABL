@@ -29,7 +29,8 @@
         <activity android:name=".MVCControllers.ExportController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController" />
-        <activity android:name=".MVCControllers.RegisterCompany"></activity>
+        <activity android:name=".MVCControllers.RegisterCompany" />
+        <activity android:name=".MVCControllers.Settings"></activity>
     </application>
 
 </manifest>
