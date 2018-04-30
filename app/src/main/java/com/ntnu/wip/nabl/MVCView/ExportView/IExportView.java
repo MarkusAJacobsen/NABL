@@ -18,6 +18,7 @@ public interface IExportView extends IAbstractMvcView {
         void invalidDateSupplied();
         void exportBtnPressed();
         void changeSelectionBtnPressed();
+        void updateChosenObject(int pos, boolean mode);
     }
 
     // Functions to implement in the View

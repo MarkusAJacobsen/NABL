@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -59,25 +60,14 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
 
         ButterKnife.bind(this, rootView);
 
-        fetchProjects();
         configureDatePickers();
         configureButton();
+        configureSpinner();
     }
 
     //---------------------------------------------------------------------------------------------
     // Private functions
     //
-
-    /**
-     * Function to fetch project from firebase
-     */
-    private void fetchProjects() {
-        //TODO Fetch projects
-    }
-
-    private void fetchClients() {
-        //TODO Fetch Clients data
-    }
 
     private void configureButton() {
         this.exportBtn.setOnClickListener(View -> {
@@ -89,6 +79,25 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
         this.selectorBtn.setOnClickListener(View -> {
             if(this.listener != null) {
                 this.listener.changeSelectionBtnPressed();
+            }
+        });
+    }
+
+    /**
+     * Function to configure selecting items on spinners
+     */
+    private void configureSpinner() {
+        this.elementList.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                if (listener != null){
+                    listener.updateChosenObject(pos, switchMode);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // NO OP
             }
         });
     }

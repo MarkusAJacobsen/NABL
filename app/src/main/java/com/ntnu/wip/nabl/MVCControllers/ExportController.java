@@ -31,6 +31,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private ExportView mvcView;
     private List<Project> projects = new ArrayList<>();
     private List<Client> clients = new ArrayList<>();
+    private Object chosenObject = new Object();
 
     /**
      * Android Activity life cycle function
@@ -61,6 +62,9 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
         new ProjectCollectionObserver(client).setOnUpdateListener(projects -> {
             this.projects = (List) projects;
+            if (!this.projects.isEmpty() || this.projects != null) {
+                this.chosenObject = (Project) this.projects.get(0);     // First element
+            }
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(),
                     android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);
@@ -77,6 +81,9 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
         new ClientCollectionObserver(client).setOnUpdateListener(clients -> {
             this.clients = (List) clients;
+            if (!this.clients.isEmpty() || this.clients != null) {
+                this.chosenObject = (Client) this.clients.get(0);     // First element
+            }
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(),
                     android.R.layout.simple_list_item_1, this.clients);
             mvcView.setResourceViewerAdapter(adapter);
@@ -130,12 +137,31 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     }
 
     /**
+     * Function that assign the chosenObject on the View
+     * @param pos       element position on it's list
+     * @param viewMode  <True>if project</True> .. <False>if Client</False>
+     */
+    @Override
+    public void updateChosenObject(int pos, boolean viewMode) {
+        if (viewMode) {
+            if (this.projects.size()>0) {
+                this.chosenObject = (Project) this.projects.get(pos);
+            }
+        } else {
+            if (this.clients.size()>0) {
+                this.chosenObject = (Client) this.clients.get(pos);
+            }
+        }
+    }
+
+    /**
      * Proof of concept, follow this
      * https://stackoverflow.com/questions/9974987/how-to-send-an-email-with-a-file-attachment-in-android
      *
      */
     @Deprecated
     private void mockMailSender() {
+        // TODO => ChosenObject hold the object that need to be exported either Project or client
         String filename = "assignment1.pdf";
         File fileLocation = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),
                 filename);
