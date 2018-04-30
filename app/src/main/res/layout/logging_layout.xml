@@ -33,25 +33,24 @@
         app:layout_constraintStart_toEndOf="@+id/projectBtn"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <!--  <FrameLayout
-        android:id="@+id/contentFrame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/project">              -->
-
+    <TextView
+        android:id="@+id/listViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/projectBtn"
+        app:layout_constraintTop_toBottomOf="@+id/projectBtn" />
 
     <FrameLayout
         android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="411dp"
+        android:layout_height="392dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/projectBtn"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/listViewTitle">
 
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>

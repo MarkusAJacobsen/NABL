@@ -5,11 +5,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 
 import com.ntnu.wip.nabl.MVCView.ClientsList.ClientListView;
 import com.ntnu.wip.nabl.MVCView.ClientsList.IClientListView;
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +23,7 @@ import java.util.List;
  */
 public class LogAClientController extends Fragment implements IClientListView.ClientListListener {
     private ClientListView mvcView;
-    private List<Client> clients;
+    private List<Client> clients = new ArrayList<>();
 
     /**
      * Android Fragment life cycle function, runs when the view is created
@@ -33,6 +38,24 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
         this.mvcView = new ClientListView(inflater, null);
         this.mvcView.registerListener(this);
 
+        fetchClients();
+
         return this.mvcView.getRootView();
+    }
+
+    /**
+     * Function to fetch Clients data from FireBase
+     */
+    private void fetchClients() {
+        this.clients.clear();
+        FireStoreClient client = new FireStoreClient(getContext());
+        client.getAllClients();
+
+        new ClientCollectionObserver(client).setOnUpdateListener(clients -> {
+            this.clients = (List) clients;
+            Adapter adapter = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_list_item_1, this.clients);
+            mvcView.setResourceViewerAdapter(adapter);
+        });
     }
 }

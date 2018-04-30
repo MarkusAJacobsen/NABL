@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.ntnu.wip.nabl.R;
@@ -24,6 +25,8 @@ public class LoggingView implements ILoggingView {
     @BindView(R.id.projectBtn) ToggleButton chooseProjectView;
     @BindView(R.id.clientBtn) ToggleButton chooseClientView;
     @BindView(R.id.listView) FrameLayout showList;
+    @BindView(R.id.listViewTitle) TextView title;
+
 
     /**
      * Constructor to bind the layout to the view, and configure menu buttons.
@@ -120,5 +123,10 @@ public class LoggingView implements ILoggingView {
         this.chooseClientView.setText(text);
         this.chooseClientView.setTextOn(text);
         this.chooseClientView.setTextOff(text);
+    }
+
+    @Override
+    public void updateTextViewTitle(String text) {
+        this.title.setText(text);
     }
 }

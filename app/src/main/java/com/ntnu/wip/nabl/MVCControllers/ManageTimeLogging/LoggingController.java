@@ -55,6 +55,7 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
         //TODO => Show under a list of projects to choose between them
         try {
             transactionManager(LogAProjectController.class, null);
+            this.mvcView.updateTextViewTitle(getString(R.string.projectList));
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
@@ -75,6 +76,7 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
         //TODO => Show under a list of clients to choose between them
         try {
             transactionManager(LogAClientController.class, null);
+            this.mvcView.updateTextViewTitle(getString(R.string.projectList));
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
