@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView2"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView38"
+            android:layout_width="73dp"
+            android:layout_height="21dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/startTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/startingDate"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="date"
+            app:layout_constraintStart_toStartOf="@+id/textView29"
+            app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+        <EditText
+            android:id="@+id/startingTime"
+            android:layout_width="150dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="time"
+            app:layout_constraintStart_toStartOf="@+id/textView38"
+            app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+        <TextView
+            android:id="@+id/textView42"
+            android:layout_width="121dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/end"
+            app:layout_constraintStart_toStartOf="@+id/textView29"
+            app:layout_constraintTop_toBottomOf="@+id/startingDate" />
+
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="129dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="54dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/endTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startingTime" />
+
+        <EditText
+            android:id="@+id/endingTime"
+            android:layout_width="150dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="33dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView41"
+            app:layout_constraintTop_toBottomOf="@+id/textView41" />
+
+        <EditText
+            android:id="@+id/endingDate"
+            android:layout_width="151dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="date"
+            app:layout_constraintStart_toStartOf="@+id/textView29"
+            app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/breaks"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/textView29"
+            app:layout_constraintTop_toBottomOf="@+id/endingDate" />
+
+        <Spinner
+            android:id="@+id/breaksCounter"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            app:layout_constraintStart_toStartOf="@+id/textView30"
+            app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="87dp"
+            android:layout_height="19dp"
+            android:layout_marginEnd="96dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/overTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/endingTime"
+            app:layout_constraintTop_toBottomOf="@+id/endingTime" />
+
+        <Spinner
+            android:id="@+id/overTimeCounter"
+            android:layout_width="151dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView31"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+        <TextView
+            android:id="@+id/textView43"
+            android:layout_width="113dp"
+            android:layout_height="29dp"
+            android:layout_marginEnd="247dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/description"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView30"
+            app:layout_constraintTop_toBottomOf="@+id/breaksCounter" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="320dp"
+            android:layout_height="159dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:gravity="top|left"
+            android:hint="@string/descriptionHint"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView43" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="169dp"
+            android:layout_height="33dp"
+            android:layout_marginEnd="191dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:ems="10"
+            android:fontFamily="@font/roboto"
+            android:text="@string/specialTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView43"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/extraHours"
+            android:layout_width="331dp"
+            android:layout_height="134dp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/description"
+            app:layout_constraintStart_toStartOf="@+id/description"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox">
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_column="6"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_row="0"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:text="@string/endTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_column="5"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="8dp"
+                android:layout_row="0"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:text="@string/startTime"
+                app:layout_constraintEnd_toStartOf="@+id/textView32"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="65dp"
+                android:layout_height="19dp"
+                android:layout_column="4"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="43dp"
+                android:layout_row="3"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:text="@string/weekend"
+                app:layout_constraintEnd_toStartOf="@+id/weekendStartTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/weekendEndTime"
+                android:layout_width="113dp"
+                android:layout_height="wrap_content"
+                android:layout_column="6"
+                android:layout_marginEnd="5dp"
+                android:layout_row="3"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView32"
+                app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+            <EditText
+                android:id="@+id/weekendStartTime"
+                android:layout_width="114dp"
+                android:layout_height="wrap_content"
+                android:layout_column="5"
+                android:layout_marginEnd="21dp"
+                android:layout_row="3"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="time"
+                app:layout_constraintEnd_toStartOf="@+id/weekendEndTime"
+                app:layout_constraintStart_toStartOf="@+id/textView33"
+                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="66dp"
+                android:layout_height="18dp"
+                android:layout_column="4"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="30dp"
+                android:layout_row="1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:text="@string/holiday"
+                app:layout_constraintEnd_toStartOf="@+id/holidayEndTime"
+                app:layout_constraintStart_toStartOf="@+id/textView34"
+                app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+            <EditText
+                android:id="@+id/holidayStartTime"
+                android:layout_width="109dp"
+                android:layout_height="wrap_content"
+                android:layout_column="5"
+                android:layout_marginTop="5dp"
+                android:layout_row="1"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="time"
+                app:layout_constraintStart_toStartOf="@+id/weekendEndTime"
+                app:layout_constraintTop_toBottomOf="@+id/weekendEndTime" />
+
+            <EditText
+                android:id="@+id/holidayEndTime"
+                android:layout_width="114dp"
+                android:layout_height="wrap_content"
+                android:layout_column="6"
+                android:layout_marginEnd="21dp"
+                android:layout_marginTop="5dp"
+                android:layout_row="1"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="time"
+                app:layout_constraintEnd_toStartOf="@+id/holidayStartTime"
+                app:layout_constraintStart_toStartOf="@+id/weekendStartTime"
+                app:layout_constraintTop_toBottomOf="@+id/weekendStartTime" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

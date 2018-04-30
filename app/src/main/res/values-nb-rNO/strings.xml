@@ -5,6 +5,15 @@
         <item>Klienter</item>
     </string-array>
 
+    <string-array name="sideDrawerMenuItems">
+        <item>Logg timer</item>
+        <item>Behandle prosjekter/klienter</item>
+        <item>Oppsummering</item>
+        <item>Eksporter</item>
+        <item>Innstillinger</item>
+        <item>Log ut</item>
+    </string-array>
+
     <string name="app_name">NABL</string>
     <string name="manageProjectsClientsTitle">Administer prosjekter/klienter</string>
     <string name="modify">Endre</string>
@@ -53,5 +62,11 @@
     <string name="invalidDate">Ugyldig dato</string>
     <string name="loggingView">Start Logging</string>
     <string name="headerDescription">Arbeidsbeskrivelse</string>
+    <string name="makeCompany">Lag organisasjon</string>
+    <string name="companyLabel">Organisasjonsnavn</string>
+    <string name="companyOrgNumber">Organisasjonsnummer</string>
+    <string name="createCompanyTitle">Registrer en organisasjon</string>
+    <string name="wantTodDeleteString">Vil du virkelig slette denne organisasjonen?</string>
+    <string name="deleteTitleString">Slett organisasjon</string>
 
 </resources>

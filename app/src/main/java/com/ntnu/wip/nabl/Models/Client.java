@@ -9,6 +9,7 @@ import java.util.Locale;
 
 public class Client {
     private String id;
+    private String companyId;
     private String name;
     private ContactInformation contactInformation;
     private Address address;
@@ -57,6 +58,14 @@ public class Client {
 
     public void setContactInformation(ContactInformation contactInformation) {
         this.contactInformation = contactInformation;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getCompanyId() {
+        return companyId;
     }
 
     @Override

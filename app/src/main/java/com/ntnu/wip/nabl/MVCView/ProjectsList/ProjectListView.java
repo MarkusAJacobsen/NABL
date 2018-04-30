@@ -4,8 +4,10 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
 
@@ -31,7 +33,19 @@ public class ProjectListView implements IProjectListView {
         this.rootView = inflater.inflate(R.layout.project_listview, container);
         ButterKnife.bind(this, this.rootView);
 
-        // TODO => Fetch Lists and get configure onClickListener
+        configureListView();
+    }
+
+    /**
+     * Function to configure the List view and apply Item Clicking
+     */
+    private void configureListView() {
+        this.projects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //TODO => Do something to the item.
+            }
+        });
     }
 
 
@@ -53,5 +67,14 @@ public class ProjectListView implements IProjectListView {
     @Override
     public void registerListener(ProjectListListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Function to update the ListView
+     * @param adapter
+     */
+    @Override
+    public void setResourceViewerAdapter(Adapter adapter) {
+        this.projects.setAdapter((ListAdapter) adapter);
     }
 }

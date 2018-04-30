@@ -1,5 +1,7 @@
 package com.ntnu.wip.nabl.MVCView.ClientsList;
 
+import android.widget.Adapter;
+
 import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 
 /**
@@ -14,4 +16,5 @@ public interface IClientListView extends IAbstractMvcView {
 
     // Functions to implement in the View
     void registerListener(ClientListListener listener);
+    void setResourceViewerAdapter(Adapter adapter);
 }

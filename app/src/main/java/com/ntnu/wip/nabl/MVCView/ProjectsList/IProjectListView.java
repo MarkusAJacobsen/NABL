@@ -1,5 +1,7 @@
 package com.ntnu.wip.nabl.MVCView.ProjectsList;
 
+import android.widget.Adapter;
+
 import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 
 /**
@@ -14,4 +16,5 @@ public interface IProjectListView extends IAbstractMvcView{
 
     // Functions to implement in the View
     void registerListener(ProjectListListener listener);
+    void setResourceViewerAdapter(Adapter adapter);
 }

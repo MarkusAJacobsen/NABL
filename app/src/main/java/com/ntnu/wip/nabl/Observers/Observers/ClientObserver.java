@@ -4,15 +4,24 @@ import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Network.AbstractClient;
 import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientObserver extends Observer {
-    public ClientObserver(AbstractClient client) {
-        subject = client;
-        subject.attach(this);
+public class ClientObserver extends Observer<AbstractClient> {
+    protected ClientObserver() {}
+
+    @Override
+    public void setSubject(IObserverSubject subject) {
+        this.subject = (AbstractClient) subject;
+        this.subject.attach(this);
+    }
+
+    @Override
+    public void update() {
+        //NO_OP
     }
 
     @Override

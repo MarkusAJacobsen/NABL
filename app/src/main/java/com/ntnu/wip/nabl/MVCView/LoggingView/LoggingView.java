@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.ntnu.wip.nabl.R;
@@ -19,10 +20,13 @@ import butterknife.ButterKnife;
 public class LoggingView implements ILoggingView {
     private View rootView;
     private LoggingViewListener listener;
+    private ActionBar actionBar;
 
     @BindView(R.id.projectBtn) ToggleButton chooseProjectView;
     @BindView(R.id.clientBtn) ToggleButton chooseClientView;
     @BindView(R.id.listView) FrameLayout showList;
+    @BindView(R.id.listViewTitle) TextView title;
+
 
     /**
      * Constructor to bind the layout to the view, and configure menu buttons.
@@ -85,12 +89,13 @@ public class LoggingView implements ILoggingView {
 
     @Override
     public void setActionBar(ActionBar actionbar) {
-        // Implemented in LoggingController
+        this.actionBar = actionbar;
+        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void setActionBarTitle(String title) {
-        // Implemented in LoggingController
+        actionBar.setTitle(title);
     }
 
     @Override
@@ -118,5 +123,10 @@ public class LoggingView implements ILoggingView {
         this.chooseClientView.setText(text);
         this.chooseClientView.setTextOn(text);
         this.chooseClientView.setTextOff(text);
+    }
+
+    @Override
+    public void updateTextViewTitle(String text) {
+        this.title.setText(text);
     }
 }
