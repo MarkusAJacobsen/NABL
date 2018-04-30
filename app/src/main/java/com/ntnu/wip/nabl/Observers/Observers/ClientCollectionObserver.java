@@ -3,12 +3,16 @@ package com.ntnu.wip.nabl.Observers.Observers;
 import com.ntnu.wip.nabl.Network.AbstractClient;
 import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 
 public class ClientCollectionObserver extends Observer<AbstractClient> {
-    public ClientCollectionObserver(AbstractClient client) {
-        subject = client;
-        subject.attach(this);
+    protected ClientCollectionObserver() {}
+
+    @Override
+    public void setSubject(IObserverSubject subject) {
+        this.subject = (AbstractClient) subject;
+        this.subject.attach(this);
     }
 
     @Override
