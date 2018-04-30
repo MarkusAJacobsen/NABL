@@ -16,7 +16,6 @@ import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
-import com.ntnu.wip.nabl.R;
 
 public class Settings extends AppCompatActivity implements ISettingsView.SettingsListener {
 
@@ -71,6 +70,7 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
             public void setOnUpdateListener(AddOnUpdateListener listener) {
 
             }
+
         });
 
 
