@@ -76,7 +76,7 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
         //TODO => Show under a list of clients to choose between them
         try {
             transactionManager(LogAClientController.class, null);
-            this.mvcView.updateTextViewTitle(getString(R.string.projectList));
+            this.mvcView.updateTextViewTitle(getString(R.string.clientList));
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
