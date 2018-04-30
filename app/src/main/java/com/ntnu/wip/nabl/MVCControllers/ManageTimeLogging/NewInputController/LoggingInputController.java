@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging;
+package com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.NewInputController;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
