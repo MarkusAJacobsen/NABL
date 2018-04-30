@@ -66,5 +66,7 @@
     <string name="companyLabel">Organisasjonsnavn</string>
     <string name="companyOrgNumber">Organisasjonsnummer</string>
     <string name="createCompanyTitle">Registrer en organisasjon</string>
+    <string name="wantTodDeleteString">Vil du virkelig slette denne organisasjonen?</string>
+    <string name="deleteTitleString">Slett organisasjon</string>
 
 </resources>

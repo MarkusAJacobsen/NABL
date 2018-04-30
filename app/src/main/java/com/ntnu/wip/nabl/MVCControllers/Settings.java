@@ -1,11 +1,11 @@
 package com.ntnu.wip.nabl.MVCControllers;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.MVCView.Settings.ISettingsView;
@@ -16,6 +16,7 @@ import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
+import com.ntnu.wip.nabl.R;
 
 public class Settings extends AppCompatActivity implements ISettingsView.SettingsListener {
 
@@ -38,8 +39,29 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
 
     @Override
     public void deleteCompany(Company company) {
-        FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.deleteCompany(company);
+        AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+
+        builder.setMessage(getString(R.string.wantTodDeleteString))
+        .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FireStoreClient client = new FireStoreClient(getApplicationContext());
+                client.deleteCompany(company);
+            }
+        })
+        .setNegativeButton(getString(android.R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // I DONT DO SHIT!
+            }
+        })
+                .setTitle(R.string.deleteTitleString)
+
+        .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     private void setCompanyList() {
@@ -70,7 +92,6 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
             public void setOnUpdateListener(AddOnUpdateListener listener) {
 
             }
-
         });
 
 

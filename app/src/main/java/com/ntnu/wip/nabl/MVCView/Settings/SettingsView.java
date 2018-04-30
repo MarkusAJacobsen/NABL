@@ -69,6 +69,9 @@ public class SettingsView implements ISettingsView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Company company = (Company) companyList.getAdapter().getItem(position);
+
+
+
                 for (ISettingsView.SettingsListener listener: settingsListenerList) {
                     listener.deleteCompany(company);
                 }
