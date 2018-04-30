@@ -27,23 +27,23 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.mvcView = new LoggingView(getLayoutInflater(), null);
-        this.mvcView.registerLoggingListener(this);
+        mvcView = new LoggingView(getLayoutInflater(), null);
+        mvcView.registerLoggingListener(this);
 
-        this.mvcView.setActionBar(getSupportActionBar());
-        this.mvcView.setActionBarTitle(getString(R.string.loggingView));
+        mvcView.setActionBar(getSupportActionBar());
+        mvcView.setActionBarTitle(getString(R.string.loggingView));
 
         configureButtons();
 
-        setContentView(this.mvcView.getRootView());
+        setContentView(mvcView.getRootView());
     }
 
     /**
      * Function to add text on View's Toggle-buttons.
      */
     private void configureButtons() {
-        this.mvcView.setProjectText(getString(R.string.project));
-        this.mvcView.setClientText(getString(R.string.client));
+        mvcView.setProjectText(getString(R.string.project));
+        mvcView.setClientText(getString(R.string.client));
     }
 
     /**
@@ -55,6 +55,7 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
         //TODO => Show under a list of projects to choose between them
         try {
             transactionManager(LogAProjectController.class, null);
+            mvcView.updateTextViewTitle(getString(R.string.projectList));
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
@@ -75,6 +76,7 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
         //TODO => Show under a list of clients to choose between them
         try {
             transactionManager(LogAClientController.class, null);
+            mvcView.updateTextViewTitle(getString(R.string.clientList));
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
