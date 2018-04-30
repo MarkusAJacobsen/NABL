@@ -177,14 +177,14 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     public void getCompanyClients(Company company) {
         this.db.collection(CLIENT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    List<Project> projects = new ArrayList<>();
+                    List<Client> clients = new ArrayList<>();
 
                     for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
-                        Project project = snap.toObject(Project.class);
-                        projects.add(project);
+                        Client client = snap.toObject(Client.class);
+                        clients.add(client);
                     }
 
-                    this.setLastFetchedProjects(projects);
+                    this.setLastFetchedClients(clients);
                 });
 
     }
