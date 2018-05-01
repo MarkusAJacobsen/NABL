@@ -40,10 +40,9 @@ public class ProjectListView implements IProjectListView {
      * Function to configure the List view and apply Item Clicking
      */
     private void configureListView() {
-        this.projects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //TODO => Do something to the item.
+        projects.setOnItemClickListener((adapterView, view, position, l) -> {
+            if(listener != null) {
+                listener.projectSelected(adapterView.getAdapter().getItem(position));
             }
         });
     }

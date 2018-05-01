@@ -40,10 +40,9 @@ public class ClientListView implements IClientListView {
      * Function to configure the List view and apply Item Clicking
      */
     private void configureListView() {
-        this.clients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //TODO => Do something to the item.
+        clients.setOnItemClickListener((adapterView, view, position, l) -> {
+            if(listener != null) {
+                listener.clientSelected(adapterView.getAdapter().getItem(position));
             }
         });
     }

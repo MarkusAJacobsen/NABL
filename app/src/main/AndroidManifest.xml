@@ -28,7 +28,8 @@
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController" />
         <activity android:name=".MVCControllers.ExportController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
-        <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController" />
+        <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController"
+            android:windowSoftInputMode="stateHidden"/> <!-- To hide the keyboard when activity start -->
         <activity android:name=".MVCControllers.RegisterCompany" />
         <activity android:name=".MVCControllers.Settings"></activity>
     </application>
