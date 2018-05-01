@@ -112,6 +112,7 @@ public class TimeSheet {
         this.project = project;
         this.user = user;
         this.workDays = workDays;
+        inizializeTimeSheet();
     }
 
     private void inizializeTimeSheet() {
@@ -122,6 +123,22 @@ public class TimeSheet {
         creationHelper = workbook.getCreationHelper();
         sheet = workbook.createSheet(this.extractPeriod());
 
+    }
+
+    /**
+     * The autoresize-function provided by POI does not work when there is no java.awt library
+     * this function makes resize the column based on the number of characters.
+     * NOTE that this method is not that precise
+     * @param row the row that will be used for resize
+     * @param column the column that should be resized
+     */
+    private void resizeColumn(Row row, int column, double degree) {
+        Cell cell = row.getCell(column);
+        cell.getCellStyle().getFontIndex();
+        int contentLength = cell.getStringCellValue().length();
+        Double addition = contentLength*450.0*degree;
+        int width =  addition.intValue();
+        sheet.setColumnWidth(column, width);
     }
 
 
@@ -230,9 +247,16 @@ public class TimeSheet {
 
         for (int i = FIRST_HEADER_COLUMN; i < cellHeaders.size()+FIRST_HEADER_COLUMN; i++) {
             cell = headerRow.createCell(i);
-            cell.setCellValue(cellHeaders.get(i-FIRST_HEADER_COLUMN));
+            String cellValue = cellHeaders.get(i-FIRST_HEADER_COLUMN);
+            cell.setCellValue(cellValue);
             cell.setCellStyle(cellStyle);
-            sheet.autoSizeColumn(i);
+            if (cellValue.equals(context.getString(R.string.headerDate)) ||
+                cellValue.equals(context.getString(R.string.headerDescription))) {
+                resizeColumn(headerRow, i, 2);
+            } else {
+                resizeColumn(headerRow, i, 1.0);
+            }
+
         }
 
         sheet.getRow(HEADER_ROW_NUMBER).setHeight((short) 500);
@@ -363,7 +387,7 @@ public class TimeSheet {
      * Extract if this is only for a month or from a month to another
      * @return either ex: april or april-june
      */
-    private String extractPeriod() {
+    public String extractPeriod() {
 
         if (workDays.size() == 0) {
             return "NONE";
@@ -432,7 +456,7 @@ public class TimeSheet {
      * @return a row with formulas
      */
     private void createSumRow(int rowNumber) {
-        Row row = sheet.createRow(rowNumber+1);
+        Row row = sheet.createRow(rowNumber+2);
         int columns = createHeaderList().size();
 
         Cell cell;
@@ -447,9 +471,11 @@ public class TimeSheet {
 
             for (int j = 0; j < ROWS_TO_SUM.length; j++) {
                 if (i == ROWS_TO_SUM[j]) {
-                    String firstCell = this.sheet.getRow(HEADER_ROW_NUMBER+1).getCell(i).getAddress().formatAsString();
-                    String lastCell = this.sheet.getRow(rowNumber-2).getCell(i).getAddress().formatAsString();
-                    cell.setCellFormula("SUM("+firstCell+":"+lastCell+")");
+                    if (rowNumber-HEADER_ROW_NUMBER > 0) {
+                        String firstCell = this.sheet.getRow(HEADER_ROW_NUMBER+1).getCell(i).getAddress().formatAsString();
+                        String lastCell = this.sheet.getRow(rowNumber-2).getCell(i).getAddress().formatAsString();
+                        cell.setCellFormula("SUM("+firstCell+":"+lastCell+")");
+                    }
                 }
             }
         }
@@ -478,7 +504,7 @@ public class TimeSheet {
     private void addEmployeeInformation() {
         Row row = sheet.createRow(EMPLOYEE_INFORMATION_ROW);
 
-        CellRangeAddress address = new CellRangeAddress(EMPLOYEE_INFORMATION_ROW, EMPLOYEE_INFORMATION_ROW, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+4);
+        CellRangeAddress address = new CellRangeAddress(EMPLOYEE_INFORMATION_ROW, EMPLOYEE_INFORMATION_ROW, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);
         sheet.addMergedRegion(address);
         row.setHeight((short) 400);
 
@@ -495,7 +521,7 @@ public class TimeSheet {
     private void addCompanyInformation(Company  company) {
         Row row = sheet.createRow(RECIPIENT_INFORMATION);
 
-        CellRangeAddress address = new CellRangeAddress(RECIPIENT_INFORMATION, RECIPIENT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+4);
+        CellRangeAddress address = new CellRangeAddress(RECIPIENT_INFORMATION, RECIPIENT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);
         sheet.addMergedRegion(address);
         row.setHeight((short) 400);
 
@@ -510,7 +536,7 @@ public class TimeSheet {
     private void addProjectInformation() {
         Row row = sheet.createRow(EMPLOYEE_INFORMATION_ROW);
 
-        CellRangeAddress address = new CellRangeAddress(PROJECT_INFORMATION, PROJECT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+4);
+        CellRangeAddress address = new CellRangeAddress(PROJECT_INFORMATION, PROJECT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);
         sheet.addMergedRegion(address);
         row.setHeight((short) 400);
 
@@ -527,7 +553,7 @@ public class TimeSheet {
     private void addClientInformation() {
         Row row = sheet.createRow(EMPLOYEE_INFORMATION_ROW);
 
-        CellRangeAddress address = new CellRangeAddress(RECIPIENT_INFORMATION, RECIPIENT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+4);
+        CellRangeAddress address = new CellRangeAddress(RECIPIENT_INFORMATION, RECIPIENT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);
         sheet.addMergedRegion(address);
         row.setHeight((short) 400);
 
