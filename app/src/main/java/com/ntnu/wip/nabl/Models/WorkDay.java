@@ -60,10 +60,16 @@ public class WorkDay {
         overTime = 0;
     }
 
+    public WorkDay(long startTime, long stopTime) {
+        this.startTime = new DateTime(startTime);
+        this.endTime = new DateTime(stopTime);
+    }
+
     /**
      * Round to first begun half-hour
      * @return
      */
+    @Exclude
     public double getTotalHours() {
 
         Hours hours = Hours.hoursBetween(startTime, endTime);
@@ -156,6 +162,7 @@ public class WorkDay {
     }
 
     // Hours - break
+    @Exclude
     public double getTotal() {
         return getTotalHours()-getBreakTime();
     }
@@ -174,6 +181,14 @@ public class WorkDay {
 
     public long getEndTimeInMillis() {
         return endTime.getMillis();
+    }
+
+    public void setStartTimeInMillis(long startTimeInMillis) {
+        startTime = new DateTime(startTimeInMillis);
+    }
+
+    public void setEndTimeInMillis(long endTimeInMillis) {
+        endTime = new DateTime(endTimeInMillis);
     }
 
     public String getId() {
@@ -207,4 +222,5 @@ public class WorkDay {
     public String getProjectId() {
         return projectId;
     }
+
 }
