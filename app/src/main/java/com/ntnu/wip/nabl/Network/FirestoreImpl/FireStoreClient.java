@@ -239,7 +239,6 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
         });
 
         query.get();
-
     }
 
     @Override
@@ -276,49 +275,9 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
         });
     }
 
-
-
-    @Override
-    public void getCompanyProjects() {
-        if(company == null) {
-            return;
-        }
-
-        this.db.collection(PROJECT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    List<Project> projects = new ArrayList<>();
-
-                    for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
-                        Project project = snap.toObject(Project.class);
-                        project.setCompany(company);
-                        projects.add(project);
-                    }
-
-                    this.setLastFetchedProjects(projects);
-                });
-    }
-
-    @Override
-    public void getCompanyClients(Company company) {
-        this.db.collection(CLIENT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    List<Client> clients = new ArrayList<>();
-
-                    for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
-                        Client client = snap.toObject(Client.class);
-                        clients.add(client);
-                    }
-
-                    this.setLastFetchedClients(clients);
-                });
-
-    }
-
     @Override
     public void getAllProjects() throws CompanyNotFoundException {
-        if(company == null) {
-            abort();
-        }
+        checkCompany();
 
         fetchCollectionNested(ROOT_LEVEL_DATA, company.getName(), PROJECT_COLLECTION, snapshot -> {
             List<Project> toBeReturned = new ArrayList<>();
@@ -428,6 +387,16 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.updateComplete, Toast.LENGTH_SHORT).show());
     }
 
+    /**
+     * A bit on the dumber side, but since you cant actually do something with a collection,
+     * we are limited to a even number of identifiers, so this method is customized for our need
+     * and not very dynamic
+     * @param root String - top level identifier
+     * @param childName String - Middle level identifier
+     * @param resourceType String - Last level identifier
+     * @param toUpdate Object
+     * @param documentId String
+     */
     private void updateNested(String root, String childName, String resourceType, Object toUpdate, String documentId) {
         db.collection(root)
                 .document(childName)
@@ -446,6 +415,15 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.successDeleted, Toast.LENGTH_SHORT).show());
     }
 
+    /**
+     * A bit on the dumber side, but since you cant actually do something with a collection,
+     * we are limited to a even number of identifiers, so this method is customized for our need
+     * and not very dynamic
+     * @param root String - top level identifier
+     * @param childName String - Middle level identifier
+     * @param resourceType String - Last level identifier
+     * @param documentId String
+     */
     private void deleteNested(String root, String childName, String resourceType, String documentId) {
         db.collection(root)
                 .document(childName)

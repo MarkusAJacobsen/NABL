@@ -17,49 +17,49 @@ import java.util.List;
  */
 public interface IClient extends IObserverSubject {
     /**
-     * Get project
+     * Get project based on Company
      * @param id Project id - int
      */
     void getProject(String id) throws CompanyNotFoundException;
 
     /**
-     * Write new project to cloud
+     * Write new project to cloud based on Company
      * @param project Project
      */
     void writeNewProject(Project project) throws CompanyNotFoundException;
 
     /**
-     * Update project in cloud
+     * Update project in cloud based on Company
      * @param project Project
      */
     void updateProject(Project project) throws CompanyNotFoundException;
 
     /**
-     * Delete project from cloud
+     * Delete project from cloud based on Company
      * @param project Project
      */
     void deleteProject(Project project) throws CompanyNotFoundException;
 
     /**
-     * Get client
+     * Get client based on Company
      * @param id Client id - Int
      */
     void getClient(String id) throws CompanyNotFoundException;
 
     /**
-     * Write new client to cloud
+     * Write new client to cloud based on Company
      * @param client Client
      */
     void writeNewClient(Client client) throws CompanyNotFoundException;
 
     /**
-     * Update client in cloud
+     * Update client in cloud based on Company
      * @param client Client
      */
     void updateClient(Client client) throws CompanyNotFoundException;
 
     /**
-     * Delete client from cloud
+     * Delete client from cloud based on Company
      * @param client Client
      */
     void deleteClient(Client client) throws CompanyNotFoundException;
@@ -73,17 +73,13 @@ public interface IClient extends IObserverSubject {
 
     void getUserCompanies(String uid);
 
-    void getCompanyProjects();
-
-    void getCompanyClients(Company company);
-
     /**
-     * Get all projects in cloud
+     * Get all projects in cloud based on Company
      */
     void getAllProjects() throws CompanyNotFoundException;
 
     /**
-     * Get all client from cloud
+     * Get all client from cloud based on Company
      */
     void getAllClients() throws CompanyNotFoundException;
     void getAllCompanies();
