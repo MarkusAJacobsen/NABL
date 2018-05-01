@@ -20,6 +20,7 @@ public interface ISettingsView extends IAbstractMvcView {
 
     interface SettingsListener {
         void createNewCompany();
-        void deleteCompany(Company company);
+        void deleteCompany(int position);
+        void companySelectedAsWorkspace(int position);
     }
 }

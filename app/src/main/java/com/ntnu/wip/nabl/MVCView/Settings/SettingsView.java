@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
+import com.ntnu.wip.nabl.Adapters.ICompanyListAdapterCallback;
 import com.ntnu.wip.nabl.Adapters.ViewHolders.CompanyListViewHolder;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.R;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by klingen on 30.04.18.
  */
 
-public class SettingsView implements ISettingsView {
+public class SettingsView implements ISettingsView, ICompanyListAdapterCallback {
     private View rootView;
     private ActionBar actionBar;
 
@@ -77,24 +78,22 @@ public class SettingsView implements ISettingsView {
 
     @Override
     public void setListAdapter(CompanyListAdapter adapter) {
+        adapter.setListener(this);
         this.companyList.setAdapter(adapter);
 
-        //configureItemButtons(adapter);
-        this.companyList.setOnItemClickListener((parent, view, position, id) -> {
-            Company company = (Company) companyList.getAdapter().getItem(position);
-
-            for (SettingsListener listener: settingsListenerList) {
-                listener.deleteCompany(company);
-            }
-        });
-        // Add some sort of listener or similar
     }
 
-    private void configureItemButtons(CompanyListAdapter adapter) {
-        CompanyListViewHolder holder = adapter.getHolder();
+    @Override
+    public void deletePressed(int position) {
+        for (SettingsListener listener: settingsListenerList) {
+            listener.deleteCompany(position);
+        }
+    }
 
-        holder.delete.setOnClickListener(view -> {
-            System.out.println(holder.description.getText());
-        });
+    @Override
+    public void selectedWorkspace(int position) {
+        for (SettingsListener listener: settingsListenerList) {
+            listener.companySelectedAsWorkspace(position);
+        }
     }
 }

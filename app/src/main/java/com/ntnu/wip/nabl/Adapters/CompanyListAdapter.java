@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Adapters.ViewHolders.CompanyListViewHolder;
 import com.ntnu.wip.nabl.Models.Company;
@@ -19,6 +18,7 @@ public class CompanyListAdapter extends BaseAdapter {
     private List<Company> companies;
     private View row;
     private CompanyListViewHolder holder;
+    private ICompanyListAdapterCallback listener;
 
     public CompanyListAdapter(Context context, List<Company> companies) {
         this.context = context;
@@ -51,9 +51,16 @@ public class CompanyListAdapter extends BaseAdapter {
 
         holder.description.setText(companies.get(position).toString());
 
-        holder.delete.setOnClickListener(pressedView -> {
-            Toast.makeText(context, "Delete pressed in item "+position, Toast.LENGTH_SHORT).show();
-        });
+        if(listener != null) {
+            holder.delete.setOnClickListener(pressedView -> {
+                listener.deletePressed(position);
+            });
+
+            holder.workspace.setOnClickListener(pressedView -> {
+                listener.selectedWorkspace(position);
+                deselectEverythingElse();
+            });
+        }
 
         return row;
     }
@@ -70,7 +77,15 @@ public class CompanyListAdapter extends BaseAdapter {
         holder.workspace = row.findViewById(R.id.workspace);
     }
 
+    private void deselectEverythingElse(){
+        
+    }
+
     public CompanyListViewHolder getHolder(){
         return holder;
+    }
+
+    public void setListener(ICompanyListAdapterCallback listener) {
+        this.listener = listener;
     }
 }
