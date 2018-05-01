@@ -151,10 +151,6 @@ public class ExportController extends AppCompatActivity implements IExportView.E
                 User user = new User(firestoreAuthentication.getUId(), "missing", new ContactInformation());
                 Company company = client.getLastFetchedCompanies().get(0);
 
-                if (company == null) {
-                    company = new Company("UNKNOWN", "0");
-                }
-
                 if (sub == Subscriptions.LOG_ENTRIES) {
                     if (chosenObject.getClass() == Project.class) {
                         sheet = new TimeSheet(getApplicationContext(), (Project) chosenObject, user, client.getLastFetchedWorkdays());
@@ -177,9 +173,6 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
             }
         });
-
-        // Fetch the user companies
-        client.getUserCompanies(firestoreAuthentication.getUId());
 
 
         // Proof of concept of sending the file to Email or cloud storing
