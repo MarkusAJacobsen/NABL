@@ -6,6 +6,9 @@ import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 
+/**
+ * Observer for project collection change
+ */
 public class ProjectCollectionObserver extends Observer<AbstractClient> {
     protected ProjectCollectionObserver() {}
 

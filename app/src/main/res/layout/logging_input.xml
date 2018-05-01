@@ -215,40 +215,24 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/extraHours"
             android:layout_width="331dp"
-            android:layout_height="134dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="79dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/description"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/description"
             app:layout_constraintTop_toBottomOf="@+id/checkBox">
 
             <TextView
-                android:id="@+id/textView32"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:layout_column="6"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_row="0"
-                android:ems="10"
-                android:fontFamily="@font/roboto"
-                android:text="@string/endTime"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/textView33"
-                android:layout_width="115dp"
-                android:layout_height="wrap_content"
+                android:layout_width="59dp"
+                android:layout_height="16dp"
                 android:layout_column="5"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="74dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="37dp"
                 android:layout_row="0"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
-                android:text="@string/startTime"
-                app:layout_constraintEnd_toStartOf="@+id/textView32"
+                android:text="@string/hours"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -257,87 +241,52 @@
                 android:layout_width="65dp"
                 android:layout_height="19dp"
                 android:layout_column="4"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="43dp"
+                android:layout_marginEnd="74dp"
+                android:layout_marginTop="8dp"
                 android:layout_row="3"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:text="@string/weekend"
-                app:layout_constraintEnd_toStartOf="@+id/weekendStartTime"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/weekendEndTime"
-                android:layout_width="113dp"
-                android:layout_height="wrap_content"
-                android:layout_column="6"
-                android:layout_marginEnd="5dp"
-                android:layout_row="3"
-                android:ems="10"
-                android:focusable="false"
-                android:inputType="time"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView32"
-                app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
-            <EditText
-                android:id="@+id/weekendStartTime"
-                android:layout_width="114dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/weekendHours"
+                android:layout_width="93dp"
+                android:layout_height="47dp"
                 android:layout_column="5"
-                android:layout_marginEnd="21dp"
                 android:layout_row="3"
                 android:ems="10"
-                android:focusable="false"
-                android:inputType="time"
-                app:layout_constraintEnd_toStartOf="@+id/weekendEndTime"
-                app:layout_constraintStart_toStartOf="@+id/textView33"
-                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+                android:inputType="phone"
+                android:text="0"
+                app:layout_constraintStart_toStartOf="@+id/textView34"
+                app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
             <TextView
                 android:id="@+id/textView37"
                 android:layout_width="66dp"
                 android:layout_height="18dp"
                 android:layout_column="4"
-                android:layout_marginEnd="4dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="8dp"
                 android:layout_row="1"
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:text="@string/holiday"
-                app:layout_constraintEnd_toStartOf="@+id/holidayEndTime"
-                app:layout_constraintStart_toStartOf="@+id/textView34"
-                app:layout_constraintTop_toBottomOf="@+id/textView34" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/holidayStartTime"
-                android:layout_width="109dp"
-                android:layout_height="wrap_content"
-                android:layout_column="5"
-                android:layout_marginTop="5dp"
-                android:layout_row="1"
-                android:ems="10"
-                android:focusable="false"
-                android:inputType="time"
-                app:layout_constraintStart_toStartOf="@+id/weekendEndTime"
-                app:layout_constraintTop_toBottomOf="@+id/weekendEndTime" />
-
-            <EditText
-                android:id="@+id/holidayEndTime"
-                android:layout_width="114dp"
+                android:id="@+id/holidayHours"
+                android:layout_width="96dp"
                 android:layout_height="wrap_content"
                 android:layout_column="6"
-                android:layout_marginEnd="21dp"
-                android:layout_marginTop="5dp"
                 android:layout_row="1"
                 android:ems="10"
-                android:focusable="false"
-                android:inputType="time"
-                app:layout_constraintEnd_toStartOf="@+id/holidayStartTime"
-                app:layout_constraintStart_toStartOf="@+id/weekendStartTime"
-                app:layout_constraintTop_toBottomOf="@+id/weekendStartTime" />
+                android:inputType="phone"
+                android:text="0"
+                app:layout_constraintStart_toStartOf="@+id/textView37"
+                app:layout_constraintTop_toBottomOf="@+id/textView37" />
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

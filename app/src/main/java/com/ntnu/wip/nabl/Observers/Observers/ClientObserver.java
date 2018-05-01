@@ -10,6 +10,9 @@ import com.ntnu.wip.nabl.Observers.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Observer for single Client change
+ */
 public class ClientObserver extends Observer<AbstractClient> {
     protected ClientObserver() {}
 
