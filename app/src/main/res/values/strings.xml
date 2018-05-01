@@ -50,6 +50,8 @@
     <string name="finished">Finished</string>
     <string name="inputInvalid">Some fields are invalid/not filled</string>
     <string name="address">Address</string>
+    <string name="workspaceSat">Current company sat</string>
+    <string name="workspaceNotSat">Company not specified in settings</string>
 
     <!-- EXCEL-related names -->
     <string name="headerDate">Date</string>
@@ -100,9 +102,9 @@
     <string name="newLogging">New Log</string>
     <string name="hours">Hours:</string>
 
-    <string name="type">type</string>
-    <string name="id">id</string>
-    <string name="userID">userID</string>
+    <string name="type" translatable="false">type</string>
+    <string name="id" translatable="false">id</string>
+    <string name="userID">userId</string>
 
 
     <!-- Strings related to company registration -->

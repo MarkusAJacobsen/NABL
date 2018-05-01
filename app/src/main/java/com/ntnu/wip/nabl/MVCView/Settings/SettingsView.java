@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 public class SettingsView implements ISettingsView, ICompanyListAdapterCallback {
     private View rootView;
     private ActionBar actionBar;
+    private int savedOption = 0;
 
 
     @BindView(R.id.createCompanySettingsButton)
@@ -84,6 +85,11 @@ public class SettingsView implements ISettingsView, ICompanyListAdapterCallback 
     }
 
     @Override
+    public int getSelectedOption() {
+        return savedOption;
+    }
+
+    @Override
     public void deletePressed(int position) {
         for (SettingsListener listener: settingsListenerList) {
             listener.deleteCompany(position);
@@ -94,6 +100,7 @@ public class SettingsView implements ISettingsView, ICompanyListAdapterCallback 
     public void selectedWorkspace(int position) {
         for (SettingsListener listener: settingsListenerList) {
             listener.companySelectedAsWorkspace(position);
+            savedOption = position;
         }
     }
 }

@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.ExportView.ExportView;
 import com.ntnu.wip.nabl.MVCView.ExportView.IExportView;
 import com.ntnu.wip.nabl.Models.Client;
@@ -141,6 +142,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     public void exportBtnPressed() {
         //TODO => Generate the File
         FireStoreClient client = new FireStoreClient(this);
+
         FirestoreAuthentication firestoreAuthentication = new FirestoreAuthentication();
 
         client.attach(new Observer() {
@@ -257,6 +259,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     @Override
     public void changeSelectionBtnPressed() {
         final boolean mode = this.mvcView.switchView();
+
         if(mode) {
             fetchProjects();
         } else {

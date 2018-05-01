@@ -1,6 +1,7 @@
 package com.ntnu.wip.nabl.Network.FirestoreImpl;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,8 +12,12 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.Authentication.IAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
+import com.ntnu.wip.nabl.MVCControllers.Settings;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
@@ -26,6 +31,7 @@ import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.R;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +59,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     private Context context;
     private IAuthentication auth;
     private String loggedInUser;
-    private String company;
+    private String companyName;
 
     public FireStoreClient(Context context) {
         db = FirebaseFirestore.getInstance();
@@ -61,9 +67,47 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
         establishUserAndCompany();
     }
 
-    private void establishUserAndCompany(){
+    /**
+     * Get logged in user and user saved company workspace
+     * This is needed to insert and fetch from the database
+     * in a hierarchly correct way
+     */
+    private void establishUserAndCompany() {
         auth = new FirestoreAuthentication();
         loggedInUser = auth.getEmail();
+        getCompanyFromPreferences();
+    }
+
+    /**
+     * Get company from preferences, this is sat in settings
+     * If no company is sat return null
+     */
+    private void getCompanyFromPreferences() {
+        SharedPreferences preferences = context.getSharedPreferences(Settings.PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+
+        if(preferences.contains(Settings.SELECTED_WORKSPACE_PREFERENCE_FIELD)) {
+            final String companyString = preferences.getString(Settings.SELECTED_WORKSPACE_PREFERENCE_FIELD, "");
+
+            if(companyString.equals("")) {
+                companyName = null;
+            }
+
+            final Type token = new TypeToken<Company>(){}.getType();
+            final Company company = new Gson().fromJson(companyString, token);
+
+            companyName = company.getName();
+        } else {
+            companyName = null;
+        }
+    }
+
+    /**
+     * If execution abort is needed. E.g. company not sat
+     * @throws CompanyNotFoundException Company not found
+     * TODO generify
+     */
+    private void abort() throws CompanyNotFoundException{
+       throw new CompanyNotFoundException();
     }
 
     @Override
@@ -75,8 +119,11 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void writeNewProject(Project project) {
-        this.addNested(project, project.getId(), ROOT_LEVEL_DATA, loggedInUser, PROJECT_COLLECTION);
+    public void writeNewProject(Project project) throws CompanyNotFoundException {
+        if(companyName == null) {
+            abort();
+        }
+        this.addNested(project, project.getId(), ROOT_LEVEL_DATA, companyName, PROJECT_COLLECTION);
     }
 
     @Override
@@ -98,8 +145,11 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void writeNewClient(Client client) {
-        this.addNested(client, client.getId(), ROOT_LEVEL_DATA, loggedInUser, CLIENT_COLLECTION);
+    public void writeNewClient(Client client) throws CompanyNotFoundException {
+        if(companyName == null) {
+            abort();
+        }
+        this.addNested(client, client.getId(), ROOT_LEVEL_DATA, companyName, CLIENT_COLLECTION);
     }
 
     @Override

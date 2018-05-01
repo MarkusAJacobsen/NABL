@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.Settings.ISettingsView;
 import com.ntnu.wip.nabl.MVCView.Settings.SettingsView;
 import com.ntnu.wip.nabl.Models.Company;
@@ -35,8 +36,20 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
     private FireStoreClient client;
     private FirestoreAuthentication authentication;
 
+    /**
+     * Settings preference file name
+     */
     public static final String PREFERENCE_FILE_NAME = "settings_preferences";
+
+    /**
+     * Preference field for saved workspace/company
+     */
     public static final String SELECTED_WORKSPACE_PREFERENCE_FIELD = "selectedWorkspace";
+
+    /**
+     * Preference field name for selected workspace/company position in list
+     */
+    public static final String SAVED_WORKSPACE_POSITION_PREFERENCE_FIELD = "savedOption";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +63,9 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
         setContentView(mvcView.getRootView());
     }
 
+    /**
+     * Establish needed dependencies for this class to function
+     */
     private void createDependencies(){
         client = new FireStoreClient(this);
         authentication = new FirestoreAuthentication();
@@ -81,6 +97,12 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
 
     }
 
+    /**
+     * Company selected in the Company list. This selection will be saved to
+     * preferences and represents the current company which a user will
+     * log hours/create project/client against
+     * @param position int
+     */
     @Override
     public void companySelectedAsWorkspace(int position) {
         selectedWorkspace = companies.get(position);
@@ -101,7 +123,7 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
             public void update(Subscriptions sub) {
                 if (sub == Subscriptions.COMPANIES) {
                     companies = client.getLastFetchedCompanies();
-                    CompanyListAdapter adapter = new CompanyListAdapter(getApplicationContext(), companies);
+                    CompanyListAdapter adapter = new CompanyListAdapter(getApplicationContext(), companies, getSavedOption());
                     mvcView.setListAdapter(adapter);
                 }
             }
@@ -129,18 +151,37 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Save selected workspace/company to preferences.
+     * Do this by marshall the data structure and put it
+     * as a string to preferences.
+     */
     private void saveSelectedWorkspaceCompany(){
         if(selectedWorkspace == null) {
             return;
         }
 
+        final int savedOption = mvcView.getSelectedOption();
         final String selectedWorkSpaceString = new Gson().toJson(selectedWorkspace);
+
         SharedPreferences preferences = getSharedPreferences(PREFERENCE_FILE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString(SELECTED_WORKSPACE_PREFERENCE_FIELD, selectedWorkSpaceString);
+        editor.putInt(SAVED_WORKSPACE_POSITION_PREFERENCE_FIELD, savedOption);
         editor.apply();
 
-        Toast.makeText(getApplicationContext(), "Workspace saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.workspaceSat), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Fetched selected workspace position from preferences.
+     * If not found return default 0 - the first element in any list
+     * @return int
+     */
+    private int getSavedOption(){
+        SharedPreferences preferences = getSharedPreferences(PREFERENCE_FILE_NAME, MODE_PRIVATE);
+
+        return preferences.getInt(SAVED_WORKSPACE_POSITION_PREFERENCE_FIELD, 0);
     }
 }

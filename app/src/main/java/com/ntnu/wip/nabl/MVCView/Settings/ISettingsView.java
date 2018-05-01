@@ -17,6 +17,7 @@ public interface ISettingsView extends IAbstractMvcView {
     void addSettingsListener(SettingsListener listener);
     View getRootView();
     void setListAdapter(CompanyListAdapter adapter);
+    int getSelectedOption();
 
     interface SettingsListener {
         void createNewCompany();

@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController;
 import com.ntnu.wip.nabl.MVCView.ProjectsList.IProjectListView;
 import com.ntnu.wip.nabl.MVCView.ProjectsList.ProjectListView;

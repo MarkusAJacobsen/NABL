@@ -1,5 +1,6 @@
 package com.ntnu.wip.nabl.Network;
 
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
@@ -25,7 +26,7 @@ public interface IClient extends IObserverSubject {
      * Write new project to cloud
      * @param project Project
      */
-    void writeNewProject(Project project);
+    void writeNewProject(Project project) throws CompanyNotFoundException;
 
     /**
      * Update project in cloud
@@ -49,7 +50,7 @@ public interface IClient extends IObserverSubject {
      * Write new client to cloud
      * @param client Client
      */
-    void writeNewClient(Client client);
+    void writeNewClient(Client client) throws CompanyNotFoundException;
 
     /**
      * Update client in cloud

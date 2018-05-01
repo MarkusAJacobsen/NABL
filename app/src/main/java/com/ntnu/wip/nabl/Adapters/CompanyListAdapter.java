@@ -14,6 +14,10 @@ import com.ntnu.wip.nabl.R;
 
 import java.util.List;
 
+/**
+ * Custom adapter for settings company list containg
+ * a description field and to buttons
+ */
 public class CompanyListAdapter extends BaseAdapter {
     private Context context;
     private List<Company> companies;
@@ -23,26 +27,80 @@ public class CompanyListAdapter extends BaseAdapter {
     private RadioButton listRadioButton = null;
     private int listIndex = -1;
 
+    /**
+     * Constructor
+     * @param context Context
+     * @param companies List<Company>
+     */
     public CompanyListAdapter(Context context, List<Company> companies) {
         this.context = context;
         this.companies = companies;
     }
 
+    /**
+     * Constructor
+     * @param context Context
+     * @param companies List<Company>
+     * @param savedOption int - which item to toggle the radiobutton for
+     */
+    public CompanyListAdapter(Context context, List<Company> companies, int savedOption) {
+        this.context = context;
+        this.companies = companies;
+        listIndex = savedOption;
+    }
+
+    /**
+     * Get GUI item holder
+     * @return {@link CompanyListViewHolder}
+     */
+    public CompanyListViewHolder getHolder(){
+        return holder;
+    }
+
+    /**
+     * Set listener for buttons
+     * @param listener {@link ICompanyListAdapterCallback}
+     */
+    public void setListener(ICompanyListAdapterCallback listener) {
+        this.listener = listener;
+    }
+
+    /**
+     * Get adapter item count
+     * @return int
+     */
     @Override
     public int getCount() {
         return companies.size();
     }
 
+    /**
+     * Get item
+     * @param i int - position
+     * @return Object
+     */
     @Override
     public Object getItem(int i) {
         return companies.get(i);
     }
 
+    /**
+     * Not implementet
+     * @param i int
+     * @return 0
+     */
     @Override
     public long getItemId(int i) {
         return 0;
     }
 
+    /**
+     * Create a list entry
+     * @param position int
+     * @param view View
+     * @param viewGroup ViewGroup
+     * @return View
+     */
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,6 +112,12 @@ public class CompanyListAdapter extends BaseAdapter {
 
         holder.description.setText(companies.get(position).toString());
 
+        if(position == listIndex) {
+            holder.workspace.toggle();
+            listRadioButton = holder.workspace;
+        }
+
+        //Button clicks, call listener behaviour
         if(listener != null) {
             holder.delete.setOnClickListener(pressedView -> {
                 listener.deletePressed(position);
@@ -68,6 +132,10 @@ public class CompanyListAdapter extends BaseAdapter {
         return row;
     }
 
+    /**
+     * Fetch GUI items
+     * @param holder {@link CompanyListViewHolder} - where to place items
+     */
     private void initialiseGUIComponents(CompanyListViewHolder holder){
         if(row == null) {
             return;
@@ -80,6 +148,12 @@ public class CompanyListAdapter extends BaseAdapter {
         holder.workspace = row.findViewById(R.id.workspace);
     }
 
+
+    /**
+     * Making sure only one radiobutton in the adapter is checked at one time
+     * https://stackoverflow.com/a/11894068/7036624
+     * @param pressedView View
+     */
     private void deselectEverythingElse(View pressedView){
         View vMain = ((View) pressedView.getParent());
         int newIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
@@ -88,15 +162,8 @@ public class CompanyListAdapter extends BaseAdapter {
         if (listRadioButton != null) {
             listRadioButton.setChecked(false);
         }
+
         listRadioButton = (RadioButton) pressedView;
         listIndex = newIndex;
-    }
-
-    public CompanyListViewHolder getHolder(){
-        return holder;
-    }
-
-    public void setListener(ICompanyListAdapterCallback listener) {
-        this.listener = listener;
     }
 }
