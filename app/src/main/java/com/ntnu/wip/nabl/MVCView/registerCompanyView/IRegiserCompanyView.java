@@ -16,8 +16,6 @@ public interface IRegiserCompanyView extends IAbstractMvcView {
     void setOrganisationNumber(String organisationNumber);
 
     void addSubmissionListener(IRegistrationListener listener);
-    void addActionBar(ActionBar actionBar);
-    void setActionBarTitle(String title);
 
     View getRootView();
 }
