@@ -36,6 +36,12 @@ public class WorkDay {
     private String description;
 
 
+    /**
+     * Empty constructor, with auto generated id
+     */
+    public WorkDay() {
+        id = Utils.generateUniqueId(24);
+    }
 
     /**
      * Used in the case of the user inputting data from a former
@@ -88,10 +94,13 @@ public class WorkDay {
     @Exclude
     public Calendar getDay() {
         Calendar cal = new GregorianCalendar();
-        cal.set(Calendar.DAY_OF_MONTH, startTime.getDayOfMonth());
-        cal.set(Calendar.MONTH, startTime.getMonthOfYear());
-        cal.set(Calendar.YEAR, startTime.getYear());
-        return cal;
+        if(startTime != null) {
+            cal.set(Calendar.DAY_OF_MONTH, startTime.getDayOfMonth());
+            cal.set(Calendar.MONTH, startTime.getMonthOfYear());
+            cal.set(Calendar.YEAR, startTime.getYear());
+            return cal;
+        }
+        return null;
     }
 
     public float getBreakTime() {
