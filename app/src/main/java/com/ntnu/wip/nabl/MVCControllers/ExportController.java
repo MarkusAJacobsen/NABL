@@ -1,10 +1,14 @@
 package com.ntnu.wip.nabl.MVCControllers;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -29,9 +33,12 @@ import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
+import org.joda.time.DateTime;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +52,10 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private Object chosenObject = new Object();
 
     private static final String FILE_LOCATION = "exportFile.xlsx";
+    private static final int PERMISSION_EXTERNAL_STORAGE = 2279;
+
+    // This is set when the user is asked for permission
+    private TimeSheet temporaryTimeSheet;
 
     /**
      * Android Activity life cycle function
@@ -158,22 +169,16 @@ public class ExportController extends AppCompatActivity implements IExportView.E
                         sheet = new TimeSheet(getApplicationContext(), (Client) chosenObject, user, client.getLastFetchedWorkdays());
                     }
 
-                    try{
-                        sheet.write(new File(Environment.getExternalStorageDirectory(), FILE_LOCATION).getAbsolutePath());
-                        mockMailSender();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
+                    timeSheetWriteExport(sheet);
                 }
             }
+
 
             @Override
             public void setOnUpdateListener(AddOnUpdateListener listener) {
 
             }
         });
-
 
         // Proof of concept of sending the file to Email or cloud storing
         if (chosenObject.getClass() == Project.class) {
@@ -186,6 +191,63 @@ public class ExportController extends AppCompatActivity implements IExportView.E
                     mvcView.getStart().getTime(), mvcView.getEnd().getTime());
         }
 
+    }
+
+
+    /**
+     * This function handles asking for permissions and similar
+     * @param timeSheet timesheet to be written
+     */
+    private void timeSheetWriteExport(TimeSheet timeSheet) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            temporaryTimeSheet = timeSheet;
+            ActivityCompat.requestPermissions(thisActivity,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_EXTERNAL_STORAGE);
+
+        } else {
+            try {
+                timeSheet.write(timeSheetName(timeSheet));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    timeSheetWriteExport(temporaryTimeSheet);
+                } else {
+                    // Grant was not given by the user
+                    finish();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    private String timeSheetName(TimeSheet sheet) {
+        DateTime dt = new DateTime();
+
+        String name = "timesheet_";
+        name += sheet.extractPeriod();
+        name += "_"+sheet+dt.toDate().getTime();
+        name += ".xlsx";
+
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+        return file.getAbsolutePath();
     }
 
     /**
@@ -222,15 +284,11 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     /**
      * Proof of concept, follow this
      * https://stackoverflow.com/questions/9974987/how-to-send-an-email-with-a-file-attachment-in-android
-     *
+     * @param filename absolute path of a file
      */
     @Deprecated
-    private void mockMailSender() {
-        // TODO => ChosenObject hold the object that need to be exported either Project or client
-        String filename = FILE_LOCATION;
-        File fileLocation = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),
-                filename);
-        Uri path = Uri.fromFile(fileLocation);
+    private void mockMailSender(String filename) {
+        Uri path = Uri.fromFile(filename);
 
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);

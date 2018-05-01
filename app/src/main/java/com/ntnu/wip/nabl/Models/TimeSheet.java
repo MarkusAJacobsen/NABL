@@ -387,7 +387,7 @@ public class TimeSheet {
      * Extract if this is only for a month or from a month to another
      * @return either ex: april or april-june
      */
-    private String extractPeriod() {
+    public String extractPeriod() {
 
         if (workDays.size() == 0) {
             return "NONE";
