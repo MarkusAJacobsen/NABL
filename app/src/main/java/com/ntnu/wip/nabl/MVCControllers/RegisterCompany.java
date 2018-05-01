@@ -1,7 +1,11 @@
 package com.ntnu.wip.nabl.MVCControllers;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
@@ -9,6 +13,7 @@ import com.ntnu.wip.nabl.MVCView.registerCompanyView.IRegistrationListener;
 import com.ntnu.wip.nabl.MVCView.registerCompanyView.RegisterCompanyView;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.R;
 
 public class RegisterCompany extends AppCompatActivity implements IRegistrationListener {
 
@@ -17,8 +22,10 @@ public class RegisterCompany extends AppCompatActivity implements IRegistrationL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mvcView = new RegisterCompanyView(getLayoutInflater(), null);
-        this.mvcView.addSubmissionListener(this);
+        mvcView = new RegisterCompanyView(getLayoutInflater(), null);
+        mvcView.addSubmissionListener(this);
+        mvcView.setActionBar(getSupportActionBar());
+        mvcView.setActionBarTitle(getString(R.string.makeCompany));
 
         setContentView(this.mvcView.getRootView());
     }
@@ -36,5 +43,18 @@ public class RegisterCompany extends AppCompatActivity implements IRegistrationL
         company.setOwnerId(authentication.getUId());
         client.newCompany(company);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                ComponentName name = getCallingActivity();
+                Intent intent = new Intent(this, Settings.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

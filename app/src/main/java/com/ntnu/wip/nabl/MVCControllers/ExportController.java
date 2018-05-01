@@ -1,28 +1,41 @@
 package com.ntnu.wip.nabl.MVCControllers;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.MVCView.ExportView.ExportView;
 import com.ntnu.wip.nabl.MVCView.ExportView.IExportView;
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Models.TimeSheet;
+import com.ntnu.wip.nabl.Models.User;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Network.Subscriptions;
+import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
-import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
-import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
+import org.joda.time.DateTime;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +47,12 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private List<Project> projects = new ArrayList<>();
     private List<Client> clients = new ArrayList<>();
     private Object chosenObject = new Object();
+
+    private static final String FILE_LOCATION = "exportFile.xlsx";
+    private static final int PERMISSION_EXTERNAL_STORAGE = 2279;
+
+    // This is set when the user is asked for permission
+    private TimeSheet temporaryTimeSheet;
 
     /**
      * Android Activity life cycle function
@@ -120,13 +139,115 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     @Override
     public void exportBtnPressed() {
         //TODO => Generate the File
+        FireStoreClient client = new FireStoreClient(this);
+        FirestoreAuthentication firestoreAuthentication = new FirestoreAuthentication();
+
+        client.attach(new Observer() {
+            @Override
+            public void setSubject(IObserverSubject subject) {
+
+            }
+
+            @Override
+            public void update() {
+
+            }
+
+            @Override
+            public void update(Subscriptions sub) {
+                TimeSheet sheet;
+                User user = new User(firestoreAuthentication.getUId(), "missing", new ContactInformation());
+
+                if (sub == Subscriptions.LOG_ENTRIES) {
+                    if (chosenObject.getClass() == Project.class) {
+                        sheet = new TimeSheet(getApplicationContext(), (Project) chosenObject, user, client.getLastFetchedWorkdays());
+                    } else {
+                        sheet = new TimeSheet(getApplicationContext(), (Client) chosenObject, user, client.getLastFetchedWorkdays());
+                    }
+
+                    timeSheetWriteExport(sheet);
+                }
+            }
+
+
+            @Override
+            public void setOnUpdateListener(AddOnUpdateListener listener) {
+
+            }
+        });
 
         // Proof of concept of sending the file to Email or cloud storing
-        mockMailSender();
+        if (chosenObject.getClass() == Project.class) {
+            Project project = (Project) chosenObject;
+            client.getLogEntries(firestoreAuthentication.getUId(), "", project.getId(),
+                    mvcView.getStart().getTime(), mvcView.getEnd().getTime());
+        } else {
+            Client clientC = (Client) chosenObject;
+            client.getLogEntries(firestoreAuthentication.getUId(), clientC.getId(), "",
+                    mvcView.getStart().getTime(), mvcView.getEnd().getTime());
+        }
+
+    }
 
 
-        Toast.makeText(getApplicationContext(), "Pressed export button",
-                Toast.LENGTH_SHORT).show();
+    /**
+     * This function handles asking for permissions and similar
+     * @param timeSheet timesheet to be written
+     */
+    private void timeSheetWriteExport(TimeSheet timeSheet) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            temporaryTimeSheet = timeSheet;
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_EXTERNAL_STORAGE);
+
+        } else {
+            try {
+                String name = timeSheetName(timeSheet);
+                timeSheet.write(name);
+                mockMailSender(name);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    timeSheetWriteExport(temporaryTimeSheet);
+                } else {
+                    // Grant was not given by the user
+                    finish();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    private String timeSheetName(TimeSheet sheet) {
+        DateTime dt = new DateTime();
+
+        String name = "timesheet_";
+        name += sheet.extractPeriod();
+        name += "_"+dt.toDate().getTime();
+        name += ".xlsx";
+
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+        System.out.println(file.getAbsoluteFile());
+        System.out.println(file.getAbsolutePath());
+        return file.getAbsolutePath();
     }
 
     /**
@@ -163,21 +284,16 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     /**
      * Proof of concept, follow this
      * https://stackoverflow.com/questions/9974987/how-to-send-an-email-with-a-file-attachment-in-android
-     *
+     * @param filename absolute path of a file
      */
-    @Deprecated
-    private void mockMailSender() {
-        // TODO => ChosenObject hold the object that need to be exported either Project or client
-        String filename = "assignment1.pdf";
-        File fileLocation = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),
-                filename);
-        Uri path = Uri.fromFile(fileLocation);
+    private void mockMailSender(String filename) {
+        Uri path = Uri.fromFile(new File(filename));
 
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         // set the type to 'email'
         emailIntent .setType("vnd.android.cursor.dir/email");
-        String to[] = {"asmadhun@stud.ntnu.no"};
+        String to[] = {"martkli@stud.ntnu.no"};
         emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
         // the attachment
         emailIntent .putExtra(Intent.EXTRA_STREAM, path);

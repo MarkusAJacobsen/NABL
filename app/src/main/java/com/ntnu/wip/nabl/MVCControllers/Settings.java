@@ -2,9 +2,11 @@ package com.ntnu.wip.nabl.MVCControllers;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
@@ -27,6 +29,8 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
         super.onCreate(savedInstanceState);
         mvcView = new SettingsView(getLayoutInflater(), null);
         mvcView.addSettingsListener(this);
+        mvcView.setActionBar(getSupportActionBar());
+        mvcView.setActionBarTitle(getString(R.string.pref_title_system_sync_settings));
         setCompanyList();
         setContentView(mvcView.getRootView());
     }
@@ -96,8 +100,17 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
 
 
         client.getUserCompanies(authentication.getUId());
+    }
 
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent = new Intent(this, MainActivityController.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
