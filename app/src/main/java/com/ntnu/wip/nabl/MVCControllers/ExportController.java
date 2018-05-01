@@ -160,7 +160,6 @@ public class ExportController extends AppCompatActivity implements IExportView.E
             public void update(Subscriptions sub) {
                 TimeSheet sheet;
                 User user = new User(firestoreAuthentication.getUId(), "missing", new ContactInformation());
-                Company company = client.getLastFetchedCompanies().get(0);
 
                 if (sub == Subscriptions.LOG_ENTRIES) {
                     if (chosenObject.getClass() == Project.class) {
@@ -203,13 +202,15 @@ public class ExportController extends AppCompatActivity implements IExportView.E
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
             temporaryTimeSheet = timeSheet;
-            ActivityCompat.requestPermissions(thisActivity,
+            ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSION_EXTERNAL_STORAGE);
 
         } else {
             try {
-                timeSheet.write(timeSheetName(timeSheet));
+                String name = timeSheetName(timeSheet);
+                timeSheet.write(name);
+                mockMailSender(name);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -243,10 +244,12 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
         String name = "timesheet_";
         name += sheet.extractPeriod();
-        name += "_"+sheet+dt.toDate().getTime();
+        name += "_"+dt.toDate().getTime();
         name += ".xlsx";
 
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+        System.out.println(file.getAbsoluteFile());
+        System.out.println(file.getAbsolutePath());
         return file.getAbsolutePath();
     }
 
@@ -286,15 +289,14 @@ public class ExportController extends AppCompatActivity implements IExportView.E
      * https://stackoverflow.com/questions/9974987/how-to-send-an-email-with-a-file-attachment-in-android
      * @param filename absolute path of a file
      */
-    @Deprecated
     private void mockMailSender(String filename) {
-        Uri path = Uri.fromFile(filename);
+        Uri path = Uri.fromFile(new File(filename));
 
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         // set the type to 'email'
         emailIntent .setType("vnd.android.cursor.dir/email");
-        String to[] = {"asmadhun@stud.ntnu.no"};
+        String to[] = {"martkli@stud.ntnu.no"};
         emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
         // the attachment
         emailIntent .putExtra(Intent.EXTRA_STREAM, path);
