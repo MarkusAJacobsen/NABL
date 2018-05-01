@@ -10,11 +10,18 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.MVCView.ExportView.ExportView;
 import com.ntnu.wip.nabl.MVCView.ExportView.IExportView;
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Models.TimeSheet;
+import com.ntnu.wip.nabl.Models.User;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Network.Subscriptions;
+import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
+import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
@@ -22,6 +29,7 @@ import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +42,8 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private List<Project> projects = new ArrayList<>();
     private List<Client> clients = new ArrayList<>();
     private Object chosenObject = new Object();
+
+    private static final String FILE_LOCATION = "exportFile.xlsx";
 
     /**
      * Android Activity life cycle function
@@ -120,13 +130,57 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     @Override
     public void exportBtnPressed() {
         //TODO => Generate the File
+        FireStoreClient client = new FireStoreClient(this);
+        FirestoreAuthentication firestoreAuthentication = new FirestoreAuthentication();
 
+        client.attach(new Observer() {
+            @Override
+            public void setSubject(IObserverSubject subject) {
+
+            }
+
+            @Override
+            public void update() {
+
+            }
+
+            @Override
+            public void update(Subscriptions sub) {
+                TimeSheet sheet;
+                User user = new User(firestoreAuthentication.getUId(), "missing", new ContactInformation());
+                if (sub == Subscriptions.LOG_ENTRIES) {
+                    if (chosenObject.getClass() == Project.class) {
+                        sheet = new TimeSheet(getApplicationContext(), (Project) chosenObject, user, client.getLastFetchedWorkdays());
+                    } else {
+                        sheet = new TimeSheet(getApplicationContext(), (Client) chosenObject, user, client.getLastFetchedWorkdays());
+                    }
+
+                    try{
+                        sheet.write(FILE_LOCATION);
+                        mockMailSender();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void setOnUpdateListener(AddOnUpdateListener listener) {
+
+            }
+        });
         // Proof of concept of sending the file to Email or cloud storing
-        mockMailSender();
+        if (mvcView.switchView()) {
+            Project project = (Project) chosenObject;
+            client.getLogEntries(firestoreAuthentication.getUId(), "", project.getId(),
+                    mvcView.getStart().getTime(), mvcView.getEnd().getTime());
+        } else {
+            Client clientC = (Client) chosenObject;
+            client.getLogEntries(firestoreAuthentication.getUId(), clientC.getId(), "",
+                    mvcView.getStart().getTime(), mvcView.getEnd().getTime());
+        }
 
-
-        Toast.makeText(getApplicationContext(), "Pressed export button",
-                Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -168,7 +222,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     @Deprecated
     private void mockMailSender() {
         // TODO => ChosenObject hold the object that need to be exported either Project or client
-        String filename = "assignment1.pdf";
+        String filename = FILE_LOCATION;
         File fileLocation = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),
                 filename);
         Uri path = Uri.fromFile(fileLocation);
