@@ -10,6 +10,10 @@ import com.ntnu.wip.nabl.Observers.IObserverSubject;
 
 import java.util.List;
 
+/**
+ * Interface for an Network component. All network components must comply to
+ * this structure to ensure workings of the system
+ */
 public interface IClient extends IObserverSubject {
     /**
      * Get project

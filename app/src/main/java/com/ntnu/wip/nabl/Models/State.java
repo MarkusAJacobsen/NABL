@@ -7,6 +7,9 @@ import com.ntnu.wip.nabl.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * State represents the state of something, in our case a project
+ */
 public enum State {
     PLANNING,
     STARTED,
@@ -14,12 +17,21 @@ public enum State {
 
     private static final int SIZE = 3;
 
+    /**
+     * Return enum size
+     * @return int
+     */
     public static int size(){
         return SIZE;
     }
 
-    public static State get(int i) {
-        switch (i) {
+    /**
+     * Get state based in an position
+     * @param position int
+     * @return State
+     */
+    public static State get(int position) {
+        switch (position) {
             case 0: return PLANNING;
             case 1: return STARTED;
             case 2: return FINISHED;
@@ -27,8 +39,14 @@ public enum State {
         }
     }
 
-    public static String getName(int i, Context context) {
-        switch (i) {
+    /**
+     * Get name of an State based on position, with concern to i18n
+     * @param position int
+     * @param context Context
+     * @return String
+     */
+    public static String getName(int position, Context context) {
+        switch (position) {
             case 0: return context.getString(R.string.planning);
             case 1: return context.getString(R.string.started);
             case 2: return context.getString(R.string.finished);
@@ -36,6 +54,12 @@ public enum State {
         }
     }
 
+    /**
+     * Get name of an state based on name, with concern to i18n
+     * @param state State
+     * @param context Context
+     * @return String
+     */
     public static String getName(State state, Context context) {
         switch (state) {
             case PLANNING: return context.getString(R.string.planning);
@@ -45,6 +69,12 @@ public enum State {
         }
     }
 
+    /**
+     * Get State based on a String
+     * @param value String
+     * @param context Context
+     * @return State
+     */
     public static State getState(String value, Context context) {
         List<String> options = new ArrayList<>();
         options.add(context.getString(R.string.planning));
