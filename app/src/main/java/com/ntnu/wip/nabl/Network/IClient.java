@@ -10,6 +10,10 @@ import com.ntnu.wip.nabl.Observers.IObserverSubject;
 
 import java.util.List;
 
+/**
+ * Interface for an Network component. All network components must comply to
+ * this structure to ensure workings of the system
+ */
 public interface IClient extends IObserverSubject {
     /**
      * Get project
@@ -60,6 +64,7 @@ public interface IClient extends IObserverSubject {
     void deleteClient(Client client);
     void getLogEntry(String id);
     void newLogEntry(WorkDay workDay);
+    void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis);
     void getLogEntriesByUser(User user);
     void updateLogEntry(LogEntry entry);
     void deleteLogEntry(LogEntry entry);

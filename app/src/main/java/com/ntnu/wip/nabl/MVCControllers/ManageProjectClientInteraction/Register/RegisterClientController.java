@@ -71,7 +71,6 @@ public class RegisterClientController extends Fragment implements IClientInputVi
     private void registerModel(){
         newModel = new Client();
 
-        newModel.setId(Utils.generateUniqueId(24));
         getCoreInformation();
         getContactInformation();
         getAddressInformation();

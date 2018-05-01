@@ -41,7 +41,10 @@ public class ExcelSheetCreationTest {
     public void createExcelFile() {
 
         when (mockApplicationContext.getString(anyInt()))
-                .thenReturn("Loooooong word");
+                .thenReturn("Loooo");
+
+        when (mockApplicationContext.getString(R.string.headerDescription)).thenReturn("Description");
+        when (mockApplicationContext.getString(R.string.headerDate)).thenReturn("Date");
         Calendar cal = new GregorianCalendar();
         Company company = new Company();
         company.setName("SuperFIrm");
@@ -64,6 +67,15 @@ public class ExcelSheetCreationTest {
         } catch (IOException e) {
             // If exception... something is wrong
             Assert.assertFalse(true);
+        }
+
+        // Test if the app can handle no rows of data
+        timeSheet = new TimeSheet(mockApplicationContext, company, user, new ArrayList<WorkDay>());
+
+        try {
+            timeSheet.write("unique2Name.xlsx");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

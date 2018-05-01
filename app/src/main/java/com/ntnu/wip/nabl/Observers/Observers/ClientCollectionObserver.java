@@ -6,6 +6,9 @@ import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 
+/**
+ * Observer for Client Collection change
+ */
 public class ClientCollectionObserver extends Observer<AbstractClient> {
     protected ClientCollectionObserver() {}
 

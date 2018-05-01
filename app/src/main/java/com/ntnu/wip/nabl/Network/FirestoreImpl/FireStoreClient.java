@@ -6,8 +6,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
@@ -27,10 +29,19 @@ import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.CLIENT_CO
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANIES_COLLECTION;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_PROJECT_FIELD;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_USER_ID;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_CLIENT;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_PROJECT;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_START_FIELD;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_STOP_FIELD;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_COLLECTION;
 
+/**
+ * Firestore network implementation
+ * For docs see {@link com.ntnu.wip.nabl.Network.IClient}
+ */
 public class FireStoreClient extends AbstractClient implements OnFailureListener {
     private FirebaseFirestore db;
     private Context context;
@@ -113,6 +124,42 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
                 });
     }
 
+    /**
+     * Fetch log entries for a user that has specified either a Company or Project or neither
+     * @param uid user identifier
+     * @param cid client identifier (can be null)
+     * @param pid project identifier (can be null)
+     * @param startMillis from a time in milliseconds
+     * @param stopMillis to time in milliseconds
+     */
+    @Override
+    public void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis) {
+        CollectionReference collectionReference = this.db.collection(LOG_ENTRY_COLLECTION);
+        Query query = collectionReference.whereEqualTo(LOG_ENTRY_USER_ID, uid);
+        query.whereGreaterThan(LOG_ENTRY_START_FIELD, startMillis);
+        query.whereLessThan(LOG_ENTRY_STOP_FIELD, stopMillis);
+
+        if (cid.length() > 0) {
+            query.whereEqualTo(LOG_ENTRY_CLIENT, cid);
+        } else if (pid.length() > 0) {
+            query.whereEqualTo(LOG_ENTRY_PROJECT, pid);
+        }
+
+        query.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            List<WorkDay> workDays = new ArrayList<>();
+
+            for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                WorkDay workDay = snap.toObject(WorkDay.class);
+                workDays.add(workDay);
+            }
+
+            this.setLastFetchedWorkdays(workDays);
+        });
+
+        query.get();
+
+    }
+
     @Override
     public void updateLogEntry(LogEntry entry) {
 
@@ -166,6 +213,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
                     for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
                         Project project = snap.toObject(Project.class);
+                        project.setCompany(company);
                         projects.add(project);
                     }
 
