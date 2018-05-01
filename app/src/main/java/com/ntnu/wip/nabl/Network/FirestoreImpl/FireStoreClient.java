@@ -208,6 +208,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
                     for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
                         Project project = snap.toObject(Project.class);
+                        project.setCompany(company);
                         projects.add(project);
                     }
 

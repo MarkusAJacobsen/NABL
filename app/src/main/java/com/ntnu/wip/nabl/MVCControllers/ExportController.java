@@ -14,6 +14,7 @@ import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.MVCView.ExportView.ExportView;
 import com.ntnu.wip.nabl.MVCView.ExportView.IExportView;
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.TimeSheet;
@@ -148,6 +149,12 @@ public class ExportController extends AppCompatActivity implements IExportView.E
             public void update(Subscriptions sub) {
                 TimeSheet sheet;
                 User user = new User(firestoreAuthentication.getUId(), "missing", new ContactInformation());
+                Company company = client.getLastFetchedCompanies().get(0);
+
+                if (company == null) {
+                    company = new Company("UNKNOWN", "0");
+                }
+
                 if (sub == Subscriptions.LOG_ENTRIES) {
                     if (chosenObject.getClass() == Project.class) {
                         sheet = new TimeSheet(getApplicationContext(), (Project) chosenObject, user, client.getLastFetchedWorkdays());
@@ -170,6 +177,11 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
             }
         });
+
+        // Fetch the user companies
+        client.getUserCompanies(firestoreAuthentication.getUId());
+
+
         // Proof of concept of sending the file to Email or cloud storing
         if (chosenObject.getClass() == Project.class) {
             Project project = (Project) chosenObject;
