@@ -156,7 +156,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
                     }
 
                     try{
-                        sheet.write(FILE_LOCATION);
+                        sheet.write(new File(Environment.getExternalStorageDirectory(), FILE_LOCATION).getAbsolutePath());
                         mockMailSender();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -171,7 +171,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
             }
         });
         // Proof of concept of sending the file to Email or cloud storing
-        if (mvcView.switchView()) {
+        if (chosenObject.getClass() == Project.class) {
             Project project = (Project) chosenObject;
             client.getLogEntries(firestoreAuthentication.getUId(), "", project.getId(),
                     mvcView.getStart().getTime(), mvcView.getEnd().getTime());
