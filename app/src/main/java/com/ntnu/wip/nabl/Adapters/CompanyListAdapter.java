@@ -20,6 +20,8 @@ public class CompanyListAdapter extends BaseAdapter {
     private View row;
     private CompanyListViewHolder holder;
     private ICompanyListAdapterCallback listener;
+    private RadioButton listRadioButton = null;
+    private int listIndex = -1;
 
     public CompanyListAdapter(Context context, List<Company> companies) {
         this.context = context;
