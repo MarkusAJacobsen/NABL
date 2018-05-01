@@ -120,7 +120,7 @@ MainActivityView mvcView;
         switch(position){
             case 0: activityClass = LoggingController.class; break;
             case 1: activityClass = ProjectClientSelectorController.class; break;
-            case 2: break;
+            case 2: activityClass = Summary.class; break;
             case 3: activityClass = ExportController.class; break;
             case 4: activityClass = Settings.class; break;
             case 5: signOut(); break;
