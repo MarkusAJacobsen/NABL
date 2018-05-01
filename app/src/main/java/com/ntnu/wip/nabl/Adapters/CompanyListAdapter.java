@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RadioButton;
 
 import com.ntnu.wip.nabl.Adapters.ViewHolders.CompanyListViewHolder;
 import com.ntnu.wip.nabl.Models.Company;
@@ -58,7 +59,7 @@ public class CompanyListAdapter extends BaseAdapter {
 
             holder.workspace.setOnClickListener(pressedView -> {
                 listener.selectedWorkspace(position);
-                deselectEverythingElse();
+                deselectEverythingElse(pressedView);
             });
         }
 
@@ -77,8 +78,16 @@ public class CompanyListAdapter extends BaseAdapter {
         holder.workspace = row.findViewById(R.id.workspace);
     }
 
-    private void deselectEverythingElse(){
-        
+    private void deselectEverythingElse(View pressedView){
+        View vMain = ((View) pressedView.getParent());
+        int newIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
+        if (listIndex == newIndex) return;
+
+        if (listRadioButton != null) {
+            listRadioButton.setChecked(false);
+        }
+        listRadioButton = (RadioButton) pressedView;
+        listIndex = newIndex;
     }
 
     public CompanyListViewHolder getHolder(){

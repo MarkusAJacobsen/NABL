@@ -135,7 +135,7 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
         }
 
         final String selectedWorkSpaceString = new Gson().toJson(selectedWorkspace);
-        SharedPreferences preferences = getSharedPreferences(this.PREFERENCE_FILE_NAME, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(PREFERENCE_FILE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString(SELECTED_WORKSPACE_PREFERENCE_FIELD, selectedWorkSpaceString);
