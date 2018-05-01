@@ -96,5 +96,4 @@ public class RegisterCompanyView implements IRegiserCompanyView {
     public void setActionBar(android.support.v7.app.ActionBar actionbar) {
 
     }
-
 }

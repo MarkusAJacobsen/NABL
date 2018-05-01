@@ -18,7 +18,6 @@ import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.MVCView.ExportView.ExportView;
 import com.ntnu.wip.nabl.MVCView.ExportView.IExportView;
 import com.ntnu.wip.nabl.Models.Client;
-import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.ContactInformation;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.TimeSheet;
@@ -28,9 +27,7 @@ import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
-import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
-import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
 import org.joda.time.DateTime;

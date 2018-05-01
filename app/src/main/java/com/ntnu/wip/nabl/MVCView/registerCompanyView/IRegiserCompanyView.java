@@ -2,7 +2,6 @@ package com.ntnu.wip.nabl.MVCView.registerCompanyView;
 
 import android.app.ActionBar;
 import android.view.View;
-
 import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 
 /**

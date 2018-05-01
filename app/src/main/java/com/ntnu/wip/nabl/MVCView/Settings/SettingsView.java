@@ -1,7 +1,10 @@
 package com.ntnu.wip.nabl.MVCView.Settings;
 
 import android.content.Intent;
+<<<<<<< HEAD
 import android.support.v7.app.ActionBar;
+=======
+>>>>>>> 16beba26f912a5a10fb4197e1aff9d5e814caecb
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +66,7 @@ public class SettingsView implements ISettingsView {
     }
 
     @Override
+<<<<<<< HEAD
     public void setActionBar(ActionBar actionbar) {
 
     }
@@ -73,6 +77,8 @@ public class SettingsView implements ISettingsView {
     }
 
     @Override
+=======
+>>>>>>> 16beba26f912a5a10fb4197e1aff9d5e814caecb
     public void setListAdapter(ListAdapter adapter) {
         this.companyList.setAdapter(adapter);
 
