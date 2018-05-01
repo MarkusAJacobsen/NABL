@@ -78,6 +78,7 @@ public abstract class AbstractClient implements IClient {
 
     public void setLastFetchedWorkdays(List<WorkDay> lastFetchedWorkdays) {
         this.lastFetchedWorkdays = lastFetchedWorkdays;
+        notifyAllObservers(Subscriptions.LOG_ENTRIES);
     }
 
     public void setLastFetchedCompanies(List<Company> lastFetchedCompanies) {

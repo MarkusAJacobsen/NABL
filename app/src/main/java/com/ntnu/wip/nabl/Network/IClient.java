@@ -60,6 +60,7 @@ public interface IClient extends IObserverSubject {
     void deleteClient(Client client);
     void getLogEntry(String id);
     void newLogEntry(WorkDay workDay);
+    void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis);
     void getLogEntriesByUser(User user);
     void updateLogEntry(LogEntry entry);
     void deleteLogEntry(LogEntry entry);
