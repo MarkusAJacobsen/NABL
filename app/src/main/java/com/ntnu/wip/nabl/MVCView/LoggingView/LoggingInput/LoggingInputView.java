@@ -2,7 +2,6 @@ package com.ntnu.wip.nabl.MVCView.LoggingView.LoggingInput;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
@@ -39,12 +38,10 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     @BindView(R.id.endingDate) TextView endingDate;
     @BindView(R.id.startingTime) TextView startingTime;
     @BindView(R.id.endingTime) TextView endingTime;
-
     @BindView(R.id.weekendHours) TextView weekendHours;
     @BindView(R.id.holidayHours) TextView holidayHours;
     @BindView(R.id.breaksCounter) Spinner breakSpinner;
     @BindView(R.id.overTimeCounter) Spinner overTimeSpinner;
-
     @BindView(R.id.checkBox) CheckBox overTimeCheckBox;
     @BindView(R.id.extraHours) ConstraintLayout overTimeLayout;
     @BindView(R.id.description) TextView description;
@@ -119,6 +116,9 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
         });
     }
 
+    /**
+     * Function to update date variables at the begging to now time
+     */
     private void updateDateVariables() {
         Calendar cal = Calendar.getInstance();
         sDate = eDate = cal.getTime();

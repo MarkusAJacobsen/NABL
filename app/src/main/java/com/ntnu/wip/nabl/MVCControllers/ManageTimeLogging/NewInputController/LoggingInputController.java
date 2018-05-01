@@ -170,6 +170,8 @@ public class LoggingInputController extends AppCompatActivity implements
         day.setDescription(mvcView.getDescription());
 
         if(overTimePressed){
+            float x = mvcView.getHoliday();
+            float y = mvcView.getWeekend();
             day.setHolyDay(mvcView.getHoliday());
             day.setWeekEnd(mvcView.getWeekend());
         }
@@ -178,7 +180,7 @@ public class LoggingInputController extends AppCompatActivity implements
     }
 
     /**
-     * Function to check if the givin time or date is invalid
+     * Function to check if the given time or date is invalid
      * @return
      */
     private boolean checkInvalidDateOrTime() {

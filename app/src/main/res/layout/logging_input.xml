@@ -252,15 +252,15 @@
 
             <EditText
                 android:id="@+id/weekendHours"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
+                android:layout_width="93dp"
+                android:layout_height="47dp"
                 android:layout_column="5"
                 android:layout_row="3"
                 android:ems="10"
-                android:text="0"
                 android:inputType="phone"
-                app:layout_constraintStart_toStartOf="@+id/textView37"
-                app:layout_constraintTop_toBottomOf="@+id/textView37" />
+                android:text="0"
+                app:layout_constraintStart_toStartOf="@+id/textView34"
+                app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
             <TextView
                 android:id="@+id/textView37"
@@ -283,10 +283,10 @@
                 android:layout_column="6"
                 android:layout_row="1"
                 android:ems="10"
-                android:text="0"
                 android:inputType="phone"
-                app:layout_constraintStart_toStartOf="@+id/textView34"
-                app:layout_constraintTop_toBottomOf="@+id/textView34" />
+                android:text="0"
+                app:layout_constraintStart_toStartOf="@+id/textView37"
+                app:layout_constraintTop_toBottomOf="@+id/textView37" />
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
