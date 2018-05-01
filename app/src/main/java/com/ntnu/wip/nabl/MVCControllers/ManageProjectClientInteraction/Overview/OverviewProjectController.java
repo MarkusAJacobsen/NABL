@@ -9,9 +9,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.ModifyProjectController;
 import com.ntnu.wip.nabl.MVCView.OverviewProject.OverviewProjectView;
@@ -110,7 +112,12 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
 
     private void fetchModel(String id) {
         FireStoreClient client = new FireStoreClient(getContext());
-        client.getProject(id);
+
+        try {
+            client.getProject(id);
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.PROJECT);
         observer.setSubject(client);
@@ -167,7 +174,12 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
 
     private void deleteModel(){
         FireStoreClient client = new FireStoreClient(getContext());
-        client.deleteProject(model);
+
+        try {
+            client.deleteProject(model);
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
     }
   
     //

@@ -104,7 +104,12 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
 
     private void projectSelected(){
         FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.getAllProjects();
+
+        try {
+            client.getAllProjects();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
         observer.setSubject(client);
@@ -118,7 +123,11 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
     private void clientSelected(){
         FireStoreClient client= new FireStoreClient(getApplicationContext());
 
-        client.getAllClients();
+        try {
+            client.getAllClients();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
         observer.setSubject(client);

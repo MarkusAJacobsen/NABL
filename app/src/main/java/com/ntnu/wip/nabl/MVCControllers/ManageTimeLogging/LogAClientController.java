@@ -49,7 +49,11 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
         mvcView = new ClientListView(inflater, null);
         mvcView.registerListener(this);
 
-        fetchClients();
+        try {
+            fetchClients();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         return mvcView.getRootView();
     }
@@ -86,7 +90,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
     /**
      * Function to fetch Clients data from FireBase
      */
-    private void fetchClients() {
+    private void fetchClients() throws CompanyNotFoundException {
         clients.clear();
         FireStoreClient client = new FireStoreClient(getContext());
         client.getAllClients();

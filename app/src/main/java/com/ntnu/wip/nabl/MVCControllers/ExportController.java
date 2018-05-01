@@ -81,7 +81,12 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private void fetchProjects() {
         this.projects.clear();
         FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.getAllProjects();
+
+        try {
+            client.getAllProjects();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
         observer.setSubject(client);
@@ -102,7 +107,12 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private void fetchClients() {
         this.clients.clear();
         FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.getAllClients();
+
+        try {
+            client.getAllClients();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
         observer.setSubject(client);

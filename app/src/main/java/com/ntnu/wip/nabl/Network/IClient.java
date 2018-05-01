@@ -20,7 +20,7 @@ public interface IClient extends IObserverSubject {
      * Get project
      * @param id Project id - int
      */
-    void getProject(String id);
+    void getProject(String id) throws CompanyNotFoundException;
 
     /**
      * Write new project to cloud
@@ -32,19 +32,19 @@ public interface IClient extends IObserverSubject {
      * Update project in cloud
      * @param project Project
      */
-    void updateProject(Project project);
+    void updateProject(Project project) throws CompanyNotFoundException;
 
     /**
      * Delete project from cloud
      * @param project Project
      */
-    void deleteProject(Project project);
+    void deleteProject(Project project) throws CompanyNotFoundException;
 
     /**
      * Get client
      * @param id Client id - Int
      */
-    void getClient(String id);
+    void getClient(String id) throws CompanyNotFoundException;
 
     /**
      * Write new client to cloud
@@ -56,13 +56,13 @@ public interface IClient extends IObserverSubject {
      * Update client in cloud
      * @param client Client
      */
-    void updateClient(Client client);
+    void updateClient(Client client) throws CompanyNotFoundException;
 
     /**
      * Delete client from cloud
      * @param client Client
      */
-    void deleteClient(Client client);
+    void deleteClient(Client client) throws CompanyNotFoundException;
     void getLogEntry(String id);
     void newLogEntry(WorkDay workDay);
     void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis);
@@ -73,19 +73,19 @@ public interface IClient extends IObserverSubject {
 
     void getUserCompanies(String uid);
 
-    void getCompanyProjects(Company company);
+    void getCompanyProjects();
 
     void getCompanyClients(Company company);
 
     /**
      * Get all projects in cloud
      */
-    void getAllProjects();
+    void getAllProjects() throws CompanyNotFoundException;
 
     /**
      * Get all client from cloud
      */
-    void getAllClients();
+    void getAllClients() throws CompanyNotFoundException;
     void getAllCompanies();
     void getAllLogEntries();
     void getProjectSpecificLogEntries(Project project);

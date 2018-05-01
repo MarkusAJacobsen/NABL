@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewProjectController;
 import com.ntnu.wip.nabl.MVCView.projectInput.IProjectInputView;
@@ -181,7 +182,12 @@ public class ModifyProjectController extends Fragment implements IChangeScreen.F
 
     private void saveModel(){
         FireStoreClient client = new FireStoreClient(getContext());
-        client.updateProject(model);
+
+        try {
+            client.updateProject(model);
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private Bundle constructArgsFromProject(){

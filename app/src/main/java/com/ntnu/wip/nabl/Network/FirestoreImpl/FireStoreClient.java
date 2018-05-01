@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
@@ -59,7 +60,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     private Context context;
     private IAuthentication auth;
     private String loggedInUser;
-    private String companyName;
+    private Company company;
 
     public FireStoreClient(Context context) {
         db = FirebaseFirestore.getInstance();
@@ -89,15 +90,21 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
             final String companyString = preferences.getString(Settings.SELECTED_WORKSPACE_PREFERENCE_FIELD, "");
 
             if(companyString.equals("")) {
-                companyName = null;
+                return;
             }
 
             final Type token = new TypeToken<Company>(){}.getType();
-            final Company company = new Gson().fromJson(companyString, token);
+            company = new Gson().fromJson(companyString, token);
+        }
+    }
 
-            companyName = company.getName();
-        } else {
-            companyName = null;
+    /**
+     * Method for checking the presence of Company else abort execution
+     * @throws CompanyNotFoundException - Company not sat in settings
+     */
+    private void checkCompany() throws CompanyNotFoundException {
+        if(company == null) {
+            abort();
         }
     }
 
@@ -111,8 +118,10 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void getProject(String id) {
-        get(PROJECT_COLLECTION, id, snapshot -> {
+    public void getProject(String id) throws CompanyNotFoundException {
+        checkCompany();
+
+        getNested(ROOT_LEVEL_DATA, company.getName(), PROJECT_COLLECTION, id, snapshot -> {
             Project project = snapshot.toObject(Project.class);
             setLastFetchedProject(project);
         });
@@ -120,25 +129,30 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void writeNewProject(Project project) throws CompanyNotFoundException {
-        if(companyName == null) {
-            abort();
-        }
-        this.addNested(project, project.getId(), ROOT_LEVEL_DATA, companyName, PROJECT_COLLECTION);
+        checkCompany();
+
+        this.addNested(project, project.getId(), ROOT_LEVEL_DATA, company.getName(), PROJECT_COLLECTION);
     }
 
     @Override
-    public void updateProject(Project project) {
-        this.update(PROJECT_COLLECTION, project, project.getId());
+    public void updateProject(Project project) throws CompanyNotFoundException {
+        checkCompany();
+
+        this.updateNested(ROOT_LEVEL_DATA, company.getName(), PROJECT_COLLECTION, project, project.getId());
     }
 
     @Override
-    public void deleteProject(Project project) {
-        this.delete(PROJECT_COLLECTION, project.getId());
+    public void deleteProject(Project project) throws CompanyNotFoundException {
+        checkCompany();
+
+        this.deleteNested(ROOT_LEVEL_DATA, company.getName(), PROJECT_COLLECTION, project.getId());
     }
 
     @Override
-    public void getClient(String id) {
-        get(CLIENT_COLLECTION, id, snapshot -> {
+    public void getClient(String id) throws CompanyNotFoundException {
+        checkCompany();
+
+        getNested(ROOT_LEVEL_DATA, company.getName(), CLIENT_COLLECTION, id, snapshot -> {
             Client client = snapshot.toObject(Client.class);
             setLastFetchedClient(client);
         });
@@ -146,20 +160,23 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void writeNewClient(Client client) throws CompanyNotFoundException {
-        if(companyName == null) {
-            abort();
-        }
-        this.addNested(client, client.getId(), ROOT_LEVEL_DATA, companyName, CLIENT_COLLECTION);
+        checkCompany();
+
+        this.addNested(client, client.getId(), ROOT_LEVEL_DATA, company.getName(), CLIENT_COLLECTION);
     }
 
     @Override
-    public void updateClient(Client client) {
-        this.update(CLIENT_COLLECTION, client, client.getId());
+    public void updateClient(Client client) throws CompanyNotFoundException {
+        checkCompany();
+
+        this.updateNested(ROOT_LEVEL_DATA, company.getName(), CLIENT_COLLECTION, client, client.getId());
     }
 
     @Override
-    public void deleteClient(Client client) {
-        this.delete(CLIENT_COLLECTION, client.getId());
+    public void deleteClient(Client client) throws CompanyNotFoundException {
+        checkCompany();
+
+        this.deleteNested(ROOT_LEVEL_DATA, company.getName(), CLIENT_COLLECTION, client.getId());
     }
 
     @Override
@@ -257,11 +274,16 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
             this.setLastFetchedCompanies(companies);
         });
-
     }
 
+
+
     @Override
-    public void getCompanyProjects(Company company) {
+    public void getCompanyProjects() {
+        if(company == null) {
+            return;
+        }
+
         this.db.collection(PROJECT_COLLECTION).whereEqualTo(COMPANY_PROJECT_FIELD, company.getId())
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     List<Project> projects = new ArrayList<>();
@@ -293,8 +315,12 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void getAllProjects() {
-        fetchCollection(PROJECT_COLLECTION, snapshot -> {
+    public void getAllProjects() throws CompanyNotFoundException {
+        if(company == null) {
+            abort();
+        }
+
+        fetchCollectionNested(ROOT_LEVEL_DATA, company.getName(), PROJECT_COLLECTION, snapshot -> {
             List<Project> toBeReturned = new ArrayList<>();
 
             for(QueryDocumentSnapshot doc : snapshot) {
@@ -307,8 +333,12 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void getAllClients() {
-        fetchCollection(CLIENT_COLLECTION, snapshot -> {
+    public void getAllClients() throws CompanyNotFoundException {
+        if(company == null) {
+            abort();
+        }
+
+        fetchCollectionNested(ROOT_LEVEL_DATA, company.getName(), CLIENT_COLLECTION, snapshot -> {
             List<Client> toBeReturned = new ArrayList<>();
 
             for(QueryDocumentSnapshot doc : snapshot) {
@@ -351,6 +381,17 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
                 .addOnSuccessListener(callback::trigger);
     }
 
+    private void getNested(String root, String childName, String resourceType, String id,
+                           DocumentSnapshotCallback callback) {
+        db.collection(root)
+                .document(childName)
+                .collection(resourceType)
+                .document(id)
+                .get()
+                .addOnFailureListener(this)
+                .addOnSuccessListener(callback::trigger);
+    }
+
     private void add(String collection, Object toWrite, String id){
         db.collection(collection)
                 .document(id).
@@ -387,8 +428,28 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.updateComplete, Toast.LENGTH_SHORT).show());
     }
 
+    private void updateNested(String root, String childName, String resourceType, Object toUpdate, String documentId) {
+        db.collection(root)
+                .document(childName)
+                .collection(resourceType)
+                .document(documentId)
+                .set(toUpdate)
+                .addOnFailureListener(this)
+                .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.updateComplete, Toast.LENGTH_SHORT).show());
+    }
+
     private void delete(String collection, String documentId) {
         db.collection(collection)
+                .document(documentId)
+                .delete()
+                .addOnFailureListener(this)
+                .addOnSuccessListener(aVoid -> Toast.makeText(context, R.string.successDeleted, Toast.LENGTH_SHORT).show());
+    }
+
+    private void deleteNested(String root, String childName, String resourceType, String documentId) {
+        db.collection(root)
+                .document(childName)
+                .collection(resourceType)
                 .document(documentId)
                 .delete()
                 .addOnFailureListener(this)
@@ -403,6 +464,30 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
                         callback.trigger(task.getResult());
                     } else {
                        Toast.makeText(context, R.string.unableTofetchResource, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    /**
+     * A bit on the dumber side, but since you cant actually do something with a collection,
+     * we are limited to a even number of identifiers, so this method is customized for our need
+     * and not very dynamic
+     * @param root String - top level identifier
+     * @param childName String - Middle level identifier
+     * @param resourceType String - Last level identifier
+     * @param callback {@link QuerySnapshotCallback}
+     */
+    private void fetchCollectionNested(String root, String childName, String resourceType,
+                                         QuerySnapshotCallback callback) {
+        db.collection(root)
+                .document(childName)
+                .collection(resourceType)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.trigger(task.getResult());
+                    } else {
+                        Toast.makeText(context, R.string.unableTofetchResource, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

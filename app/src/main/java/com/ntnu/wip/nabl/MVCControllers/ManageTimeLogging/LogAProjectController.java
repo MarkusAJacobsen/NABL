@@ -48,7 +48,11 @@ public class LogAProjectController extends Fragment implements IProjectListView.
         mvcView = new ProjectListView(inflater, null);
         mvcView.registerListener(this);
 
-        fetchProjects();
+        try {
+            fetchProjects();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         return mvcView.getRootView();
     }
@@ -76,7 +80,7 @@ public class LogAProjectController extends Fragment implements IProjectListView.
     /**
      * Function to fetch projects from FireBase
      */
-    private void fetchProjects() {
+    private void fetchProjects() throws CompanyNotFoundException {
         projects.clear();
         FireStoreClient client = new FireStoreClient(getContext());
         client.getAllProjects();
