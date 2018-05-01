@@ -70,7 +70,6 @@ public class RegisterProjectController extends Fragment implements IProjectInput
     private void registerModel(){
         newModel = new Project();
 
-        newModel.setId(Utils.generateUniqueId(24));
         getCoreInformation();
         getOrganisationInformation();
         getAddressInformation();
