@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,7 +31,8 @@
         <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController" />
         <activity android:name=".MVCControllers.RegisterCompany" />
-        <activity android:name=".MVCControllers.Settings"></activity>
+        <activity android:name=".MVCControllers.Settings" />
+        <activity android:name=".MVCControllers.Summary"></activity>
     </application>
 
 </manifest>

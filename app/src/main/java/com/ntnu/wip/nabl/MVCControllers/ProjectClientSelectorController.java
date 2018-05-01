@@ -16,9 +16,7 @@ import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.IProjectClientSelectorVie
 import com.ntnu.wip.nabl.MVCView.ProjectClientSelector.ProjectClientSelector;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.Observers.Observer;
-import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
-import com.ntnu.wip.nabl.Observers.Observers.ProjectCollectionObserver;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;

@@ -288,8 +288,6 @@ public class ExportController extends AppCompatActivity implements IExportView.E
      */
     private void mockMailSender(String filename) {
         Uri path = Uri.fromFile(new File(filename));
-
-
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         // set the type to 'email'
         emailIntent .setType("vnd.android.cursor.dir/email");
