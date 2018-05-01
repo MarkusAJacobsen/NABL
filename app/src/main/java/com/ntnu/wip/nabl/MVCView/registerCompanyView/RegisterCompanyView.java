@@ -1,6 +1,6 @@
 package com.ntnu.wip.nabl.MVCView.registerCompanyView;
 
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,11 +78,6 @@ public class RegisterCompanyView implements IRegiserCompanyView {
     }
 
     @Override
-    public void addActionBar(ActionBar actionBar) {
-        this.actionBar = actionBar;
-    }
-
-    @Override
     public void setActionBarTitle(String title) {
         this.actionBar.setTitle(title);
     }
@@ -92,4 +87,9 @@ public class RegisterCompanyView implements IRegiserCompanyView {
         return this.rootView;
     }
 
+    @Override
+    public void setActionBar(android.support.v7.app.ActionBar actionbar) {
+        this.actionBar = actionbar;
+        this.actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 }

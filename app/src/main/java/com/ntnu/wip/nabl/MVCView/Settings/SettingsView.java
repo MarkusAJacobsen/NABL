@@ -1,6 +1,7 @@
 package com.ntnu.wip.nabl.MVCView.Settings;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 
 public class SettingsView implements ISettingsView {
     private View rootView;
+    private ActionBar actionBar;
+
 
     @BindView(R.id.createCompanySettingsButton)
     Button submitButton;
@@ -59,6 +62,17 @@ public class SettingsView implements ISettingsView {
     @Override
     public View getRootView() {
         return rootView;
+    }
+
+    @Override
+    public void setActionBar(ActionBar actionbar) {
+        this.actionBar = actionbar;
+        this.actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void setActionBarTitle(String title) {
+        actionBar.setTitle(title);
     }
 
     @Override

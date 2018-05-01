@@ -28,4 +28,5 @@ public interface IExportView extends IAbstractMvcView {
     Date getStart();
     Date getEnd();
     void setResourceViewerAdapter(Adapter adapter);
+
 }
