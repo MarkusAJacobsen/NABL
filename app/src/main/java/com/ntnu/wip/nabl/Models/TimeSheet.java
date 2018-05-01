@@ -475,7 +475,7 @@ public class TimeSheet {
             for (int j = 0; j < ROWS_TO_SUM.length; j++) {
                 if (i == ROWS_TO_SUM[j]) {
                     if (rowNumber-HEADER_ROW_NUMBER > 0) {
-                        String firstCell = this.sheet.getRow(HEADER_ROW_NUMBER+1).getCell(i).getAddress().formatAsString();
+                        String firstCell = this.sheet.getRow(HEADER_ROW_NUMBER+2).getCell(i).getAddress().formatAsString();
                         String lastCell = this.sheet.getRow(rowNumber-2).getCell(i).getAddress().formatAsString();
                         cell.setCellFormula("SUM("+firstCell+":"+lastCell+")");
                     }
