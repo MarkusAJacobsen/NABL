@@ -52,6 +52,6 @@ public class ClientProjectAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        return new View();
     }
 }
