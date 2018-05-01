@@ -85,6 +85,7 @@ public class WorkDay {
     // ################### SETTERS / GETTERS #####################
 
     // Date of the workday is decided by the first day of work
+    @Exclude
     public Calendar getDay() {
         Calendar cal = new GregorianCalendar();
         cal.set(Calendar.DAY_OF_MONTH, startTime.getDayOfMonth());
@@ -97,6 +98,7 @@ public class WorkDay {
         return breakTime;
     }
 
+    @Exclude
     public DateTime getEndTime() {
         return endTime;
     }
@@ -105,6 +107,7 @@ public class WorkDay {
         return overTime;
     }
 
+    @Exclude
     public DateTime getStartTime() {
         return startTime;
     }

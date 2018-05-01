@@ -1,6 +1,7 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,13 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 
+import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController;
 import com.ntnu.wip.nabl.MVCView.ClientsList.ClientListView;
 import com.ntnu.wip.nabl.MVCView.ClientsList.IClientListView;
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ClientCollectionObserver;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
+import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +63,25 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
     }
 
     /**
+     * Function to go to Logging View to log a project
+     */
+    private void logForClient(Client client) {
+        Intent loggingIntent = new Intent(this.context, LoggingInputController.class);
+        loggingIntent.putExtra(getString(R.string.type), getString(R.string.client));
+        loggingIntent.putExtra(getString(R.string.id), client.getId());
+        loggingIntent.putExtra(getString(R.string.userID), getUserID());
+        startActivity(loggingIntent);
+    }
+
+    /**
+     * Function to get current user ID
+     * @return User ID
+     */
+    private String getUserID() {
+        return new FirestoreAuthentication().getUId();
+    }
+
+    /**
      * Function to fetch Clients data from FireBase
      */
     private void fetchClients() {
@@ -76,5 +100,14 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
                 mvcView.setResourceViewerAdapter(adapter);
             }
         });
+    }
+
+    /**
+     * Function that react to a click on a client element from the ListView in View
+     * @param chosenClient
+     */
+    @Override
+    public void clientSelected(Object chosenClient) {
+        logForClient((Client) chosenClient);
     }
 }

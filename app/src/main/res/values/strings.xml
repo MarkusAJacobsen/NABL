@@ -73,6 +73,7 @@
     <string name="export">Export the file</string>
     <string name="exportProjectsTitle">Export your projects</string>
     <string name="invalidDate">Invalid date</string>
+    <string name="invalidTime">Invalid time</string>
 
     <string name="loggingView">Start Logging</string>
     <string name="title_activity_login">Sign in</string>
@@ -99,6 +100,11 @@
     <string name="weekend">Weekend</string>
     <string name="newLogging">New Log</string>
 
+    <string name="type">type</string>
+    <string name="id">id</string>
+    <string name="userID">userID</string>
+
+
     <!-- Strings related to company registration -->
     <string name="companyLabel">Company name</string>
     <string name="companyOrgNumber">Organisation Number</string>
@@ -106,6 +112,7 @@
     <string name="createCompanyTitle">Register a company</string>
 
     <string-array name="breakTiming">
+        <item>No Breaks</item>
         <item>30 Minutes</item>
         <item>1 Hour</item>
         <item>1,5 Hours</item>
@@ -113,6 +120,7 @@
     </string-array>
 
     <string-array name="overTiming">
+        <item>No Overtime</item>
         <item>30 Minutes</item>
         <item>1 Hour</item>
         <item>1,5 Hours</item>
