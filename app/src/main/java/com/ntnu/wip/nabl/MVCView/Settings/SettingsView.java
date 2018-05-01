@@ -1,6 +1,7 @@
 package com.ntnu.wip.nabl.MVCView.Settings;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,16 @@ public class SettingsView implements ISettingsView {
     @Override
     public View getRootView() {
         return rootView;
+    }
+
+    @Override
+    public void setActionBar(ActionBar actionbar) {
+
+    }
+
+    @Override
+    public void setActionBarTitle(String title) {
+
     }
 
     @Override

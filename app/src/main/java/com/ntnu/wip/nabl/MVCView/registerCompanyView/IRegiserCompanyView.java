@@ -3,11 +3,13 @@ package com.ntnu.wip.nabl.MVCView.registerCompanyView;
 import android.app.ActionBar;
 import android.view.View;
 
+import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
+
 /**
  * Created by klingen on 30.04.18.
  */
 
-public interface IRegiserCompanyView {
+public interface IRegiserCompanyView extends IAbstractMvcView {
     String getCompanyName();
     String getOrganisationNumber();
 
