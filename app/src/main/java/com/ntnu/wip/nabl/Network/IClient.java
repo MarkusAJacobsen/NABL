@@ -64,7 +64,7 @@ public interface IClient extends IObserverSubject {
      */
     void deleteClient(Client client) throws CompanyNotFoundException;
     void getLogEntry(String id);
-    void newLogEntry(WorkDay workDay);
+    void newLogEntry(WorkDay workDay) throws CompanyNotFoundException;
     void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis);
     void getLogEntriesByUser(User user);
     void newCompany(Company company);
@@ -84,6 +84,6 @@ public interface IClient extends IObserverSubject {
     void getAllClients() throws CompanyNotFoundException;
     void getAllCompanies();
     void getAllLogEntries();
-    void getProjectSpecificLogEntries(Project project);
-    void getClientSpecificLogEntries(Client client);
+    void getProjectSpecificLogEntries(Project project) throws CompanyNotFoundException;
+    void getClientSpecificLogEntries(Client client) throws CompanyNotFoundException;
 }

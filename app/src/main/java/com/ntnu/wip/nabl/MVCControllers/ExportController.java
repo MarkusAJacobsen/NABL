@@ -92,9 +92,11 @@ public class ExportController extends AppCompatActivity implements IExportView.E
         observer.setSubject(client);
         observer.setOnUpdateListener(projects -> {
             this.projects = (List) projects;
-            if (!this.projects.isEmpty() || this.projects != null) {
-                this.chosenObject = (Project) this.projects.get(0);     // First element
+
+            if (!this.projects.isEmpty()) {
+                this.chosenObject = this.projects.get(0);     // First element
             }
+
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(),
                     android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);

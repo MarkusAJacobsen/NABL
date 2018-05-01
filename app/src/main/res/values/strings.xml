@@ -52,6 +52,8 @@
     <string name="address">Address</string>
     <string name="workspaceSat">Current company sat</string>
     <string name="workspaceNotSat">Company not specified in settings</string>
+    <string name="hourLogSaved">Log entry saved</string>
+    <string name="listEmpty">Nothing to show</string>
 
     <!-- EXCEL-related names -->
     <string name="headerDate">Date</string>

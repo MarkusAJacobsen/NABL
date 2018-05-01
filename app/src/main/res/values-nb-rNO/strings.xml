@@ -102,5 +102,7 @@
     <string name="pref_title_sync_frequency">Sync hyppighet</string>
     <string name="pref_title_add_friends_to_messages">Legg til venner til meldinger</string>
     <string name="workspaceNotSat">Firma ikke spesifisert i innstillinger</string>
+    <string name="hourLogSaved">Timesføring lagret</string>
+    <string name="listEmpty">Ingenting å vise</string>
 
 </resources>

@@ -101,6 +101,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
 
             if(context != null) {
                 clients = (List) receivedClients;
+
                 Adapter adapter = new ArrayAdapter<>(context,
                         android.R.layout.simple_list_item_1, this.clients);
                 mvcView.setResourceViewerAdapter(adapter);

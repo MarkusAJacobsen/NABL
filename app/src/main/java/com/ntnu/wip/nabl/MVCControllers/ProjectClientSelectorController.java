@@ -115,6 +115,11 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         observer.setSubject(client);
         observer.setOnUpdateListener(receivedProjects -> {
             this.projects = (List) receivedProjects;
+
+            if(this.projects.isEmpty()) {
+                mvcView.setEmptyIdentifier(getString(R.string.listEmpty));
+            }
+
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);
         });
@@ -133,6 +138,11 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
         observer.setSubject(client);
         observer.setOnUpdateListener(receivedClients -> {
             this.clients = (List) receivedClients;
+
+            if(this.projects.isEmpty()) {
+                mvcView.setEmptyIdentifier(getString(R.string.listEmpty));
+            }
+
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.clients);
             mvcView.setResourceViewerAdapter(adapter);
         });

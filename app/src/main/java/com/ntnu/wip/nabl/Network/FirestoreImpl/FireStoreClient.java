@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -185,8 +186,36 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     @Override
-    public void newLogEntry(WorkDay workDay) {
-        this.add(LOG_ENTRY_COLLECTION, workDay, workDay.getId());
+    public void newLogEntry(WorkDay workDay) throws CompanyNotFoundException {
+        checkCompany();
+
+        String resource;
+        String resourceId;
+        if(workDay.getClientId() != null) {
+            resource = CLIENT_COLLECTION;
+            resourceId = workDay.getClientId();
+        } else {
+            resource = PROJECT_COLLECTION;
+            resourceId = workDay.getProjectId();
+        }
+
+        //Save log entry in Company -> Client/Project -> Corresponding project/client -> logEntries
+        db.collection(ROOT_LEVEL_DATA)
+                .document(company.getName())
+                .collection(resource)
+                .document(resourceId)
+                .collection(LOG_ENTRY_COLLECTION)
+                .document(workDay.getId())
+                .set(workDay)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(context, R.string.hourLogSaved, Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(this);
+
+        //For convenience save entries in root -> logEntries as well, this makes it easier to fetch
+        //but is a way of double storing. Optimally you will have to iterate all user companies
+        //and all collections below and sort TODO
+        add(LOG_ENTRY_COLLECTION, workDay, workDay.getId());
     }
 
     @Override
@@ -207,6 +236,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     /**
+     * TODO Martin Klingenberg, handle DB hierarchy same as the rest. Not entirely sure whats happening here
      * Fetch log entries for a user that has specified either a Company or Project or neither
      * @param uid user identifier
      * @param cid client identifier (can be null)
@@ -311,20 +341,62 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void getAllCompanies() {
+        fetchCollection(LOG_ENTRY_COLLECTION,  snapshot -> {
+            List<Company> toBeReturned = new ArrayList<>();
 
+            for(QueryDocumentSnapshot doc : snapshot) {
+                Company company = doc.toObject(Company.class);
+                toBeReturned.add(company);
+            }
+
+            this.setLastFetchedCompanies(toBeReturned);
+        });
     }
 
     @Override
     public void getAllLogEntries() {
+        fetchCollection(LOG_ENTRY_COLLECTION,  snapshot -> {
+            List<WorkDay> toBeReturned = new ArrayList<>();
+
+            for(QueryDocumentSnapshot doc : snapshot) {
+                WorkDay workDay = doc.toObject(WorkDay.class);
+                toBeReturned.add(workDay);
+            }
+
+            this.setLastFetchedWorkdays(toBeReturned);
+        });
     }
 
     @Override
-    public void getProjectSpecificLogEntries(Project project) {
+    public void getProjectSpecificLogEntries(Project project) throws CompanyNotFoundException {
+        checkCompany();
+
+        db.collection(ROOT_LEVEL_DATA)
+                .document(company.getName())
+                .collection(PROJECT_COLLECTION)
+                .document(project.getId())
+                .collection(LOG_ENTRY_COLLECTION)
+                .get()
+                .addOnFailureListener(this)
+                .addOnSuccessListener(snapshots -> {
+                    //TODO
+                });
     }
 
     @Override
-    public void getClientSpecificLogEntries(Client client) {
+    public void getClientSpecificLogEntries(Client client) throws CompanyNotFoundException {
+        checkCompany();
 
+        db.collection(ROOT_LEVEL_DATA)
+                .document(company.getName())
+                .collection(CLIENT_COLLECTION)
+                .document(client.getId())
+                .collection(LOG_ENTRY_COLLECTION)
+                .get()
+                .addOnFailureListener(this)
+                .addOnSuccessListener(snapshots -> {
+                    //TODO
+                });
     }
 
     @Override
@@ -369,8 +441,6 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
      * @param resourceType String - Last level identifier
      */
     private void addNested(Object toWrite, String id, String root, String childName, String resourceType){
-        CollectionReference colRef = null;
-
         db.collection(root)
                 .document(childName)
                 .collection(resourceType)
