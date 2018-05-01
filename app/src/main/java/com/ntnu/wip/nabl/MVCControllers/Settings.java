@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
+import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.MVCView.Settings.ISettingsView;
 import com.ntnu.wip.nabl.MVCView.Settings.SettingsView;
@@ -85,9 +86,11 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
             @Override
             public void update(Subscriptions sub) {
                 if (sub == Subscriptions.COMPANIES) {
-                    ArrayAdapter<Company> adapter = new ArrayAdapter<Company>(getApplicationContext(), android.R.layout.simple_list_item_activated_1);
-                    adapter.addAll(client.getLastFetchedCompanies());
-                    adapter.notifyDataSetChanged();
+
+                    CompanyListAdapter adapter = new CompanyListAdapter(getApplicationContext(), client.getLastFetchedCompanies());
+                    //ArrayAdapter<Company> adapter = new ArrayAdapter<Company>(getApplicationContext(), android.R.layout.expandable_list_content);
+                    //adapter.addAll(client.getLastFetchedCompanies());
+                    //adapter.notifyDataSetChanged();
                     mvcView.setListAdapter(adapter);
                 }
             }

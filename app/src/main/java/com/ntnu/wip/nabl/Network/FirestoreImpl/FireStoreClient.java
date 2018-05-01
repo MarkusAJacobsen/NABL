@@ -11,6 +11,8 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Authentication.IAuthentication;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
@@ -20,9 +22,12 @@ import com.ntnu.wip.nabl.Models.WorkDay;
 import com.ntnu.wip.nabl.Network.AbstractClient;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.DocumentSnapshotCallback;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.QuerySnapshotCallback;
+import com.ntnu.wip.nabl.Observers.Observer;
+import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.CLIENT_COLLECTION;
@@ -37,6 +42,7 @@ import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_COLLECTION;
+import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.ROOT_LEVEL_DATA;
 
 /**
  * Firestore network implementation
@@ -45,10 +51,19 @@ import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_C
 public class FireStoreClient extends AbstractClient implements OnFailureListener {
     private FirebaseFirestore db;
     private Context context;
+    private IAuthentication auth;
+    private String loggedInUser;
+    private String company;
 
     public FireStoreClient(Context context) {
         db = FirebaseFirestore.getInstance();
         this.context = context;
+        establishUserAndCompany();
+    }
+
+    private void establishUserAndCompany(){
+        auth = new FirestoreAuthentication();
+        loggedInUser = auth.getEmail();
     }
 
     @Override
@@ -61,7 +76,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void writeNewProject(Project project) {
-        this.add(PROJECT_COLLECTION, project, project.getId());
+        this.addNested(project, project.getId(), ROOT_LEVEL_DATA, loggedInUser, PROJECT_COLLECTION);
     }
 
     @Override
@@ -84,7 +99,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     @Override
     public void writeNewClient(Client client) {
-        this.add(CLIENT_COLLECTION, client, client.getId());
+        this.addNested(client, client.getId(), ROOT_LEVEL_DATA, loggedInUser, CLIENT_COLLECTION);
     }
 
     @Override
@@ -157,16 +172,6 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
         });
 
         query.get();
-
-    }
-
-    @Override
-    public void updateLogEntry(LogEntry entry) {
-
-    }
-
-    @Override
-    public void deleteLogEntry(LogEntry entry) {
 
     }
 
@@ -298,6 +303,27 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
 
     private void add(String collection, Object toWrite, String id){
         db.collection(collection)
+                .document(id).
+                set(toWrite).
+                addOnFailureListener(this);
+    }
+
+    /**
+     * A bit on the dumber side, but since you cant actually do something with a collection,
+     * we are limited to a even number of identifiers, so this method is customized for our need
+     * and not very dynamic
+     * @param toWrite Object
+     * @param id String
+     * @param root String - top level identifier
+     * @param childName String - Middle level identifier
+     * @param resourceType String - Last level identifier
+     */
+    private void addNested(Object toWrite, String id, String root, String childName, String resourceType){
+        CollectionReference colRef = null;
+
+        db.collection(root)
+                .document(childName)
+                .collection(resourceType)
                 .document(id).
                 set(toWrite).
                 addOnFailureListener(this);

@@ -9,7 +9,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
+import com.ntnu.wip.nabl.Adapters.ViewHolders.CompanyListViewHolder;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.R;
 
@@ -44,12 +47,9 @@ public class SettingsView implements ISettingsView {
         ButterKnife.bind(this, rootView);
 
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (ISettingsView.SettingsListener listener: settingsListenerList) {
-                    listener.createNewCompany();
-                }
+        submitButton.setOnClickListener(v -> {
+            for (SettingsListener listener: settingsListenerList) {
+                listener.createNewCompany();
             }
         });
     }
@@ -76,21 +76,25 @@ public class SettingsView implements ISettingsView {
     }
 
     @Override
-    public void setListAdapter(ListAdapter adapter) {
+    public void setListAdapter(CompanyListAdapter adapter) {
         this.companyList.setAdapter(adapter);
 
-        this.companyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Company company = (Company) companyList.getAdapter().getItem(position);
+        //configureItemButtons(adapter);
+        this.companyList.setOnItemClickListener((parent, view, position, id) -> {
+            Company company = (Company) companyList.getAdapter().getItem(position);
 
-
-
-                for (ISettingsView.SettingsListener listener: settingsListenerList) {
-                    listener.deleteCompany(company);
-                }
+            for (SettingsListener listener: settingsListenerList) {
+                listener.deleteCompany(company);
             }
         });
         // Add some sort of listener or similar
+    }
+
+    private void configureItemButtons(CompanyListAdapter adapter) {
+        CompanyListViewHolder holder = adapter.getHolder();
+
+        holder.delete.setOnClickListener(view -> {
+            System.out.println(holder.description.getText());
+        });
     }
 }
