@@ -212,7 +212,7 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         final String date = String.format(Locale.getDefault(), "%s.%s.%s",
                 String.valueOf(dayOfMonth),
-                String.valueOf(month),
+                String.valueOf(month + 1),                  // +1 because the month is 0-based Array
                 String.valueOf(year));
 
         Calendar cal = Calendar.getInstance();

@@ -35,6 +35,7 @@ public class LoggingInputController extends AppCompatActivity implements
     private String objectID;
     private float breaks;                           // Breaks in Minute
     private float overTime;                         // Overtime in Minute
+    private boolean overTimePressed = false;
 
     /**
      * Android Activity Life Cycle function, runs whens the activity is created
@@ -168,6 +169,11 @@ public class LoggingInputController extends AppCompatActivity implements
         day.setOverTime(overTime);
         day.setDescription(mvcView.getDescription());
 
+        if(overTimePressed){
+            day.setHolyDay(mvcView.getHoliday());
+            day.setWeekEnd(mvcView.getWeekend());
+        }
+
         return day;
     }
 
@@ -220,6 +226,12 @@ public class LoggingInputController extends AppCompatActivity implements
     @Override
     public void overTimePressed() {
         this.mvcView.enableOverTimeBox();
+        if(overTimePressed) {
+            overTimePressed = false;
+        }
+        else {
+            overTimePressed = true;
+        }
     }
 
     @Override

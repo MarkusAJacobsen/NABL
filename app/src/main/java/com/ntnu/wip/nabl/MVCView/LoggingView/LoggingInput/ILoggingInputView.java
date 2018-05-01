@@ -38,4 +38,6 @@ public interface ILoggingInputView extends IAbstractMvcView {
     Date getStartDate();
     Date getEndDate();
     String getDescription();
+    float getHoliday();
+    float getWeekend();
 }

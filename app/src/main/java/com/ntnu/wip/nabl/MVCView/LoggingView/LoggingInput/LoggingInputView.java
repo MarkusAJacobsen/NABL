@@ -39,12 +39,9 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     @BindView(R.id.endingDate) TextView endingDate;
     @BindView(R.id.startingTime) TextView startingTime;
     @BindView(R.id.endingTime) TextView endingTime;
-    /*
-    @BindView(R.id.holidayStartTime) TextView holidayStartTime;
-    @BindView(R.id.holidayEndTime) TextView holidayEndTime;
-    @BindView(R.id.weekendStartTime) TextView weekendStartTime;
-    @BindView(R.id.weekendEndTime) TextView weekendEndTime;
-    */
+
+    @BindView(R.id.weekendHours) TextView weekendHours;
+    @BindView(R.id.holidayHours) TextView holidayHours;
     @BindView(R.id.breaksCounter) Spinner breakSpinner;
     @BindView(R.id.overTimeCounter) Spinner overTimeSpinner;
 
@@ -70,7 +67,7 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     }
 
     private enum WhichTime {
-        START, END, HOLIDAY_START, HOLIDAY_END, WEEKEND_START, WEEKEND_END, NULL
+        START, END, NULL
     }
 
     /**
@@ -85,7 +82,7 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
         updateDateVariables();
 
         configureDatePickers();
-        configureTimePickers();
+        configureStartAndEndTime();
 
         configureViewSpinners();
 
@@ -139,17 +136,6 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     }
 
     /**
-     * Function to configure the Time dialog
-     */
-    private void configureTimePickers() {
-        configureStartAndEndTime();
-        /*
-        configureHolidayTime();
-        configureWeekendTime();
-        */
-    }
-
-    /**
      * Function to configure the time dialog on clicking Time fields
      */
     private void configureStartAndEndTime() {
@@ -173,59 +159,6 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
             }
         });
     }
-
-    /**
-     * Function to configure the time dialog on clicking weekend fields
-     */
-    /*
-    private void configureWeekendTime() {
-        this.weekendStartTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.WEEKEND_START;
-                    this.timeDialog.show();
-                }
-            }
-        });
-
-        this.weekendEndTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.WEEKEND_END;
-                    this.timeDialog.show();
-                }
-            }
-        });
-    }
-    */
-
-    /**
-     * Function to configure the time dialog on clicking holiday fields
-     */
-    /*
-    private void configureHolidayTime() {
-        this.holidayStartTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.HOLIDAY_START;
-                    this.timeDialog.show();
-                }
-            }
-        });
-
-        this.holidayEndTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.HOLIDAY_END;
-                    this.timeDialog.show();
-                }
-            }
-        });
-    }*/
 
     /**
      * Function to configure the Date dialog on clicking Date fields
@@ -391,6 +324,16 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     }
 
     @Override
+    public float getHoliday() {
+        return Float.parseFloat(holidayHours.getText().toString());
+    }
+
+    @Override
+    public float getWeekend() {
+        return Float.parseFloat(weekendHours.getText().toString());
+    }
+
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         final String date = String.format(Locale.getDefault(), "%s.%s.%s",
                 String.valueOf(dayOfMonth),
@@ -433,19 +376,6 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
                 endingTime.setText(time);
                 eDate = updateTimeOnCalendar(eDate, hourOfDay, minute).getTime();
                 break;
-
-            case HOLIDAY_START:
-                //holidayStartTime.setText(time); break;
-
-            case HOLIDAY_END:
-                //holidayEndTime.setText(time); break;
-
-            case WEEKEND_START:
-                //weekendStartTime.setText(time); break;
-
-            case WEEKEND_END:
-                //weekendEndTime.setText(time); break;
-
             case NULL: break;
         }
 

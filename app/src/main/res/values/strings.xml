@@ -99,6 +99,7 @@
     <string name="holiday">Holiday</string>
     <string name="weekend">Weekend</string>
     <string name="newLogging">New Log</string>
+    <string name="hours">Hours:</string>
 
     <string name="type">type</string>
     <string name="id">id</string>
