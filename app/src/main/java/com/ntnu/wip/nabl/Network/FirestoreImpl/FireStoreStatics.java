@@ -1,5 +1,8 @@
 package com.ntnu.wip.nabl.Network.FirestoreImpl;
 
+/**
+ * Firestore database fields and collections names
+ */
 public interface FireStoreStatics {
     // Collections
     String PROJECT_COLLECTION = "projects";

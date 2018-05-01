@@ -31,6 +31,10 @@ import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.PROJECT_COLLECTION;
 
+/**
+ * Firestore network implementation
+ * For docs see {@link com.ntnu.wip.nabl.Network.IClient}
+ */
 public class FireStoreClient extends AbstractClient implements OnFailureListener {
     private FirebaseFirestore db;
     private Context context;
