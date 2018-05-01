@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ntnu.wip.nabl.Adapters.View.ProjectClientAdapterView;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Models.SummaryContainer;
 import com.ntnu.wip.nabl.R;
 
 import java.util.List;
@@ -24,36 +26,23 @@ import java.util.List;
 
 public class ClientProjectAdapter extends BaseAdapter {
 
-    private List<Client> clientList;
-    private List<Project> projectList;
     private Context context;
+    private List<SummaryContainer> list;
 
-    ClientProjectAdapter(Context context, Company company) {
+    ClientProjectAdapter(Context context, List<SummaryContainer> list) {
         this.context = context;
+        this.list = list;
     }
 
-    public void setClientList(List<Client> clients) {
-        clientList = clients;
-        notifyDataSetChanged();
-    }
-
-    public void setProjectList(List<Project> projects) {
-        projectList = projects;
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getCount() {
-        return clientList.size()+projectList.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (position >= projectList.size()) {
-            return clientList.get(position-projectList.size());
-        } else {
-            return clientList.get(position);
-        }
+        return list.get(position);
     }
 
     @Override
@@ -64,18 +53,21 @@ public class ClientProjectAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.project_client_list_element, null);
+        ProjectClientAdapterView mvcView = new ProjectClientAdapterView(inflater, parent);
 
-        TextView indicator = convertView.findViewById(R.id.project_client_indicator);
-        TextView indicator_name = convertView.findViewById(R.id.indicator_name);
+        SummaryContainer container = list.get(position);
 
-        TextView cardHours = convertView.findViewById(R.id.cardHours);
-        TextView cardOverTime = convertView.findViewById(R.id.cardOverTime);
-        TextView cardTotalHours = convertView.findViewById(R.id.cardHoursTotal);
+        mvcView.setHours(formatHourIndicator(context.getString(R.string.summaryHours), container.getHours()));
+        mvcView.setOverTime(formatHourIndicator(context.getString(R.string.summaryOverTime), container.getOverTime()));
+        mvcView.setTotalHours(formatHourIndicator(context.getString(R.string.summaryHoursTotal), container.getTotalHours()));
 
+        mvcView.setType(container.getType().toString());
+        mvcView.setTitle(container.getTitleString());
 
-        if ()
+        return mvcView.getRootView();
+    }
 
-        return convertView;
+    private String formatHourIndicator(String text, long hours) {
+        return text + " "+hours;
     }
 }

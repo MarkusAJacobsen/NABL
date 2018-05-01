@@ -17,11 +17,53 @@ public class SummaryContainer {
 
     public enum ContentType {
         PROJECT,
-        CLIENT;
+        CLIENT
     }
 
     SummaryContainer(Project project) {
         entity = project;
         type = ContentType.PROJECT;
+    }
+
+    SummaryContainer(Client client) {
+        entity = client;
+        type = ContentType.CLIENT;
+    }
+
+
+    public long getHours() {
+        return hours;
+    }
+
+    public long getOverTime() {
+        return overTime;
+    }
+
+    public Object getEntity() {
+        return entity;
+    }
+
+    public ContentType getType() {
+        return type;
+    }
+
+    public long getTotalHours() {
+        return overTime+hours;
+    }
+
+    public String getTitleString() {
+        switch (type) {
+            case CLIENT:
+                Client c = (Client) entity;
+                return c.getName();
+
+            case PROJECT:
+                Project p = (Project) entity;
+                return p.getName();
+
+                default:
+                    return "OH FUCK. OH FUCK. OH FUCK";
+
+        }
     }
 }
