@@ -1,11 +1,17 @@
 package com.ntnu.wip.nabl.Adapters;
 
+import android.content.Context;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.ntnu.wip.nabl.Models.Client;
+import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.R;
 
 import java.util.List;
 
@@ -20,6 +26,11 @@ public class ClientProjectAdapter extends BaseAdapter {
 
     private List<Client> clientList;
     private List<Project> projectList;
+    private Context context;
+
+    ClientProjectAdapter(Context context, Company company) {
+        this.context = context;
+    }
 
     public void setClientList(List<Client> clients) {
         clientList = clients;
@@ -39,9 +50,9 @@ public class ClientProjectAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         if (position >= projectList.size()) {
-            return clientList.get(i-projectList.size());
+            return clientList.get(position-projectList.size());
         } else {
-            return clientList.get(i);
+            return clientList.get(position);
         }
     }
 
@@ -52,6 +63,19 @@ public class ClientProjectAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return new View();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.project_client_list_element, null);
+
+        TextView indicator = convertView.findViewById(R.id.project_client_indicator);
+        TextView indicator_name = convertView.findViewById(R.id.indicator_name);
+
+        TextView cardHours = convertView.findViewById(R.id.cardHours);
+        TextView cardOverTime = convertView.findViewById(R.id.cardOverTime);
+        TextView cardTotalHours = convertView.findViewById(R.id.cardHoursTotal);
+
+
+        if ()
+
+        return convertView;
     }
 }
