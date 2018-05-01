@@ -72,24 +72,24 @@ public abstract class AbstractClient implements IClient {
         }
     }
 
-    public void setLastFetchedWorkday(WorkDay lastFetchedWorkday) {
+    protected void setLastFetchedWorkday(WorkDay lastFetchedWorkday) {
         this.lastFetchedWorkday = lastFetchedWorkday;
     }
 
-    public void setLastFetchedWorkdays(List<WorkDay> lastFetchedWorkdays) {
+    protected void setLastFetchedWorkdays(List<WorkDay> lastFetchedWorkdays) {
         this.lastFetchedWorkdays = lastFetchedWorkdays;
     }
 
-    public void setLastFetchedCompanies(List<Company> lastFetchedCompanies) {
+    protected void setLastFetchedCompanies(List<Company> lastFetchedCompanies) {
         this.lastFetchedCompanies = lastFetchedCompanies;
         notifyAllObservers(Subscriptions.COMPANIES);
     }
 
-    public void setLastFetchedClients(List<Client> lastFetchedClients) {
+    protected void setLastFetchedClients(List<Client> lastFetchedClients) {
         this.lastFetchedClients = lastFetchedClients;
     }
 
-    public void setLastFetchedProjects(List<Project> lastFetchedProjects) {
+    protected void setLastFetchedProjects(List<Project> lastFetchedProjects) {
         this.lastFetchedProjects = lastFetchedProjects;
     }
 
