@@ -36,6 +36,12 @@ public class WorkDay {
     private String description;
 
 
+    /**
+     * Empty constructor, with auto generated id
+     */
+    public WorkDay() {
+        id = Utils.generateUniqueId(24);
+    }
 
     /**
      * Used in the case of the user inputting data from a former
@@ -54,10 +60,16 @@ public class WorkDay {
         overTime = 0;
     }
 
+    public WorkDay(long startTime, long stopTime) {
+        this.startTime = new DateTime(startTime);
+        this.endTime = new DateTime(stopTime);
+    }
+
     /**
      * Round to first begun half-hour
      * @return
      */
+    @Exclude
     public double getTotalHours() {
 
         Hours hours = Hours.hoursBetween(startTime, endTime);
@@ -85,18 +97,23 @@ public class WorkDay {
     // ################### SETTERS / GETTERS #####################
 
     // Date of the workday is decided by the first day of work
+    @Exclude
     public Calendar getDay() {
         Calendar cal = new GregorianCalendar();
-        cal.set(Calendar.DAY_OF_MONTH, startTime.getDayOfMonth());
-        cal.set(Calendar.MONTH, startTime.getMonthOfYear());
-        cal.set(Calendar.YEAR, startTime.getYear());
-        return cal;
+        if(startTime != null) {
+            cal.set(Calendar.DAY_OF_MONTH, startTime.getDayOfMonth());
+            cal.set(Calendar.MONTH, startTime.getMonthOfYear());
+            cal.set(Calendar.YEAR, startTime.getYear());
+            return cal;
+        }
+        return null;
     }
 
     public float getBreakTime() {
         return breakTime;
     }
 
+    @Exclude
     public DateTime getEndTime() {
         return endTime;
     }
@@ -105,6 +122,7 @@ public class WorkDay {
         return overTime;
     }
 
+    @Exclude
     public DateTime getStartTime() {
         return startTime;
     }
@@ -144,6 +162,7 @@ public class WorkDay {
     }
 
     // Hours - break
+    @Exclude
     public double getTotal() {
         return getTotalHours()-getBreakTime();
     }
@@ -162,6 +181,14 @@ public class WorkDay {
 
     public long getEndTimeInMillis() {
         return endTime.getMillis();
+    }
+
+    public void setStartTimeInMillis(long startTimeInMillis) {
+        startTime = new DateTime(startTimeInMillis);
+    }
+
+    public void setEndTimeInMillis(long endTimeInMillis) {
+        endTime = new DateTime(endTimeInMillis);
     }
 
     public String getId() {
@@ -195,4 +222,5 @@ public class WorkDay {
     public String getProjectId() {
         return projectId;
     }
+
 }

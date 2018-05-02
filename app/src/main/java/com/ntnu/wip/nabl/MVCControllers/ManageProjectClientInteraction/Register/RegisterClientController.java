@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.ClientInput.ClientInputView;
 import com.ntnu.wip.nabl.MVCView.ClientInput.IClientInputView;
 import com.ntnu.wip.nabl.Models.Address;
@@ -62,7 +63,7 @@ public class RegisterClientController extends Fragment implements IClientInputVi
                     Toast.makeText(getContext(), getString(R.string.inputInvalid), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            default: break;
+            default: return super.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);
@@ -71,15 +72,18 @@ public class RegisterClientController extends Fragment implements IClientInputVi
     private void registerModel(){
         newModel = new Client();
 
-        newModel.setId(Utils.generateUniqueId(24));
         getCoreInformation();
         getContactInformation();
         getAddressInformation();
 
-        saveModel();
+        try {
+            saveModel();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void saveModel(){
+    private void saveModel() throws CompanyNotFoundException {
         IClient client = new FireStoreClient(getContext());
         client.writeNewClient(newModel);
     }
@@ -109,6 +113,6 @@ public class RegisterClientController extends Fragment implements IClientInputVi
     }
 
     private void finishFragment(){
-
+        getActivity().onBackPressed();
     }
 }

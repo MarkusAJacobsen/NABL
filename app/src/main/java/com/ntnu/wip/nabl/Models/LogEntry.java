@@ -2,6 +2,7 @@ package com.ntnu.wip.nabl.Models;
 
 import java.util.Date;
 
+@Deprecated // Replaced by WorkDay.java
 public class LogEntry {
     private String id;
     private Date entryDate;

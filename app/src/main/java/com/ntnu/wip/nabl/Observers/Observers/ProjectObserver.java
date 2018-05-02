@@ -12,6 +12,9 @@ import com.ntnu.wip.nabl.Observers.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Observer for single project change
+ */
 public class ProjectObserver extends Observer<AbstractClient> {
     protected ProjectObserver() {}
 

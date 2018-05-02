@@ -11,7 +11,7 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 public interface IClientListView extends IAbstractMvcView {
     // Functions to implement in the controller
     interface ClientListListener {
-
+        void clientSelected(Object item);
     }
 
     // Functions to implement in the View

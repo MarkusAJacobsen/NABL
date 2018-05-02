@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Modify.ModifyClientController;
 import com.ntnu.wip.nabl.Models.Client;
@@ -141,7 +142,12 @@ public class OverviewClientController extends Fragment implements IOverviewClien
 
     private void fetchModel(String id) {
         FireStoreClient client = new FireStoreClient(getContext());
-        client.getClient(id);
+
+        try {
+            client.getClient(id);
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT);
         observer.setSubject(client);
@@ -202,6 +208,12 @@ public class OverviewClientController extends Fragment implements IOverviewClien
 
     private void deleteModel(){
         FireStoreClient client = new FireStoreClient(getContext());
-        client.deleteClient(model);
+
+        try {
+            client.deleteClient(model);
+            getActivity().onBackPressed();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
     }
 }

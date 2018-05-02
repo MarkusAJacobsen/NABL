@@ -10,11 +10,13 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.ExportView.ExportView;
 import com.ntnu.wip.nabl.MVCView.ExportView.IExportView;
 import com.ntnu.wip.nabl.Models.Client;
@@ -35,7 +37,6 @@ import org.joda.time.DateTime;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,15 +80,22 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private void fetchProjects() {
         this.projects.clear();
         FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.getAllProjects();
+
+        try {
+            client.getAllProjects();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
         observer.setSubject(client);
         observer.setOnUpdateListener(projects -> {
             this.projects = (List) projects;
-            if (!this.projects.isEmpty() || this.projects != null) {
-                this.chosenObject = (Project) this.projects.get(0);     // First element
+
+            if (!this.projects.isEmpty()) {
+                this.chosenObject = this.projects.get(0);     // First element
             }
+
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(),
                     android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);
@@ -100,7 +108,12 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     private void fetchClients() {
         this.clients.clear();
         FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.getAllClients();
+
+        try {
+            client.getAllClients();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
         observer.setSubject(client);
@@ -256,6 +269,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     @Override
     public void changeSelectionBtnPressed() {
         final boolean mode = this.mvcView.switchView();
+
         if(mode) {
             fetchProjects();
         } else {
@@ -298,5 +312,21 @@ public class ExportController extends AppCompatActivity implements IExportView.E
         // the mail subject
         emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Your Log file");
         startActivity(Intent.createChooser(emailIntent , "Send email..."));
+    }
+
+    /**
+     * Configure the back button on the ActionBar
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item != null)
+        {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

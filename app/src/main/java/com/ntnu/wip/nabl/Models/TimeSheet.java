@@ -397,6 +397,9 @@ public class TimeSheet {
         WorkDay earliest = workDays.get(0); // Start with the first in the list
         WorkDay last = workDays.get(workDays.size()-1); // Last in list is probably last
 
+        if (workDays.size() == 0) {
+            last = workDays.get(0);
+        }
         // Loop the workdays to see if the extraction is ordered
         for (WorkDay day: workDays) {
             // Is it the same object as earliest?

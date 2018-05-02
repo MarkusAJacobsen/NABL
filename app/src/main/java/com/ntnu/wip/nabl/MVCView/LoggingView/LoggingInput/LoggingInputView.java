@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -37,20 +38,21 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     @BindView(R.id.endingDate) TextView endingDate;
     @BindView(R.id.startingTime) TextView startingTime;
     @BindView(R.id.endingTime) TextView endingTime;
-    @BindView(R.id.holidayStartTime) TextView holidayStartTime;
-    @BindView(R.id.holidayEndTime) TextView holidayEndTime;
-    @BindView(R.id.weekendStartTime) TextView weekendStartTime;
-    @BindView(R.id.weekendEndTime) TextView weekendEndTime;
+    @BindView(R.id.weekendHours) TextView weekendHours;
+    @BindView(R.id.holidayHours) TextView holidayHours;
     @BindView(R.id.breaksCounter) Spinner breakSpinner;
     @BindView(R.id.overTimeCounter) Spinner overTimeSpinner;
     @BindView(R.id.checkBox) CheckBox overTimeCheckBox;
     @BindView(R.id.extraHours) ConstraintLayout overTimeLayout;
+    @BindView(R.id.description) TextView description;
 
     private DatePickerDialog dateDialog;
     private TimePickerDialog timeDialog;
 
     private Date sDate;
     private Date eDate;
+    private boolean invalidDate = false;                // True if invalid, False if correct
+    private boolean invalidTime = false;                // True if invalid, False if correct
 
     private LoggingInputView.WhichDate whichDate = LoggingInputView.WhichDate.NULL;
     private LoggingInputView.WhichTime whichTime = LoggingInputView.WhichTime.NULL;
@@ -62,7 +64,7 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     }
 
     private enum WhichTime {
-        START, END, HOLIDAY_START, HOLIDAY_END, WEEKEND_START, WEEKEND_END, NULL
+        START, END, NULL
     }
 
     /**
@@ -74,9 +76,52 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
         this.rootView = inflater.inflate(R.layout.logging_input, container);
         ButterKnife.bind(this, rootView);
 
+        updateDateVariables();
+
         configureDatePickers();
-        configureTimePickers();
+        configureStartAndEndTime();
+
+        configureViewSpinners();
+
         configureCheckBox();
+    }
+
+    private void configureViewSpinners() {
+        breakSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                if (listener != null){
+                    listener.updateBreaksCount(pos);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // NO OP
+            }
+        });
+
+        overTimeSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                if (listener != null){
+                    listener.updateOverTimeCount(pos);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // NO OP
+            }
+        });
+    }
+
+    /**
+     * Function to update date variables at the begging to now time
+     */
+    private void updateDateVariables() {
+        Calendar cal = Calendar.getInstance();
+        sDate = eDate = cal.getTime();
     }
 
     /**
@@ -86,65 +131,6 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
         this.overTimeCheckBox.setOnClickListener(view -> {
             if (listener != null) {
                 this.listener.overTimePressed();
-            }
-        });
-    }
-
-    /**
-     * Function to configure the Time dialog
-     */
-    private void configureTimePickers() {
-        configureStartAndEndTime();
-        configureHolidayTime();
-        configureWeekendTime();
-    }
-
-    /**
-     * Function to configure the time dialog on clicking weekend fields
-     */
-    private void configureWeekendTime() {
-        this.weekendStartTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.WEEKEND_START;
-                    this.timeDialog.show();
-                }
-            }
-        });
-
-        this.weekendEndTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.WEEKEND_END;
-                    this.timeDialog.show();
-                }
-            }
-        });
-    }
-
-    /**
-     * Function to configure the time dialog on clicking holiday fields
-     */
-    private void configureHolidayTime() {
-        this.holidayStartTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.HOLIDAY_START;
-                    this.timeDialog.show();
-                }
-            }
-        });
-
-        this.holidayEndTime.setOnClickListener(view -> {
-            if (listener != null) {
-                this.listener.timeFieldPressed();
-                if (timeDialog != null) {
-                    this.whichTime = WhichTime.HOLIDAY_END;
-                    this.timeDialog.show();
-                }
             }
         });
     }
@@ -206,8 +192,40 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
         if(sDate != null && eDate != null) {
             if(sDate.after(eDate) && listener != null) {
                 this.listener.invalidDateSupplied();
+                invalidDate = true;
+            } else {
+                invalidDate = false;
             }
         }
+    }
+
+    /**
+     * Function to check if the setTime is valid
+     */
+    private void checkTimeCorrectness() {
+        if(sDate != null && eDate != null) {
+            if(sDate.after(eDate) && listener != null) {
+                this.listener.invalidTimeSupplied();
+                invalidTime = true;
+            } else {
+                invalidTime = false;
+            }
+        }
+    }
+
+    /**
+     * Function to initialize  Calendar object by adding time to existing date
+     * @param date
+     * @param hourOfDay
+     * @param minute
+     * @return
+     */
+    private Calendar updateTimeOnCalendar(Date date, int hourOfDay, int minute) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        cal.set(Calendar.MINUTE, minute);
+        return cal;
     }
 
     @Override
@@ -281,10 +299,50 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     }
 
     @Override
+    public boolean checkDateInvalid() {
+        return invalidDate;
+    }
+
+    @Override
+    public boolean checkTimeInvalid() {
+        return invalidTime;
+    }
+
+    @Override
+    public Date getStartDate() {
+        return sDate;
+    }
+
+    @Override
+    public Date getEndDate() {
+        return eDate;
+    }
+
+    @Override
+    public String getDescription() {
+        return description.getText().toString();
+    }
+
+    @Override
+    public float getHoliday() {
+        return Float.parseFloat(holidayHours.getText().toString());
+    }
+
+    @Override
+    public float getWeekend() {
+        return Float.parseFloat(weekendHours.getText().toString());
+    }
+
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        //Since Calendar uses constants to define months and January start at 0
+        final int monthAddition = month +1;
+        final String processedMonth = month < 10 ? "0"+  monthAddition : String.valueOf(monthAddition);
+        final String processedDay = dayOfMonth < 10 ? "0"+dayOfMonth : String.valueOf(dayOfMonth);
+
         final String date = String.format(Locale.getDefault(), "%s.%s.%s",
-                String.valueOf(dayOfMonth),
-                String.valueOf(month),
+                String.valueOf(processedDay),
+                String.valueOf(processedMonth),
                 String.valueOf(year));
 
         Calendar cal = Calendar.getInstance();
@@ -314,19 +372,19 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
                 String.valueOf(hourOfDay), String.valueOf(minute));
 
         switch (whichTime) {
-            case START: startingTime.setText(time); break;
+            case START:
+                startingTime.setText(time);
+                sDate = updateTimeOnCalendar(sDate, hourOfDay, minute).getTime();
+                break;
 
-            case END: endingTime.setText(time); break;
-
-            case HOLIDAY_START: holidayStartTime.setText(time); break;
-
-            case HOLIDAY_END: holidayEndTime.setText(time); break;
-
-            case WEEKEND_START: weekendStartTime.setText(time); break;
-
-            case WEEKEND_END: weekendEndTime.setText(time); break;
-
+            case END:
+                endingTime.setText(time);
+                eDate = updateTimeOnCalendar(eDate, hourOfDay, minute).getTime();
+                break;
             case NULL: break;
         }
+
+        whichTime = LoggingInputView.WhichTime.NULL;
+        checkTimeCorrectness();
     }
 }

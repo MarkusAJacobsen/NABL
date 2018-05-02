@@ -11,7 +11,7 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 public interface IProjectListView extends IAbstractMvcView{
     // Functions to implement in the controller
     interface ProjectListListener {
-
+        void projectSelected(Object item);
     }
 
     // Functions to implement in the View

@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewController;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Register.RegisterController;
 import com.ntnu.wip.nabl.Models.Client;
@@ -100,25 +102,45 @@ public class ProjectClientSelectorController extends AppCompatActivity implement
 
     private void projectSelected(){
         FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.getAllProjects();
+
+        try {
+            client.getAllProjects();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.PROJECT_COLLECTION);
         observer.setSubject(client);
         observer.setOnUpdateListener(receivedProjects -> {
             this.projects = (List) receivedProjects;
+
+            if(this.projects.isEmpty()) {
+                mvcView.setEmptyIdentifier(getString(R.string.listEmpty));
+            }
+
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.projects);
             mvcView.setResourceViewerAdapter(adapter);
         });
     }
 
     private void clientSelected(){
-        FireStoreClient client = new FireStoreClient(getApplicationContext());
-        client.getAllClients();
+        FireStoreClient client= new FireStoreClient(getApplicationContext());
+
+        try {
+            client.getAllClients();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
         observer.setSubject(client);
         observer.setOnUpdateListener(receivedClients -> {
             this.clients = (List) receivedClients;
+
+            if(this.projects.isEmpty()) {
+                mvcView.setEmptyIdentifier(getString(R.string.listEmpty));
+            }
+
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, this.clients);
             mvcView.setResourceViewerAdapter(adapter);
         });
