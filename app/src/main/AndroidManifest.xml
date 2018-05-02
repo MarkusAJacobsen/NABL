@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".MVCControllers.ProjectClientSelectorController" />
         <activity android:name=".MVCControllers.ManageProjectClientInteraction.Overview.OverviewController" />
-        <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController" />
+        <activity android:name=".MVCControllers.ManageProjectClientInteraction.Register.RegisterController"
+            android:windowSoftInputMode="adjustResize"/> <!-- Enable scroll view on keyboard -->
         <activity android:name=".MVCControllers.ExportController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.LoggingController" />
         <activity android:name=".MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController"

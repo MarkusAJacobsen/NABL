@@ -177,6 +177,7 @@ public class OverviewProjectController extends Fragment implements IChangeScreen
 
         try {
             client.deleteProject(model);
+            getActivity().onBackPressed();
         } catch (CompanyNotFoundException e) {
             Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
         }

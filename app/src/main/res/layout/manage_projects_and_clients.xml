@@ -48,5 +48,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/listEmpty"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:visibility="invisible" />
 </android.support.constraint.ConstraintLayout>

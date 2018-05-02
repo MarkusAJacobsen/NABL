@@ -113,6 +113,6 @@ public class RegisterClientController extends Fragment implements IClientInputVi
     }
 
     private void finishFragment(){
-
+        getActivity().onBackPressed();
     }
 }

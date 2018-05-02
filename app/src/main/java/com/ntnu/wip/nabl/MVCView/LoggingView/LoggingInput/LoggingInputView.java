@@ -335,10 +335,14 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        //Since Calendar uses constants to define months and January start at 0
+        final int monthAddition = month +1;
+        final String processedMonth = month < 10 ? "0"+  monthAddition : String.valueOf(monthAddition);
+        final String processedDay = dayOfMonth < 10 ? "0"+dayOfMonth : String.valueOf(dayOfMonth);
+
         final String date = String.format(Locale.getDefault(), "%s.%s.%s",
-                String.valueOf(dayOfMonth),
-                String.valueOf(month +1),               // +1 because month is defined by Calendar
-                                                            // constants which states that January is 0
+                String.valueOf(processedDay),
+                String.valueOf(processedMonth),
                 String.valueOf(year));
 
         Calendar cal = Calendar.getInstance();

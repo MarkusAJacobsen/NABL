@@ -215,6 +215,7 @@ public class OverviewClientController extends Fragment implements IOverviewClien
 
         try {
             client.deleteClient(model);
+            getActivity().onBackPressed();
         } catch (CompanyNotFoundException e) {
             Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
         }

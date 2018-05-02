@@ -28,8 +28,7 @@ public class RegisterController extends AppCompatActivity implements IRegisterVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onBackPressed();
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
