@@ -283,9 +283,14 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        //Since Calendar uses constants to define months and January start at 0
+        final int monthAddition = month +1;
+        final String processedMonth = month < 10 ? "0"+  monthAddition : String.valueOf(monthAddition);
+        final String processedDay = dayOfMonth < 10 ? "0"+dayOfMonth : String.valueOf(dayOfMonth);
+
         final String date = String.format(Locale.getDefault(), "%s.%s.%s",
-                String.valueOf(dayOfMonth),
-                String.valueOf(month),
+                String.valueOf(processedDay),
+                String.valueOf(processedMonth),
                 String.valueOf(year));
 
         Calendar cal = Calendar.getInstance();
@@ -357,7 +362,7 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
         List<Integer> decodedDate = Utils.decodeDateString(dateStringFormat);
 
         cal.set(Calendar.DAY_OF_MONTH, decodedDate.get(0));
-        cal.set(Calendar.MONTH, (decodedDate.get(1)-1)); // January is considered JANUARY(0)
+        cal.set(Calendar.MONTH, (decodedDate.get(1))); // January is considered JANUARY(0)
         cal.set(Calendar.YEAR, decodedDate.get(2));
 
         switch(whichDate){

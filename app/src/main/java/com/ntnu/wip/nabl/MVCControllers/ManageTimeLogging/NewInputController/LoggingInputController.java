@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.LoggingView.LoggingInput.ILoggingInputView;
 import com.ntnu.wip.nabl.MVCView.LoggingView.LoggingInput.LoggingInputView;
 import com.ntnu.wip.nabl.Models.WorkDay;
@@ -145,8 +146,14 @@ public class LoggingInputController extends AppCompatActivity implements
      */
     private void registerALog() {
         FireStoreClient client = new FireStoreClient(this);
+
         WorkDay day = generateWorkingDay();
-        client.newLogEntry(day);
+
+        try {
+            client.newLogEntry(day);
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getApplicationContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -159,7 +166,7 @@ public class LoggingInputController extends AppCompatActivity implements
 
         day.setUserId(getUserID());
 
-        if (logType == getString(R.string.project)){
+        if (logType.equals(getString(R.string.project))){
             day.setProjectId(objectID);
         } else {
             day.setClientId(objectID);

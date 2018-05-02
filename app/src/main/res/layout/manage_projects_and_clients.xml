@@ -41,4 +41,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resourceType" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/listEmpty"
+        android:textAlignment="center"
+        android:visibility="invisible" />
 </android.support.constraint.ConstraintLayout>

@@ -9,6 +9,7 @@ public interface FireStoreStatics {
     String CLIENT_COLLECTION = "clients";
     String LOG_ENTRY_COLLECTION = "logEntries";
     String COMPANIES_COLLECTION = "companies";
+    String ROOT_LEVEL_DATA = "data";
 
     // Fields
     String LOG_ENTRY_USER_ID = "userId";

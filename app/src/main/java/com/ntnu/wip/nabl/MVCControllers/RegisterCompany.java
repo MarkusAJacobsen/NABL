@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.registerCompanyView.IRegistrationListener;
 import com.ntnu.wip.nabl.MVCView.registerCompanyView.RegisterCompanyView;
 import com.ntnu.wip.nabl.Models.Company;
@@ -36,7 +37,7 @@ public class RegisterCompany extends AppCompatActivity implements IRegistrationL
      */
     @Override
     public void submission() {
-        FireStoreClient client = new FireStoreClient(getApplicationContext());
+        FireStoreClient client = new FireStoreClient(this);
 
         Company company = new Company(mvcView.getCompanyName(), mvcView.getOrganisationNumber());
         FirestoreAuthentication authentication = new FirestoreAuthentication();

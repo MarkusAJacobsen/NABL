@@ -9,7 +9,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
+import com.ntnu.wip.nabl.Adapters.ICompanyListAdapterCallback;
+import com.ntnu.wip.nabl.Adapters.ViewHolders.CompanyListViewHolder;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.R;
 
@@ -25,9 +29,10 @@ import butterknife.ButterKnife;
  * Created by klingen on 30.04.18.
  */
 
-public class SettingsView implements ISettingsView {
+public class SettingsView implements ISettingsView, ICompanyListAdapterCallback {
     private View rootView;
     private ActionBar actionBar;
+    private int savedOption = 0;
 
 
     @BindView(R.id.createCompanySettingsButton)
@@ -44,12 +49,9 @@ public class SettingsView implements ISettingsView {
         ButterKnife.bind(this, rootView);
 
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (ISettingsView.SettingsListener listener: settingsListenerList) {
-                    listener.createNewCompany();
-                }
+        submitButton.setOnClickListener(v -> {
+            for (SettingsListener listener: settingsListenerList) {
+                listener.createNewCompany();
             }
         });
     }
@@ -76,21 +78,29 @@ public class SettingsView implements ISettingsView {
     }
 
     @Override
-    public void setListAdapter(ListAdapter adapter) {
+    public void setListAdapter(CompanyListAdapter adapter) {
+        adapter.setListener(this);
         this.companyList.setAdapter(adapter);
 
-        this.companyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Company company = (Company) companyList.getAdapter().getItem(position);
+    }
 
+    @Override
+    public int getSelectedOption() {
+        return savedOption;
+    }
 
+    @Override
+    public void deletePressed(int position) {
+        for (SettingsListener listener: settingsListenerList) {
+            listener.deleteCompany(position);
+        }
+    }
 
-                for (ISettingsView.SettingsListener listener: settingsListenerList) {
-                    listener.deleteCompany(company);
-                }
-            }
-        });
-        // Add some sort of listener or similar
+    @Override
+    public void selectedWorkspace(int position) {
+        for (SettingsListener listener: settingsListenerList) {
+            listener.companySelectedAsWorkspace(position);
+            savedOption = position;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.ntnu.wip.nabl.MVCControllers;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -58,12 +59,21 @@ MainActivityView mvcView;
            if(auth.getCurrentUser() != null) {
                Toast.makeText(this, "Could not log out", Toast.LENGTH_SHORT).show();
            } else {
+               clearSettingsPreferences();
                signIn();
            }
         });
 
         auth.signOut(this);
 
+    }
+
+    /**
+     * Since user specific settings are sat, remove them at logout.
+     * TODO store settings in cloud instead, this way we can load settings
+     */
+    private void clearSettingsPreferences(){
+        this.getSharedPreferences(Settings.PREFERENCE_FILE_NAME, MODE_PRIVATE).edit().clear().apply();
     }
 
     @Override

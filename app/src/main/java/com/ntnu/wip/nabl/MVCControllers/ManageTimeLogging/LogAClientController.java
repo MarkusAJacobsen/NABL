@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController;
 import com.ntnu.wip.nabl.MVCView.ClientsList.ClientListView;
 import com.ntnu.wip.nabl.MVCView.ClientsList.IClientListView;
@@ -47,7 +49,11 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
         mvcView = new ClientListView(inflater, null);
         mvcView.registerListener(this);
 
-        fetchClients();
+        try {
+            fetchClients();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
 
         return mvcView.getRootView();
     }
@@ -84,7 +90,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
     /**
      * Function to fetch Clients data from FireBase
      */
-    private void fetchClients() {
+    private void fetchClients() throws CompanyNotFoundException {
         clients.clear();
         FireStoreClient client = new FireStoreClient(getContext());
         client.getAllClients();
@@ -95,6 +101,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
 
             if(context != null) {
                 clients = (List) receivedClients;
+
                 Adapter adapter = new ArrayAdapter<>(context,
                         android.R.layout.simple_list_item_1, this.clients);
                 mvcView.setResourceViewerAdapter(adapter);

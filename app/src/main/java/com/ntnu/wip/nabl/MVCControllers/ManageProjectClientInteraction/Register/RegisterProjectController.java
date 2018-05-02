@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.projectInput.IProjectInputView;
 import com.ntnu.wip.nabl.MVCView.projectInput.ProjectInputView;
 import com.ntnu.wip.nabl.Models.Address;
@@ -61,7 +62,7 @@ public class RegisterProjectController extends Fragment implements IProjectInput
                     Toast.makeText(getContext(), getString(R.string.inputInvalid), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            default: break;
+            default: return super.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);
@@ -74,10 +75,14 @@ public class RegisterProjectController extends Fragment implements IProjectInput
         getOrganisationInformation();
         getAddressInformation();
 
-        saveModel();
+        try {
+            saveModel();
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void saveModel(){
+    private void saveModel() throws CompanyNotFoundException {
         FireStoreClient client = new FireStoreClient(getContext());
         client.writeNewProject(newModel);
     }
@@ -153,6 +158,6 @@ public class RegisterProjectController extends Fragment implements IProjectInput
     }
 
     private void finishFragment(){
-       //TODO
+        getActivity().onBackPressed();
     }
 }
