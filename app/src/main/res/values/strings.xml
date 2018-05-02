@@ -212,6 +212,7 @@
     <string name="summaryHoursTotal">total</string>
     <string name="summaryOverTime">OT</string>
     <string name="summaryHours">hours</string>
+    <string name="summaryTitle">Summary</string>
 
 
 </resources>

@@ -71,5 +71,6 @@
     <string name="summaryHoursTotal">total</string>
     <string name="summaryOverTime">OT</string>
     <string name="summaryHours">timer</string>
+    <string name="summaryTitle">Oversikt</string>
 
 </resources>

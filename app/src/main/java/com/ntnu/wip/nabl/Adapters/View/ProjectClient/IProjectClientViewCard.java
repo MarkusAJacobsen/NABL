@@ -1,4 +1,4 @@
-package com.ntnu.wip.nabl.Adapters.View;
+package com.ntnu.wip.nabl.Adapters.View.ProjectClient;
 
 import android.view.View;
 

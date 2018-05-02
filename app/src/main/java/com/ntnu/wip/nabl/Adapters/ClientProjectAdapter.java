@@ -1,17 +1,12 @@
 package com.ntnu.wip.nabl.Adapters;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-import com.ntnu.wip.nabl.Adapters.View.ProjectClientAdapterView;
-import com.ntnu.wip.nabl.Models.Client;
-import com.ntnu.wip.nabl.Models.Company;
-import com.ntnu.wip.nabl.Models.Project;
+import com.ntnu.wip.nabl.Adapters.View.ProjectClient.ProjectClientAdapterView;
 import com.ntnu.wip.nabl.Models.SummaryContainer;
 import com.ntnu.wip.nabl.R;
 
