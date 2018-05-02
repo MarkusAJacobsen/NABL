@@ -10,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ntnu.wip.nabl.Consts.Poststamp;
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.IChangeScreen;
 import com.ntnu.wip.nabl.MVCControllers.ManageProjectClientInteraction.Overview.OverviewClientController;
 import com.ntnu.wip.nabl.MVCView.ClientInput.ClientInputView;
@@ -145,7 +147,12 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
 
     private void saveModel(){
         FireStoreClient client = new FireStoreClient(getContext());
-        client.updateClient(model);
+
+        try {
+            client.updateClient(model);
+        } catch (CompanyNotFoundException e) {
+            Toast.makeText(getContext(), (R.string.workspaceNotSat), Toast.LENGTH_SHORT).show();
+        }
     }
 
 

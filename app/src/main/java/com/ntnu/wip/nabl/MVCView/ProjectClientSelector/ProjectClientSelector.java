@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.ntnu.wip.nabl.R;
 
@@ -25,6 +26,8 @@ public class ProjectClientSelector implements IProjectClientSelectorView {
     @BindView(R.id.resourceType) Spinner resourceSelector;
     @BindView(R.id.resource) ListView resourceViewer;
     @BindView(R.id.register) Button mRegister;
+    @BindView(R.id.empty) TextView empty;
+
     private ResourceListener resourceListener;
     private ActionBar actionBar;
 
@@ -106,5 +109,15 @@ public class ProjectClientSelector implements IProjectClientSelectorView {
     @Override
     public int getSpinnerSelected() {
         return resourceSelector.getSelectedItemPosition();
+    }
+
+    /**
+     * Enable empty ListView text
+     * @param text String
+     */
+    @Override
+    public void setEmptyIdentifier(String text) {
+        empty.setText(text);
+        resourceViewer.setEmptyView(empty);
     }
 }

@@ -1,5 +1,6 @@
 package com.ntnu.wip.nabl.Network;
 
+import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.LogEntry;
@@ -16,79 +17,73 @@ import java.util.List;
  */
 public interface IClient extends IObserverSubject {
     /**
-     * Get project
+     * Get project based on Company
      * @param id Project id - int
      */
-    void getProject(String id);
+    void getProject(String id) throws CompanyNotFoundException;
 
     /**
-     * Write new project to cloud
+     * Write new project to cloud based on Company
      * @param project Project
      */
-    void writeNewProject(Project project);
+    void writeNewProject(Project project) throws CompanyNotFoundException;
 
     /**
-     * Update project in cloud
+     * Update project in cloud based on Company
      * @param project Project
      */
-    void updateProject(Project project);
+    void updateProject(Project project) throws CompanyNotFoundException;
 
     /**
-     * Delete project from cloud
+     * Delete project from cloud based on Company
      * @param project Project
      */
-    void deleteProject(Project project);
+    void deleteProject(Project project) throws CompanyNotFoundException;
 
     /**
-     * Get client
+     * Get client based on Company
      * @param id Client id - Int
      */
-    void getClient(String id);
+    void getClient(String id) throws CompanyNotFoundException;
 
     /**
-     * Write new client to cloud
+     * Write new client to cloud based on Company
      * @param client Client
      */
-    void writeNewClient(Client client);
+    void writeNewClient(Client client) throws CompanyNotFoundException;
 
     /**
-     * Update client in cloud
+     * Update client in cloud based on Company
      * @param client Client
      */
-    void updateClient(Client client);
+    void updateClient(Client client) throws CompanyNotFoundException;
 
     /**
-     * Delete client from cloud
+     * Delete client from cloud based on Company
      * @param client Client
      */
-    void deleteClient(Client client);
+    void deleteClient(Client client) throws CompanyNotFoundException;
     void getLogEntry(String id);
-    void newLogEntry(WorkDay workDay);
+    void newLogEntry(WorkDay workDay) throws CompanyNotFoundException;
     void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis);
     void getLogEntriesByUser(User user);
-    void updateLogEntry(LogEntry entry);
-    void deleteLogEntry(LogEntry entry);
     void newCompany(Company company);
     void updateCompany(Company company);
     void deleteCompany(Company company);
 
     void getUserCompanies(String uid);
 
-    void getCompanyProjects(Company company);
-
-    void getCompanyClients(Company company);
+    /**
+     * Get all projects in cloud based on Company
+     */
+    void getAllProjects() throws CompanyNotFoundException;
 
     /**
-     * Get all projects in cloud
+     * Get all client from cloud based on Company
      */
-    void getAllProjects();
-
-    /**
-     * Get all client from cloud
-     */
-    void getAllClients();
+    void getAllClients() throws CompanyNotFoundException;
     void getAllCompanies();
     void getAllLogEntries();
-    void getProjectSpecificLogEntries(Project project);
-    void getClientSpecificLogEntries(Client client);
+    void getProjectSpecificLogEntries(Project project) throws CompanyNotFoundException;
+    void getClientSpecificLogEntries(Client client) throws CompanyNotFoundException;
 }

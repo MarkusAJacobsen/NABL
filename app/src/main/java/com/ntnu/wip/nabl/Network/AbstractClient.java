@@ -25,8 +25,6 @@ public abstract class AbstractClient implements IClient {
     private List<WorkDay> lastFetchedWorkdays;
     private WorkDay lastFetchedWorkday;
     private List<Company> lastFetchedCompanies;
-    private List<Project> lastFetchedProjects;
-    private List<Client> lastFetchedClients;
 
     /**
      * Getter for projects
@@ -142,43 +140,11 @@ public abstract class AbstractClient implements IClient {
     }
 
     /**
-     * Setter for lastFetchedClients
-     * @param lastFetchedClients List<Client>
-     */
-    protected void setLastFetchedClients(List<Client> lastFetchedClients) {
-        this.lastFetchedClients = lastFetchedClients;
-    }
-
-    /**
-     * Setter for lastFetchedProjects
-     * @param lastFetchedProjects List<Project>
-     */
-    protected void setLastFetchedProjects(List<Project> lastFetchedProjects) {
-        this.lastFetchedProjects = lastFetchedProjects;
-    }
-
-    /**
-     * Getter for lastFetchedClients
-     * @return List<Client>
-     */
-    public List<Client> getLastFetchedClients() {
-        return lastFetchedClients;
-    }
-
-    /**
      * Getter for lastFetchedCompanies
      * @return List<Company>
      */
     public List<Company> getLastFetchedCompanies() {
         return lastFetchedCompanies;
-    }
-
-    /**
-     * Getter for lastFetchedProjects
-     * @return List<Project>
-     */
-    public List<Project> getLastFetchedProjects() {
-        return lastFetchedProjects;
     }
 
     /**
