@@ -201,9 +201,7 @@ public class ExportController extends AppCompatActivity implements IExportView.E
             client.getLogEntries(firestoreAuthentication.getUId(), clientC.getId(), "",
                     mvcView.getStart().getTime(), mvcView.getEnd().getTime());
         }
-
     }
-
 
     /**
      * This function handles asking for permissions and similar
