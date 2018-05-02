@@ -63,7 +63,7 @@ public class RegisterClientController extends Fragment implements IClientInputVi
                     Toast.makeText(getContext(), getString(R.string.inputInvalid), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            default: break;
+            default: return super.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);

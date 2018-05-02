@@ -62,7 +62,7 @@ public class RegisterProjectController extends Fragment implements IProjectInput
                     Toast.makeText(getContext(), getString(R.string.inputInvalid), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            default: break;
+            default: return super.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);

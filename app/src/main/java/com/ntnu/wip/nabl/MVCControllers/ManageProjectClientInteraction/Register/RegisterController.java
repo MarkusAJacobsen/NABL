@@ -28,6 +28,11 @@ public class RegisterController extends AppCompatActivity implements IRegisterVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() != R.id.register) {
+            onBackPressed();
+            return super.onOptionsItemSelected(item);
+        }
+
         return false;
     }
 

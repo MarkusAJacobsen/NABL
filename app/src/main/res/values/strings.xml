@@ -50,7 +50,7 @@
     <string name="finished">Finished</string>
     <string name="inputInvalid">Some fields are invalid/not filled</string>
     <string name="address">Address</string>
-    <string name="workspaceSat">Current company sat</string>
+    <string name="workspaceSat">Current company selected</string>
     <string name="workspaceNotSat">Company not specified in settings</string>
     <string name="hourLogSaved">Log entry saved</string>
     <string name="listEmpty">Nothing to show</string>
