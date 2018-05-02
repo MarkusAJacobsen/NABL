@@ -176,12 +176,12 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
 
     /**
      * Fetched selected workspace position from preferences.
-     * If not found return default 0 - the first element in any list
+     * If not found return default -1
      * @return int
      */
     private int getSavedOption(){
         SharedPreferences preferences = getSharedPreferences(PREFERENCE_FILE_NAME, MODE_PRIVATE);
 
-        return preferences.getInt(SAVED_WORKSPACE_POSITION_PREFERENCE_FIELD, 0);
+        return preferences.getInt(SAVED_WORKSPACE_POSITION_PREFERENCE_FIELD, -1);
     }
 }

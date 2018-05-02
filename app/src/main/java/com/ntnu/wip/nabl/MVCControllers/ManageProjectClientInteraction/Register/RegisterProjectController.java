@@ -158,6 +158,6 @@ public class RegisterProjectController extends Fragment implements IProjectInput
     }
 
     private void finishFragment(){
-        getActivity().onBackPressed();          
+        getActivity().onBackPressed();
     }
 }
