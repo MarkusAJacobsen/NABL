@@ -38,3 +38,8 @@ The application builds using Gradle.
 To enable Firebase you have to [add a Firebase project](https://firebase.google.com/docs/android/setup#use_the_firebase_assistant) an download the generated 'google-services.json'. Place it under '/app/'. Note: that document is not meant to be public i.e. every who has that document have full access to your firebase services.
 
 To enable the Google login (email login will work without) you have to add your computers SHA1 fingerprint to [Firebase](https://developers.google.com/android/guides/client-auth?authuser=0)
+
+#### Authors
+* Markus Andre Jacobsen
+* Amhed S. M. Madhun
+* Martin Klingenberg
