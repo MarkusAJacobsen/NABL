@@ -12,7 +12,11 @@ public class CompanyContainer {
     private Company company;
     private List<SummaryContainer> clientsProjects;
 
-    CompanyContainer(Company company) {
+    public CompanyContainer() {
+        clientsProjects = new ArrayList<>();
+    }
+
+    public CompanyContainer(Company company) {
         this.company = company;
         clientsProjects = new ArrayList<>();
     }
@@ -31,5 +35,36 @@ public class CompanyContainer {
 
     public void setClientsProjects(List<SummaryContainer> clientsProjects) {
         this.clientsProjects = clientsProjects;
+    }
+
+    public void setClientList(List<Client> clients) {
+        for (Client client: clients) {
+            clientsProjects.add(new SummaryContainer(client));
+        }
+    }
+
+    public void setProjectList(List<Project> projects) {
+        for (Project project : projects) {
+            clientsProjects.add(new SummaryContainer(project));
+        }
+    }
+
+    public void setProject(Project project) {
+        clientsProjects.add(new SummaryContainer(project));
+    }
+
+    public void setClient(Client client) {
+        clientsProjects.add(new SummaryContainer(client));
+    }
+
+    public void addWorkDays(List<WorkDay> workDays) {
+        for (WorkDay day: workDays) {
+            for (SummaryContainer container: clientsProjects) {
+                if (container.getId().equals(day.getClientId())) {
+                    container.addWorkDay(day);
+                    break;
+                }
+            }
+        }
     }
 }

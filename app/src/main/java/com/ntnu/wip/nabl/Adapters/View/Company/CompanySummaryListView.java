@@ -7,6 +7,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ntnu.wip.nabl.Adapters.ClientProjectAdapter;
+import com.ntnu.wip.nabl.Adapters.CompanyAdapter;
 import com.ntnu.wip.nabl.R;
 
 import butterknife.BindView;
@@ -23,13 +24,14 @@ public class CompanySummaryListView implements ICompanySummaryView {
     ListView listView;
 
     public CompanySummaryListView(LayoutInflater inflater, ViewGroup group) {
-        rootView = inflater.inflate(R.layout.company_summary_card, group);
+        rootView = inflater.inflate(R.layout.company_summary_card, null);
         ButterKnife.bind(this, rootView);
     }
 
     @Override
     public void setAdapter(ClientProjectAdapter adapter) {
-        listView.setAdapter(adapter);
+       listView.setAdapter(adapter);
+       adapter.notifyDataSetChanged();
     }
 
     @Override

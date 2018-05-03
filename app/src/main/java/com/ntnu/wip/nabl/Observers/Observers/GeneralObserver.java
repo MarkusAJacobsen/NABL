@@ -6,8 +6,11 @@ import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 
-public class SummaryControllerObserver extends Observer<AbstractClient> {
-    protected SummaryControllerObserver() {}
+import java.util.List;
+import java.util.Map;
+
+public class GeneralObserver extends Observer<AbstractClient> {
+    protected GeneralObserver() {}
 
     @Override
     public void setSubject(IObserverSubject subject) {
@@ -17,20 +20,23 @@ public class SummaryControllerObserver extends Observer<AbstractClient> {
 
     @Override
     public void update() {
-
-    }
-
-    @Override
-    public void update(Subscriptions sub) {
-        if (listener != null) {
-            if (sub == Subscriptions.COMPANIES) {
-                listener.onUpdate(subject.getClients());
+        for (Map.Entry<String, List<Object>> entry: subject.getDeliveryQueue().entrySet()) {
+            if (entry.getKey().equals(correlationId)) {
+                if (listener != null) {
+                    listener.onUpdate(subject.getDeliveryQueue().remove(entry.getKey()));
+                }
             }
         }
     }
 
     @Override
-    public void setOnUpdateListener(AddOnUpdateListener listener) {
-
+    public void update(Subscriptions sub) {
+        // NO OP
     }
+
+    @Override
+    public void setOnUpdateListener(AddOnUpdateListener listener) {
+        this.listener = listener;
+    }
+
 }

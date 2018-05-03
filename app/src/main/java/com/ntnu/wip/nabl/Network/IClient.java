@@ -71,7 +71,7 @@ public interface IClient extends IObserverSubject {
     void updateCompany(Company company);
     void deleteCompany(Company company);
 
-    void getUserCompanies(String uid);
+    void getUserCompanies(String correlationId, String uid);
 
     /**
      * Get all projects in cloud based on Company

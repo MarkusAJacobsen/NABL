@@ -1,5 +1,7 @@
 package com.ntnu.wip.nabl.Network;
 
+import android.util.ArrayMap;
+
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Models.Project;
@@ -25,6 +27,8 @@ public abstract class AbstractClient implements IClient {
     private List<WorkDay> lastFetchedWorkdays;
     private WorkDay lastFetchedWorkday;
     private List<Company> lastFetchedCompanies;
+    protected ArrayMap<String, List<Object> > deliveryQueue;
+
 
     /**
      * Getter for projects
@@ -114,6 +118,12 @@ public abstract class AbstractClient implements IClient {
         }
     }
 
+    private void simpleUpdateObservers() {
+        for (Observer observer: observers) {
+            observer.update();
+        }
+    }
+
     /**
      * Setter for lastFetchedWorkDay
      * @param lastFetchedWorkday {@link WorkDay}
@@ -156,5 +166,12 @@ public abstract class AbstractClient implements IClient {
         return lastFetchedWorkdays;
     }
 
+    public ArrayMap<String, List<Object>> getDeliveryQueue() {
+        return deliveryQueue;
+    }
 
+    public void addResultToQueue(String correlation, List<Object> objects) {
+        deliveryQueue.put(correlation, objects);
+        simpleUpdateObservers();
+    }
 }

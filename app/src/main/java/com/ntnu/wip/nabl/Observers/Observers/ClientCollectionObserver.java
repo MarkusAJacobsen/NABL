@@ -36,4 +36,5 @@ public class ClientCollectionObserver extends Observer<AbstractClient> {
     public void setOnUpdateListener(AddOnUpdateListener listener) {
         this.listener = listener;
     }
+
 }

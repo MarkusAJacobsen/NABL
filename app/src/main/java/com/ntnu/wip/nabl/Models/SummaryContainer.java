@@ -66,4 +66,24 @@ public class SummaryContainer {
 
         }
     }
+
+    public String getId() {
+        switch (type) {
+            case PROJECT:
+                Project p = (Project) entity;
+                return p.getId();
+
+            case CLIENT:
+                Client c = (Client) entity;
+                return c.getId();
+
+                default:
+                    return "SHOULD NEVER HAPPEN :o";
+        }
+    }
+
+    public void addWorkDay(WorkDay day) {
+        hours += day.getTotal();
+        overTime += day.getOverTime();
+    }
 }

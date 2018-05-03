@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.ntnu.wip.nabl.Adapters.View.ProjectClient.ProjectClientAdapterView;
 import com.ntnu.wip.nabl.Models.SummaryContainer;
@@ -48,18 +49,20 @@ public class ClientProjectAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ProjectClientAdapterView mvcView = new ProjectClientAdapterView(inflater, parent);
-
         SummaryContainer container = list.get(position);
+        convertView = inflater.inflate(R.layout.project_client_list_element, null);
+        TextView indicator = convertView.findViewById(R.id.project_client_indicator);
+        TextView title = convertView.findViewById(R.id.indicator_name);
+        TextView cardHours = convertView.findViewById(R.id.cardHours);
+        TextView cardOverTime = convertView.findViewById(R.id.cardOverTime);
+        TextView cardTotalTime = convertView.findViewById(R.id.cardHoursTotal);
 
-        mvcView.setHours(formatHourIndicator(context.getString(R.string.summaryHours), container.getHours()));
-        mvcView.setOverTime(formatHourIndicator(context.getString(R.string.summaryOverTime), container.getOverTime()));
-        mvcView.setTotalHours(formatHourIndicator(context.getString(R.string.summaryHoursTotal), container.getTotalHours()));
-
-        mvcView.setType(container.getType().toString());
-        mvcView.setTitle(container.getTitleString());
-
-        return mvcView.getRootView();
+        title.setText(container.getTitleString());
+        indicator.setText(container.getType().toString());
+        cardHours.setText(formatHourIndicator(context.getString(R.string.summaryHours), container.getHours()));
+        cardOverTime.setText(formatHourIndicator(context.getString(R.string.summaryOverTime), container.getOverTime()));
+        cardTotalTime.setText(formatHourIndicator(context.getString(R.string.summaryHoursTotal), container.getTotalHours()));
+        return convertView;//mvcView.getRootView();
     }
 
     private String formatHourIndicator(String text, long hours) {

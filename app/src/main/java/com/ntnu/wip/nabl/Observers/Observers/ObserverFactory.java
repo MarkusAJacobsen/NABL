@@ -30,7 +30,7 @@ public final class ObserverFactory {
             case PROJECT_COLLECTION: return new ProjectCollectionObserver();
             case PROJECT: return new ProjectObserver();
             case SIGN_OUT: return new SignOutObserver();
-            case FETCH_COMPANIES_CLIENTS_PROJECTS: return new SummaryControllerObserver();
+            case FETCH_COMPANIES_CLIENTS_PROJECTS: return new GeneralObserver();
             default: return null;
         }
     }

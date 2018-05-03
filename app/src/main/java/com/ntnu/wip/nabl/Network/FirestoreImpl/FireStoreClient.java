@@ -3,14 +3,20 @@ package com.ntnu.wip.nabl.Network.FirestoreImpl;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
@@ -19,6 +25,7 @@ import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.Settings;
 import com.ntnu.wip.nabl.Models.Client;
 import com.ntnu.wip.nabl.Models.Company;
+import com.ntnu.wip.nabl.Models.CompanyContainer;
 import com.ntnu.wip.nabl.Models.Project;
 import com.ntnu.wip.nabl.Models.User;
 import com.ntnu.wip.nabl.Models.WorkDay;
@@ -27,13 +34,15 @@ import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.DocumentSnapshotCallback
 import com.ntnu.wip.nabl.Network.FirestoreImpl.Callback.QuerySnapshotCallback;
 import com.ntnu.wip.nabl.R;
 
+import org.joda.time.DateTime;
+
 import java.lang.reflect.Type;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.CLIENT_COLLECTION;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANIES_COLLECTION;
-import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_PROJECT_FIELD;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.COMPANY_USER_ID;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_CLIENT;
 import static com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreStatics.LOG_ENTRY_COLLECTION;
@@ -59,6 +68,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
         db = FirebaseFirestore.getInstance();
         this.context = context;
         establishUserAndCompany();
+
     }
 
     /**
@@ -67,9 +77,11 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
      * in a hierarchly correct way
      */
     private void establishUserAndCompany() {
+        deliveryQueue = new ArrayMap<>();
         auth = new FirestoreAuthentication();
         loggedInUser = auth.getEmail();
         getCompanyFromPreferences();
+
     }
 
     /**
@@ -236,6 +248,7 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
      * @param startMillis from a time in milliseconds
      * @param stopMillis to time in milliseconds
      */
+    @Deprecated
     @Override
     public void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis) {
         CollectionReference collectionReference = this.db.collection(LOG_ENTRY_COLLECTION);
@@ -261,6 +274,87 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
         });
 
         query.get();
+    }
+
+    /**
+     * The goal of this monstrosity, is to fetch the following hierachy
+     * - Company
+     *   - Clients
+     *     - WorkDays
+     *   - Projects
+     *     - WorkDays
+     * This should be returned as a list of companyContainer
+     * @param companies
+     * @param start
+     * @param end
+     */
+    public void getLogEntriesByCompany(String correlationId, List<Company> companies) {
+        List<Object> companyContainers = new ArrayList<>();
+        // The user most likely already have the companies
+
+
+        DateTime time = new DateTime().hourOfDay().setCopy(0);
+        DateTime firstInMonth = time.dayOfMonth().setCopy(1);
+        DateTime lastInMonth = new DateTime();
+
+        for (int i = 0; i < companies.size(); i++) {
+            Company company = companies.get(i);
+            CompanyContainer container = new CompanyContainer(company);
+            companyContainers.add(container);
+
+            CollectionReference clientReference = this.db.collection(ROOT_LEVEL_DATA).document(company.getName()).collection(CLIENT_COLLECTION);
+            CollectionReference projectReference = this.db.collection(ROOT_LEVEL_DATA).document(company.getName()).collection(PROJECT_COLLECTION);
+
+            CollectionReference logEntryReference = this.db.collection(LOG_ENTRY_COLLECTION);
+            Query logEntryQuery = logEntryReference.whereGreaterThan(LOG_ENTRY_START_FIELD, firstInMonth.getMillis())
+                    .whereLessThan(LOG_ENTRY_START_FIELD, lastInMonth.getMillis());
+            Task<QuerySnapshot> clientSnapShot = clientReference.get().continueWithTask(new Continuation<QuerySnapshot, Task<QuerySnapshot>>() {
+                @Override
+                public Task<QuerySnapshot> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                    Query query = logEntryQuery;
+                    List<Client> clients = task.getResult().toObjects(Client.class);
+                    for (Client client: clients) {
+                        container.setClient(client);
+                        query = query.whereEqualTo(LOG_ENTRY_CLIENT, client.getId());
+                    }
+
+                    return query.get();
+                }
+            }).continueWithTask(new Continuation<QuerySnapshot, Task<QuerySnapshot>>() {
+                @Override
+                public Task<QuerySnapshot> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                    List<WorkDay> work = task.getResult().toObjects(WorkDay.class);
+                    container.addWorkDays(task.getResult().toObjects(WorkDay.class));
+                    return projectReference.get();
+                }
+            }).continueWithTask(new Continuation<QuerySnapshot, Task<QuerySnapshot>>() {
+
+                @Override
+                public Task<QuerySnapshot> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+
+                    Query query = logEntryQuery;
+                    List<Project> projects = task.getResult().toObjects(Project.class);
+
+                    for (Project project: projects) {
+                        container.setProject(project);
+                        query = query.whereEqualTo(LOG_ENTRY_PROJECT, project.getId());
+                    }
+
+                    return query.get();
+                }
+
+            }).continueWithTask(new Continuation<QuerySnapshot, Task<QuerySnapshot>>() {
+                @Override
+                public Task<QuerySnapshot> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                    List<WorkDay> work = task.getResult().toObjects(WorkDay.class);
+                    container.addWorkDays(task.getResult().toObjects(WorkDay.class));
+                    return task;
+                }
+            }).addOnCompleteListener(listen -> {
+                    this.addResultToQueue(correlationId, companyContainers);
+            });
+
+        }
 
     }
 
@@ -285,17 +379,17 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
      * @param uid the owner of the companies
      */
     @Override
-    public void getUserCompanies(String uid) {
+    public void getUserCompanies(String correlationId, String uid) {
         this.db.collection(COMPANIES_COLLECTION).whereEqualTo(COMPANY_USER_ID, uid)
         .addSnapshotListener((queryDocumentSnapshots, e) -> {
-            List<Company> companies = new ArrayList<>();
+            List<Object> companies = new ArrayList<>();
 
             for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
                 Company company = snap.toObject(Company.class);
                 companies.add(company);
             }
 
-            this.setLastFetchedCompanies(companies);
+            addResultToQueue(correlationId, companies);
         });
 
     }
@@ -304,7 +398,6 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     @Override
     public void getAllProjects() throws CompanyNotFoundException {
         checkCompany();
-
         fetchCollectionNested(ROOT_LEVEL_DATA, company.getName(), PROJECT_COLLECTION, snapshot -> {
             List<Project> toBeReturned = new ArrayList<>();
 
