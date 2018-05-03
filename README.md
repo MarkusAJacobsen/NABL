@@ -4,28 +4,37 @@ master: [![CircleCI](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/master.sv
 #####  Background: imt3673 (Mobile development course) project.
 ##### Project management: https://tree.taiga.io/project/markusja-nabl/
 
-#### Original assignement text: (Written by us) 
+#### Description
 
-There exists a lot of applications made for logging time. However, none of the ones we have tried have been any good. We wish to create an application that can export time-loggs in two ways. The first is by exporting the time-logg to an excel spread-sheet that can be passed to a third party application using intent. 
-The second, is to register the logged time into firebase. When using firebase, the user would have to register. The user might work for a branch or a project within a company. We also wish to create an interface that are useful for managers that wish to know how much time / resources that are spent on one single project or subdivision of a company. 
+There exists a lot of applications made for logging time. However, none of the ones we have tried have suited our need. Our original uses cases was to have a time logging application for sole proprietorships or smaller companies. A company may have projects and clients, and log hours against these. The hours logged must be exportable, as of now this is done by creating a excel sheet, and having this exported via email or cloud storage. 
 
+##### Time logging
+After some research into similar applications, we see two primary ways of logging time in an application. There is check-in and check-out, and register after. We are only going to support register after. This means that you will make an entry at the end of the day. We also want the worker be able to include a description of the workday. 
 
-#### Time logging
-After some research into similar applications, we see two primary ways of logging time in an application. There is check-in and check-out, and register after. We are only going to support register after. This means that you will make an entry at the end of the day. We also want the worker be able to input what he / she  has done that day. 
+##### User registration
+User regustration is done either by email or by google oauth.  
 
+##### Company registration
+A company owner needs to add the company to our system. And be able to inspect how many hours spent on each section of the company. This functionality could be in a separate application, as of now we have it in the same. It must be possible for the leader / owner to register time even though the user is also administering the company account. 
 
-#### User registration
-When a user registers he / she must select a company and possibly a project. Each company must have defined a passkey. This is to prevent spam. The user will also have the option to not register. Then the user will create an excel-file that will be sent to the employer using email or google drive. 
+##### Exporting time-sheets
+We need to be able to export time logged locally as well as time logged in our database. We will anyhow use excel spread-sheets. If time is logged in firebase, the administrator will have the possibility to retrieve all time-sheets from a project for a specified amount of time. 
 
-To make a meaningful time-sheet the user would have to input the following parameters regardless of using the app locally or not:
-* Name
-* Employee number
-We must make sure that it is not possible to input an account-number into the employee-number field. We do want to make it possible to transmit sensitive information through our application. 
+#### Done
+- [x] Create/Delete companies
+- [x] Register/see/update/ delete company clients and projects
+- [x] Log hours against a company's project/client
+- [x] Export timesheet
+- [x] Summary
+- [x] Email and google login 
+- [ ] Add multiple users to a company
+- [ ] Create a group or log hour internal 
+- [ ] User privilege 
+- [ ] Invoice generation
 
+#### Building
+The application builds using Gradle.
 
-#### Company registration
-A company owner needs to add the company to our system. And be able to inspect how many hours spent on each section of the company. This functionality could be in a separate application however, we will have it in the same application. It must be possible for the leader / owner to register time even though the user is also administering the company account. 
+To enable Firebase you have to [add a Firebase project](https://firebase.google.com/docs/android/setup#use_the_firebase_assistant) an download the generated 'google-services.json'. Place it under '/app/'. Note: that document is not meant to be public i.e. every who has that document have full access to your firebase services.
 
-
-#### Exporting time-sheets
-We need to be able to export time logged locally as well as time logged in firebase. We will anyhow use excel spread-sheets. If time is logged in firebase, the administrator will have the possibility to retrieve all time-sheets from a project for a specified amount of time. 
+To enable the Google login (email login will work without) you have to add your computers SHA1 fingerprint to [Firebase](https://developers.google.com/android/guides/client-auth?authuser=0)
