@@ -253,21 +253,23 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     public void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis) {
         CollectionReference collectionReference = this.db.collection(LOG_ENTRY_COLLECTION);
         Query query = collectionReference.whereEqualTo(LOG_ENTRY_USER_ID, uid);
-        query.whereGreaterThan(LOG_ENTRY_START_FIELD, startMillis);
-        query.whereLessThan(LOG_ENTRY_STOP_FIELD, stopMillis);
+        query = query.whereGreaterThan(LOG_ENTRY_START_FIELD, startMillis);
+        query = query.whereLessThan(LOG_ENTRY_START_FIELD, stopMillis);
 
         if (cid.length() > 0) {
-            query.whereEqualTo(LOG_ENTRY_CLIENT, cid);
+            query = query.whereEqualTo(LOG_ENTRY_CLIENT, cid);
         } else if (pid.length() > 0) {
-            query.whereEqualTo(LOG_ENTRY_PROJECT, pid);
+            query = query.whereEqualTo(LOG_ENTRY_PROJECT, pid);
         }
 
         query.addSnapshotListener((queryDocumentSnapshots, e) -> {
             List<WorkDay> workDays = new ArrayList<>();
 
-            for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
-                WorkDay workDay = snap.toObject(WorkDay.class);
-                workDays.add(workDay);
+            if (queryDocumentSnapshots != null) {
+                for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                    WorkDay workDay = snap.toObject(WorkDay.class);
+                    workDays.add(workDay);
+                }
             }
 
             this.setLastFetchedWorkdays(workDays);
@@ -285,8 +287,6 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
      *     - WorkDays
      * This should be returned as a list of companyContainer
      * @param companies
-     * @param start
-     * @param end
      */
     public void getLogEntriesByCompany(String correlationId, List<Company> companies) {
         List<Object> companyContainers = new ArrayList<>();

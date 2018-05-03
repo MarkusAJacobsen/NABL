@@ -60,7 +60,7 @@ public class CompanyContainer {
     public void addWorkDays(List<WorkDay> workDays) {
         for (WorkDay day: workDays) {
             for (SummaryContainer container: clientsProjects) {
-                if (container.getId().equals(day.getClientId())) {
+                if (container.getId().equals(day.getClientId()) || container.getId().equals(day.getProjectId()))  {
                     container.addWorkDay(day);
                     break;
                 }

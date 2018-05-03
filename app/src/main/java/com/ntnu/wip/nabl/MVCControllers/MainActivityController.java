@@ -38,6 +38,10 @@ MainActivityView mvcView;
         signIn();
 
         setContentView(mvcView.getRootView());
+        mvcView.setOnclickListener(view -> {
+            Intent intent = new Intent(this, LoggingController.class);
+            startActivity(intent);
+        });
     }
 
     /**

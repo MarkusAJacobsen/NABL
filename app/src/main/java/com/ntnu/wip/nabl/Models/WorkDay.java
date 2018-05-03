@@ -191,6 +191,18 @@ public class WorkDay {
         endTime = new DateTime(endTimeInMillis);
     }
 
+    /**
+     * SHOULD NOT BE USED
+     * @param hours
+     */
+    public void setTotalHours(int hours) {
+
+    }
+
+    public void setTotal(int hour) {
+
+    }
+
     public String getId() {
         return id;
     }
