@@ -37,7 +37,6 @@ import org.joda.time.DateTime;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -154,7 +153,6 @@ public class ExportController extends AppCompatActivity implements IExportView.E
     public void exportBtnPressed() {
         //TODO => Generate the File
         FireStoreClient client = new FireStoreClient(this);
-
         FirestoreAuthentication firestoreAuthentication = new FirestoreAuthentication();
 
         client.attach(new Observer() {
@@ -201,7 +199,9 @@ public class ExportController extends AppCompatActivity implements IExportView.E
             client.getLogEntries(firestoreAuthentication.getUId(), clientC.getId(), "",
                     mvcView.getStart().getTime(), mvcView.getEnd().getTime());
         }
+
     }
+
 
     /**
      * This function handles asking for permissions and similar
@@ -302,8 +302,6 @@ public class ExportController extends AppCompatActivity implements IExportView.E
      */
     private void mockMailSender(String filename) {
         Uri path = Uri.fromFile(new File(filename));
-
-
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         // set the type to 'email'
         emailIntent .setType("vnd.android.cursor.dir/email");

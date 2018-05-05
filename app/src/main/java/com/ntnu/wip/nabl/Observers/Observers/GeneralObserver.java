@@ -6,30 +6,32 @@ import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
 
-/**
- * Observer for Client Collection change
- */
-public class ClientCollectionObserver extends Observer<AbstractClient> {
-    protected ClientCollectionObserver() {}
+import java.util.List;
+import java.util.Map;
+
+public class GeneralObserver extends Observer<AbstractClient> {
+    protected GeneralObserver() {}
 
     @Override
     public void setSubject(IObserverSubject subject) {
-        this.subject = (AbstractClient) subject;
+        this.subject =  (AbstractClient) subject;
         this.subject.attach(this);
     }
 
     @Override
     public void update() {
-        //NO-OP
+        for (Map.Entry<String, List<Object>> entry: subject.getDeliveryQueue().entrySet()) {
+            if (entry.getKey().equals(correlationId)) {
+                if (listener != null) {
+                    listener.onUpdate(subject.getDeliveryQueue().remove(entry.getKey()));
+                }
+            }
+        }
     }
 
     @Override
     public void update(Subscriptions sub) {
-        if(listener != null) {
-            if (sub == Subscriptions.CLIENTS) {
-                listener.onUpdate(subject.getClients());
-            }
-        }
+        // NO OP
     }
 
     @Override

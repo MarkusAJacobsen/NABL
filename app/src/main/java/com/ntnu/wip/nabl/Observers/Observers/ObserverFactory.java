@@ -16,6 +16,7 @@ public final class ObserverFactory {
     public static final int PROJECT_COLLECTION = 2;
     public static final int PROJECT = 3;
     public static final int SIGN_OUT = 4;
+    public static final int FETCH_COMPANIES_CLIENTS_PROJECTS = 5;
 
     /**
      * Create returns an {@link Observer} specificed by the sent in observerMode, see modes above
@@ -29,6 +30,7 @@ public final class ObserverFactory {
             case PROJECT_COLLECTION: return new ProjectCollectionObserver();
             case PROJECT: return new ProjectObserver();
             case SIGN_OUT: return new SignOutObserver();
+            case FETCH_COMPANIES_CLIENTS_PROJECTS: return new GeneralObserver();
             default: return null;
         }
     }

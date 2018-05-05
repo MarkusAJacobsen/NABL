@@ -15,8 +15,8 @@ public interface FireStoreStatics {
     String LOG_ENTRY_USER_ID = "userId";
     String LOG_ENTRY_CLIENT = "clientId";
     String LOG_ENTRY_PROJECT = "projectId";
-    String LOG_ENTRY_START_FIELD = "start";
-    String LOG_ENTRY_STOP_FIELD = "stop";
+    String LOG_ENTRY_START_FIELD = "startTimeInMillis";
+    String LOG_ENTRY_STOP_FIELD = "endTimeInMillis";
 
     String COMPANY_USER_ID = "ownerId";
     String COMPANY_PROJECT_FIELD = "companyId";
