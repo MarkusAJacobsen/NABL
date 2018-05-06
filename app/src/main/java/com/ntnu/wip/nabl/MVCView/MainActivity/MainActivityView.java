@@ -1,7 +1,6 @@
 package com.ntnu.wip.nabl.MVCView.MainActivity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,10 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.ntnu.wip.nabl.R;
@@ -29,16 +26,21 @@ public class MainActivityView implements IMainActivityView {
     private View rootView;
     private ChangeActivityListener listener;
     private ActionBarDrawerToggle mDrawerToggle;
-    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
-    @BindView(R.id.left_drawer) ListView mDrawerList;
 
-    @BindView(R.id.logHours)
-    ImageButton button;
+    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.left_drawer) ListView mDrawerList;
+    @BindView(R.id.logHours) ImageButton logHoursButton;
 
     public MainActivityView(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.activity_main, container);
         ButterKnife.bind(this, rootView);
+
+        logHoursButton.setOnClickListener(view -> {
+            if(this.listener != null) {
+                listener.logHoursPressedInMainView();
+            }
+        });
     }
 
     @Override
@@ -107,10 +109,5 @@ public class MainActivityView implements IMainActivityView {
     @Override
     public boolean checkOptionItemClicked(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void setOnclickListener(View.OnClickListener listener) {
-        button.setOnClickListener(listener);
     }
 }

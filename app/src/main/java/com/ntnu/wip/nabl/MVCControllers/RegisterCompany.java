@@ -2,21 +2,18 @@ package com.ntnu.wip.nabl.MVCControllers;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
-import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
-import com.ntnu.wip.nabl.MVCView.registerCompanyView.IRegistrationListener;
+import com.ntnu.wip.nabl.MVCView.registerCompanyView.IRegisterCompanyView;
 import com.ntnu.wip.nabl.MVCView.registerCompanyView.RegisterCompanyView;
 import com.ntnu.wip.nabl.Models.Company;
 import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
 import com.ntnu.wip.nabl.R;
 
-public class RegisterCompany extends AppCompatActivity implements IRegistrationListener {
+public class RegisterCompany extends AppCompatActivity implements IRegisterCompanyView.IRegistrationListener {
 
     RegisterCompanyView mvcView;
 

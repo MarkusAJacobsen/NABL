@@ -38,10 +38,10 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
 
     /**
      * Android Fragment life cycle function, runs when the view is created
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return Fragment View
+     * @param inflater LayoutInflater
+     * @param container ViewGroup
+     * @param savedInstanceState Bundle
+     * @return View
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,7 +81,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
 
     /**
      * Function to get current user ID
-     * @return User ID
+     * @return String
      */
     private String getUserID() {
         return new FirestoreAuthentication().getUId();
@@ -111,7 +111,7 @@ public class LogAClientController extends Fragment implements IClientListView.Cl
 
     /**
      * Function that react to a click on a client element from the ListView in View
-     * @param chosenClient
+     * @param chosenClient Object
      */
     @Override
     public void clientSelected(Object chosenClient) {

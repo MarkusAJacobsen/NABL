@@ -1,6 +1,5 @@
 package com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.NewInputController.LoggingInputController;
 import com.ntnu.wip.nabl.MVCView.ProjectsList.IProjectListView;
@@ -37,10 +35,10 @@ public class LogAProjectController extends Fragment implements IProjectListView.
 
     /**
      * Android Fragment life cycle function, runs when the view is created
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return Fragment View
+     * @param inflater LayoutInflater
+     * @param container ViewGroup
+     * @param savedInstanceState Bundle
+     * @return View
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by klingen on 30.04.18.
  */
 
-public class RegisterCompanyView implements IRegiserCompanyView {
+public class RegisterCompanyView implements IRegisterCompanyView {
 
     private View rootView;
     private ActionBar actionBar;

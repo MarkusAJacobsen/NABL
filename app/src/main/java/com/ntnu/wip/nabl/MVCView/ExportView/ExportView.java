@@ -70,15 +70,16 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
     //
 
     private void configureButton() {
-        this.exportBtn.setOnClickListener(View -> {
-            if(this.listener != null) {
-                this.listener.exportBtnPressed();
+        exportBtn.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.exportBtnPressed();
             }
         });
 
-        this.selectorBtn.setOnClickListener(View -> {
-            if(this.listener != null) {
-                this.listener.changeSelectionBtnPressed();
+        selectorBtn.setTag(PROJECT_TAG);
+        selectorBtn.setOnClickListener(view -> {
+            if(listener != null) {
+                listener.changeSelectionBtnPressed();
             }
         });
     }
@@ -177,15 +178,15 @@ public class ExportView implements IExportView, DatePickerDialog.OnDateSetListen
 
     @Override
     public boolean switchView() {
-        if (this.selectorBtn.getTag() == this.PROJECT_TAG) {
-            this.selectorBtn.setImageResource(this.CLIENT_ICON);
-            this.selectorBtn.setTag(this.CLIENT_TAG);
+        if (this.selectorBtn.getTag() == PROJECT_TAG) {
+            this.selectorBtn.setImageResource(CLIENT_ICON);
+            this.selectorBtn.setTag(CLIENT_TAG);
             this.spinnerTitle.setText(R.string.clientList);
 
             this.switchMode = false;                    // Change to switch mode to client
         } else {
-            this.selectorBtn.setImageResource(this.PROJECT_ICON);
-            this.selectorBtn.setTag(this.PROJECT_TAG);
+            this.selectorBtn.setImageResource(PROJECT_ICON);
+            this.selectorBtn.setTag(PROJECT_TAG);
             this.spinnerTitle.setText(R.string.projectList);
 
             this.switchMode = true;                     // Change to switch mode to project

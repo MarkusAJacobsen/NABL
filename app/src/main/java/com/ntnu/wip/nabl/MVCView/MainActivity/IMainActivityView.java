@@ -14,14 +14,44 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
  */
 
 public interface IMainActivityView extends IAbstractMvcView {
+    /**
+     * Methods which this can invoke in Listeners
+     */
     interface ChangeActivityListener{
+        /**
+         * Side drawer option selected
+         * @param position position
+         */
         void changeActivity(int position);
+
+        /**
+         * Pluss button pressed
+         */
+        void logHoursPressedInMainView();
     }
 
+    /**
+     * Register listener
+     * @param listener ChangeActivityListener
+     */
     void registerListener(ChangeActivityListener listener);
+
+    /**
+     * Create side menu
+     * @param target Activity
+     */
     void createSideMenu(Activity target);
+
+    /**
+     * Set side menu list adapter
+     * @param adapter Adapter
+     */
     void setSideDrawerAdapter(Adapter adapter);
+
+    /**
+     * Sync side menu components
+     */
     void syncDrawer();
+
     boolean checkOptionItemClicked(MenuItem item);
-    void setOnclickListener(View.OnClickListener listener);
 }

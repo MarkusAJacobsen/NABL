@@ -38,10 +38,6 @@ MainActivityView mvcView;
         signIn();
 
         setContentView(mvcView.getRootView());
-        mvcView.setOnclickListener(view -> {
-            Intent intent = new Intent(this, LoggingController.class);
-            startActivity(intent);
-        });
     }
 
     /**
@@ -144,6 +140,12 @@ MainActivityView mvcView;
         if(activityClass != null){
             createAndLaunchNewActivity(activityClass);
         }
+    }
+
+    @Override
+    public void logHoursPressedInMainView() {
+        Intent intent = new Intent(this, LoggingController.class);
+        startActivity(intent);
     }
 
 

@@ -40,7 +40,7 @@ public class LoggingInputController extends AppCompatActivity implements
 
     /**
      * Android Activity Life Cycle function, runs whens the activity is created
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +88,11 @@ public class LoggingInputController extends AppCompatActivity implements
         final int min = date.get(Calendar.MINUTE);
 
 
-        final String today = day + "." + month + "." + year;
-        final String now = hour + ":" + min;
+        final String today = (day < 10 ? "0" + day : day) + "." +
+                             (month < 10 ? "0" + month : month) + "." + year;
+
+        final String now = (hour < 10 ? "0" + hour : hour)
+                            + ":" + (min < 10 ? "0" + min : min);
 
         fetchDateFields(today);
         fetchTimeFields(now);

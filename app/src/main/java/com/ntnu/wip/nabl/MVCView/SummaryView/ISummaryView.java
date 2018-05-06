@@ -18,7 +18,8 @@ public interface ISummaryView extends IAbstractMvcView {
      */
     void setCompanyAdapters(CompanyAdapter adapters);
 
-    public interface ISummaryListener {
+
+    interface ISummaryListener {
         void projectClicked(Project project);
         void clientClicked(Client client);
     }

@@ -113,7 +113,7 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
         observer.setCorrelationId(correlationId);
         observer.setOnUpdateListener(stuff -> {
             companies = (List<Company>) stuff;
-            mvcView.setListAdapter(new CompanyListAdapter(getApplicationContext(), companies));
+            mvcView.setListAdapter(new CompanyListAdapter(getApplicationContext(), companies, getSavedOption()));
         });
         client.getUserCompanies(correlationId, authentication.getUId());
     }

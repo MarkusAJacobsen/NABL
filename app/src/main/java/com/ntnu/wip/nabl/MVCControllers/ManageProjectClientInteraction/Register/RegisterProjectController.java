@@ -149,7 +149,11 @@ public class RegisterProjectController extends Fragment implements IProjectInput
             toPopulateWith[i] = State.getName(i, getContext());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, toPopulateWith);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(getContext(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        toPopulateWith);
+
         mvcView.populateStatusSpinner(adapter);
     }
 

@@ -9,12 +9,26 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
  * Created by a7med on 29.04.18.
  */
 public interface IClientListView extends IAbstractMvcView {
-    // Functions to implement in the controller
+    /**
+     * Methods which this can invoke in Listeners
+     */
     interface ClientListListener {
+        /**
+         * Client object selected
+         * @param item Object
+         */
         void clientSelected(Object item);
     }
 
-    // Functions to implement in the View
+    /**
+     * Register listener
+     * @param listener ClientListListener
+     */
     void registerListener(ClientListListener listener);
+
+    /**
+     * Set resource list adapter
+     * @param adapter Adapter
+     */
     void setResourceViewerAdapter(Adapter adapter);
 }

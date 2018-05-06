@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.Menu;
@@ -44,6 +45,7 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
         setHasOptionsMenu(true);
         return mvcView.getRootView();
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -175,7 +177,7 @@ public class ModifyClientController extends Fragment implements IChangeScreen.Fr
 
     @Override
     public void getWarningDrawable() {
-        final Drawable icon = getResources().getDrawable(R.drawable.ic_error_black_18dp);
+        final Drawable icon = ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.ic_error_black_18dp);
         mvcView.setEditWarning(icon);
     }
 

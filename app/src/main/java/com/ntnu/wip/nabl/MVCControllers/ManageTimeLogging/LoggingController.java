@@ -21,7 +21,7 @@ public class LoggingController extends AppCompatActivity implements ILoggingView
 
     /**
      * Android Activity Life Cycle function. Runs when the activity is created.
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

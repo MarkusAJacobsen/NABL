@@ -11,14 +11,44 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
  */
 
 public interface ISettingsView extends IAbstractMvcView {
+    /**
+     * Register listener
+     * @param listener SettingsListener
+     */
     void addSettingsListener(SettingsListener listener);
-    View getRootView();
+
+    /**
+     * Set Company List adapter
+     * @param adapter CompanyListAdapter
+     */
     void setListAdapter(CompanyListAdapter adapter);
+
+    /**
+     * Get Company List Selected option
+     * @return int
+     */
     int getSelectedOption();
 
+    /**
+     * Methods which this can invoke in Listeners
+     */
     interface SettingsListener {
+
+        /**
+         * Create new company pressed
+         */
         void createNewCompany();
+
+        /**
+         * Delete company pressd
+         * @param position int
+         */
         void deleteCompany(int position);
+
+        /**
+         * Company selected as current workspace
+         * @param position int
+         */
         void companySelectedAsWorkspace(int position);
     }
 }
