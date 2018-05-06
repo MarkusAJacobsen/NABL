@@ -117,10 +117,10 @@ public class ExportController extends AppCompatActivity implements IExportView.E
 
         Observer observer = ObserverFactory.create(ObserverFactory.CLIENT_COLLECTION);
         observer.setSubject(client);
-        observer.setOnUpdateListener(clients -> {
-            this.clients = (List) clients;
-            if (!this.clients.isEmpty() || this.clients != null) {
-                this.chosenObject = (Client) this.clients.get(0);     // First element
+        observer.setOnUpdateListener(clientsReceived -> {
+            this.clients = (List) clientsReceived;
+            if (this.clients != null && !this.clients.isEmpty()) {
+                this.chosenObject = this.clients.get(0);     // First element
             }
             Adapter adapter = new ArrayAdapter<>(getApplicationContext(),
                     android.R.layout.simple_list_item_1, this.clients);

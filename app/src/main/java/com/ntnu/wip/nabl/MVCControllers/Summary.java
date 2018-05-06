@@ -2,6 +2,7 @@ package com.ntnu.wip.nabl.MVCControllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.ntnu.wip.nabl.Adapters.CompanyAdapter;
 import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
@@ -37,7 +38,13 @@ public class Summary extends AppCompatActivity {
         initialise();
     }
 
-    public void initialise() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void initialise() {
         client = new FireStoreClient(this);
         auth = new FirestoreAuthentication();
         fetchCompanies();
@@ -64,9 +71,9 @@ public class Summary extends AppCompatActivity {
     private void fetchCompaniesData() {
         String correlationId = Utils.generateUniqueId(20);
 
-        CompanyAdapter adapter = new CompanyAdapter(getApplicationContext(), new ArrayList<CompanyContainer>());
+        adapter = new CompanyAdapter(getApplicationContext(), new ArrayList<>());
+
         mvcView.setCompanyAdapters(adapter);
-        this.adapter = adapter;
         Observer observer = ObserverFactory.create(ObserverFactory.FETCH_COMPANIES_CLIENTS_PROJECTS);
         observer.setSubject(client);
         observer.setCorrelationId(correlationId);

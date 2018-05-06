@@ -22,6 +22,8 @@ import com.ntnu.wip.nabl.Network.IClient;
 import com.ntnu.wip.nabl.R;
 import com.ntnu.wip.nabl.Utils;
 
+import java.util.Objects;
+
 public class RegisterClientController extends Fragment implements IClientInputView.ClientInputListener {
     private ClientInputView mvcView;
     private Client newModel;
@@ -113,6 +115,6 @@ public class RegisterClientController extends Fragment implements IClientInputVi
     }
 
     private void finishFragment(){
-        getActivity().onBackPressed();
+        Objects.requireNonNull(getActivity()).onBackPressed();
     }
 }

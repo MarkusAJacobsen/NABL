@@ -54,11 +54,6 @@ public class RegisterController extends AppCompatActivity implements IRegisterVi
         }
     }
 
-
-
-    // IChangeScreen impl
-    //
-
     @Override
     public void transactionManager(Class <? extends android.support.v4.app.Fragment> frag, Bundle args) throws
             IllegalAccessException,
@@ -74,9 +69,6 @@ public class RegisterController extends AppCompatActivity implements IRegisterVi
         ft.replace(R.id.contentFrame, newFragment);
         ft.commit();
     }
-
-    //
-    // End IChangeScreen
 
     private void configureViewButtons(){
         mvcView.setClientText(getString(R.string.client));

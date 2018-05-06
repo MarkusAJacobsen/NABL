@@ -27,9 +27,10 @@ We need to be able to export time logged locally as well as time logged in our d
 - [x] Export timesheet
 - [x] Summary
 - [x] Email and google login 
+- [ ] Hour Log entries getter network calls
 - [ ] Add multiple users to a company
 - [ ] Create a group or log hour internal 
-- [ ] User privilege 
+- [ ] User privilege
 - [ ] Invoice generation
 
 #### Building

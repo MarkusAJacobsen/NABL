@@ -7,11 +7,13 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -250,13 +252,13 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
     }
 
     @Override
-    public void setBreakSpinnerData(ArrayAdapter<String> adapter) {
-        this.breakSpinner.setAdapter(adapter);
+    public void setBreakSpinnerData(Adapter adapter) {
+        this.breakSpinner.setAdapter((SpinnerAdapter) adapter);
     }
 
     @Override
-    public void setOverTimeSpinnerData(ArrayAdapter<String> adapter) {
-        this.overTimeSpinner.setAdapter(adapter);
+    public void setOverTimeSpinnerData(Adapter adapter) {
+        this.overTimeSpinner.setAdapter((SpinnerAdapter) adapter);
     }
 
     @Override
@@ -368,8 +370,11 @@ public class LoggingInputView implements ILoggingInputView, DatePickerDialog.OnD
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        final String hourZeroConsidered = hourOfDay < 10 ? "0" + hourOfDay : String.valueOf(hourOfDay);
+        final String minuteZeroConsidered = minute < 10 ? "0" + minute : String.valueOf(minute);
+
         final String time = String.format(Locale.getDefault(), "%s:%s",
-                String.valueOf(hourOfDay), String.valueOf(minute));
+                hourZeroConsidered, minuteZeroConsidered);
 
         switch (whichTime) {
             case START:
