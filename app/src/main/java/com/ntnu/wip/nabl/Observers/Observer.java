@@ -7,11 +7,12 @@ import com.ntnu.wip.nabl.Network.Subscriptions;
  * @param <T> Extends IObserverSubject
  */
 public abstract class Observer <T extends IObserverSubject> {
+
     /**
      * Subject to observe
      */
     protected T subject;
-
+    protected String correlationId;
     /**
      * Change listener
      */
@@ -39,5 +40,13 @@ public abstract class Observer <T extends IObserverSubject> {
      * @param listener {@link AddOnUpdateListener}
      */
     public abstract void setOnUpdateListener(AddOnUpdateListener listener);
+
+    /**
+     * Adds a correlation ID to the observer
+     * @param correlationId
+     */
+    public void setCorrelationId(String correlationId) {
+        this.correlationId = correlationId;
+    }
 
 }

@@ -68,6 +68,10 @@
     <string name="createCompanyTitle">Registrer en organisasjon</string>
     <string name="wantTodDeleteString">Vil du virkelig slette denne organisasjonen?</string>
     <string name="deleteTitleString">Slett organisasjon</string>
+    <string name="summaryHoursTotal">total</string>
+    <string name="summaryOverTime">OT</string>
+    <string name="summaryHours">timer</string>
+    <string name="summaryTitle">Oversikt</string>
     <string name="workspaceSat">Nåværende firma satt</string>
     <string name="clientList">"Velg ønsket klient "</string>
     <string name="invalidTime">Ugyldig tid</string>

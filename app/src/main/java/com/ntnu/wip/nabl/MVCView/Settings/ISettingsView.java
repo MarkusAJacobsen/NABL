@@ -1,12 +1,9 @@
 package com.ntnu.wip.nabl.MVCView.Settings;
 
 import android.view.View;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 
 import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
 import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
-import com.ntnu.wip.nabl.Models.Company;
 
 /**
  * Interface between controller and view

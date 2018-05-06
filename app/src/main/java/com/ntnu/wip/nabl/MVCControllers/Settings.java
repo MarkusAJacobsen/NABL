@@ -1,21 +1,16 @@
 package com.ntnu.wip.nabl.MVCControllers;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.ntnu.wip.nabl.Adapters.CompanyListAdapter;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
-import com.ntnu.wip.nabl.Exceptions.CompanyNotFoundException;
 import com.ntnu.wip.nabl.MVCView.Settings.ISettingsView;
 import com.ntnu.wip.nabl.MVCView.Settings.SettingsView;
 import com.ntnu.wip.nabl.Models.Company;
@@ -24,7 +19,9 @@ import com.ntnu.wip.nabl.Network.Subscriptions;
 import com.ntnu.wip.nabl.Observers.AddOnUpdateListener;
 import com.ntnu.wip.nabl.Observers.IObserverSubject;
 import com.ntnu.wip.nabl.Observers.Observer;
+import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.List;
 
@@ -109,33 +106,16 @@ public class Settings extends AppCompatActivity implements ISettingsView.Setting
     }
 
     private void setCompanyList() {
-        client.attach(new Observer() {
-            @Override
-            public void setSubject(IObserverSubject subject) {
+        String correlationId = Utils.generateUniqueId(20);
+        Observer observer = ObserverFactory.create(ObserverFactory.FETCH_COMPANIES_CLIENTS_PROJECTS);
+        observer.setSubject(client);
 
-            }
-
-            @Override
-            public void update() {
-            }
-
-            @Override
-            public void update(Subscriptions sub) {
-                if (sub == Subscriptions.COMPANIES) {
-                    companies = client.getLastFetchedCompanies();
-                    CompanyListAdapter adapter = new CompanyListAdapter(getApplicationContext(), companies, getSavedOption());
-                    mvcView.setListAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void setOnUpdateListener(AddOnUpdateListener listener) {
-
-            }
+        observer.setCorrelationId(correlationId);
+        observer.setOnUpdateListener(stuff -> {
+            companies = (List<Company>) stuff;
+            mvcView.setListAdapter(new CompanyListAdapter(getApplicationContext(), companies));
         });
-
-
-        client.getUserCompanies(authentication.getUId());
+        client.getUserCompanies(correlationId, authentication.getUId());
     }
 
     @Override
