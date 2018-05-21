@@ -1,7 +1,7 @@
 # NABL - Not a bad (time) logger
 #### Build status 
 master: [![CircleCI](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/master.svg?style=svg)](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/master) develop: [![CircleCI](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/develop.svg?style=svg)](https://circleci.com/gh/MarkusAJacobsen/NABL/tree/develop)
-#####  Background: imt3673 (Mobile development course) project. Report is in the Wiki
+#####  Background: imt3673 (Mobile development course) project. Bases for imt3602 (Professional Programming) assignment. Reports are in the Wiki
 ##### Project management: https://tree.taiga.io/project/markusja-nabl/
 
 #### Description
