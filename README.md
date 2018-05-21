@@ -42,5 +42,5 @@ To enable the Google login (email login will work without) you have to add your 
 
 #### Authors
 * Markus Andre Jacobsen
-* Amhed S. M. Madhun
+* Ahmed S. M. Madhun
 * Martin Klingenberg
