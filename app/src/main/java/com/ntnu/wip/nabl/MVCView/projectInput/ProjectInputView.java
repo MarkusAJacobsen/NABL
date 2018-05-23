@@ -236,12 +236,12 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
     public boolean checkValidity() {
         boolean emptyFieldsPresent = true;
 
-        for(TextView view : inputRequiredFields) {
-            if(view.getText().toString().trim().equals("")) {
-                setWarningDrawable(view);
+        for(TextView fieldToCheck : inputRequiredFields) {
+            if(fieldToCheck.getText().toString().trim().equals("")) {
+                setWarningDrawable(fieldToCheck);
                 emptyFieldsPresent = false;
             } else {
-                tryToRemoveDrawable(view);
+                tryToRemoveDrawable(fieldToCheck);
             }
         }
 
