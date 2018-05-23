@@ -12,6 +12,8 @@ import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.Authentication.IAuthentication;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingController;
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Network.IClient;
 import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.SignOutObserver;
@@ -20,7 +22,8 @@ import com.ntnu.wip.nabl.R;
 public class MainActivityController extends AppCompatActivity implements
                                                         MainActivityView.ChangeActivityListener,
                                                         IChangeScreen.Activity {
-MainActivityView mvcView;
+    private String uid;
+    MainActivityView mvcView;
     IAuthentication auth = new FirestoreAuthentication();
 
     @Override
@@ -36,7 +39,8 @@ MainActivityView mvcView;
         mvcView.registerListener(this);
 
         signIn();
-
+        uid = auth.getUId();
+        fetchUserLogEntries();
         setContentView(mvcView.getRootView());
     }
 
@@ -63,9 +67,12 @@ MainActivityView mvcView;
                signIn();
            }
         });
-
         auth.signOut(this);
+    }
 
+    private void fetchUserLogEntries() {
+        IClient client = new FireStoreClient(this);
+        client.getLogEntriesByUserId(uid);
     }
 
     /**
@@ -101,6 +108,7 @@ MainActivityView mvcView;
                 signIn();
             } else {
                 Toast.makeText(this, "Hello " + auth.getFullName(), Toast.LENGTH_SHORT).show();
+                uid = auth.getUId();
             }
         }
     }
@@ -137,7 +145,7 @@ MainActivityView mvcView;
             default: break;
         }
 
-        if(activityClass != null){
+        if (activityClass != null){
             createAndLaunchNewActivity(activityClass);
         }
     }

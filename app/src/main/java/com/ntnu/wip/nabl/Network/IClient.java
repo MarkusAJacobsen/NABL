@@ -66,6 +66,12 @@ public interface IClient extends IObserverSubject {
     void getLogEntry(String id);
     void newLogEntry(WorkDay workDay) throws CompanyNotFoundException;
     void getLogEntries(String uid, String cid, String pid, long startMillis, long stopMillis);
+
+    /**
+     * Fetch all Log entries based on a User id
+     * @param uid String
+     */
+    void getLogEntriesByUserId(String uid);
     void getLogEntriesByUser(User user);
     void newCompany(Company company);
     void updateCompany(Company company);
