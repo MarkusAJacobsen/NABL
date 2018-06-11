@@ -2,6 +2,7 @@ package com.ntnu.wip.nabl.Models;
 
 import android.content.Context;
 
+import com.google.common.collect.Iterables;
 import com.ntnu.wip.nabl.R;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +71,8 @@ public class TimeSheet {
     private static final int RECIPIENT_INFORMATION = 4;
     private static final int PROJECT_INFORMATION = 5;
 
+    private static final String SEPARATOR = "-";
+
 
     private static final int ROWS_TO_SUM[] = {6, 7, 8, 9, 10, 11};
 
@@ -82,6 +87,8 @@ public class TimeSheet {
         this.user = user;
         this.company = company;
         this.workDays = workDays;
+
+        sortWorkDays();
         inizializeTimeSheet();
     }
 
@@ -387,17 +394,17 @@ public class TimeSheet {
      * Extract if this is only for a month or from a month to another
      * @return either ex: april or april-june
      */
-    public String extractPeriod() {
+    public String extractPeriod3() {
 
-        if (workDays.size() == 0) {
+       /* if (workDays.size() == 0) {
             return "NONE";
-        }
+        }*/
 
 
         WorkDay earliest = workDays.get(0); // Start with the first in the list
         WorkDay last = workDays.get(workDays.size()-1); // Last in list is probably last
 
-        if (workDays.size() == 0) {
+        if (workDays.isEmpty()) {
             last = workDays.get(0);
         }
         // Loop the workdays to see if the extraction is ordered
@@ -424,6 +431,33 @@ public class TimeSheet {
             return earliest.getDay().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
                     +" - " + last.getDay().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
         }
+    }
+
+    public String extractPeriod() {
+        if(workDays.isEmpty()) {
+            return null;
+        }
+
+        final WorkDay firstDay = Iterables.getFirst(workDays, null);
+        final WorkDay lastDay = Iterables.getLast(workDays);
+
+        final Calendar firstWorkDayCalendar = firstDay.getDay();
+        final Calendar lastWorkDayCalendar = lastDay.getDay();
+
+        final int firstMonth = firstWorkDayCalendar.get(Calendar.MONTH);
+        final int lastMonth = lastWorkDayCalendar.get(Calendar.MONTH);
+
+        String toBeReturned = firstWorkDayCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+
+        if(firstMonth != lastMonth) {
+            toBeReturned += SEPARATOR + lastWorkDayCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        }
+
+        return toBeReturned;
+    }
+
+    private void sortWorkDays() {
+        workDays.sort(Comparator.comparing(WorkDay::getDay));
     }
 
 
