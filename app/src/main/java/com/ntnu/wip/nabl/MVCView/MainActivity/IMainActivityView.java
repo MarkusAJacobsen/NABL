@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
 
@@ -14,6 +15,8 @@ import com.ntnu.wip.nabl.MVCView.IAbstractMvcView;
  */
 
 public interface IMainActivityView extends IAbstractMvcView {
+
+
     /**
      * Methods which this can invoke in Listeners
      */
@@ -54,4 +57,20 @@ public interface IMainActivityView extends IAbstractMvcView {
     void syncDrawer();
 
     boolean checkOptionItemClicked(MenuItem item);
+
+    /**
+     * Takes a ListView and places it on the Main GUI
+     * @param entries ListView
+     */
+    void addUserEntryList(ListView entries);
+
+    /**
+     * Remove the start-up default image
+     */
+    void removeDefaultImage();
+
+    /**
+     * Configure the log entry floating button on the screen
+     */
+    void configureLogButton();
 }

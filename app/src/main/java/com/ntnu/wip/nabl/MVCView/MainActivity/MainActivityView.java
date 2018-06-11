@@ -1,9 +1,11 @@
 package com.ntnu.wip.nabl.MVCView.MainActivity;
 
 import android.app.Activity;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.ntnu.wip.nabl.R;
@@ -27,20 +30,20 @@ public class MainActivityView implements IMainActivityView {
     private ChangeActivityListener listener;
     private ActionBarDrawerToggle mDrawerToggle;
     private ActionBar mActionBar;
+    private ConstraintLayout innerLayout;
 
     @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @BindView(R.id.left_drawer) ListView mDrawerList;
     @BindView(R.id.logHours) ImageButton logHoursButton;
+    @BindView(R.id.defaultImage) ImageView defaultImage;
 
     public MainActivityView(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.activity_main, container);
         ButterKnife.bind(this, rootView);
 
-        logHoursButton.setOnClickListener(view -> {
-            if(this.listener != null) {
-                listener.logHoursPressedInMainView();
-            }
-        });
+        innerLayout = rootView.findViewById(R.id.mainInnerLayout);
+
+        configureLogButton();
     }
 
     @Override
@@ -109,5 +112,27 @@ public class MainActivityView implements IMainActivityView {
     @Override
     public boolean checkOptionItemClicked(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void addUserEntryList(ListView entries) {
+        removeDefaultImage();
+
+        final ViewGroup.LayoutParams listViewParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        innerLayout.addView(entries, listViewParams);
+    }
+
+    @Override
+    public void removeDefaultImage() {
+        innerLayout.removeView(defaultImage);
+    }
+
+    @Override
+    public void configureLogButton() {
+        logHoursButton.setOnClickListener(view -> {
+            if(this.listener != null) {
+                listener.logHoursPressedInMainView();
+            }
+        });
     }
 }
