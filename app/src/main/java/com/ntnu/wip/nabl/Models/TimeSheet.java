@@ -253,6 +253,10 @@ public class TimeSheet {
      * @return row with nicely formatted headers
      */
     private Row workDayHeaderRow() {
+        if(sheet == null) {
+            return null;
+        }
+
         Row headerRow = sheet.createRow(HEADER_ROW_NUMBER);
         List<String> cellHeaders = createHeaderList();
 
@@ -500,6 +504,10 @@ public class TimeSheet {
      * @return a row with formulas
      */
     private void createSumRow(int rowNumber) {
+        if(sheet == null) {
+            return;
+        }
+
         Row row = sheet.createRow(rowNumber+2);
         int columns = createHeaderList().size();
 
@@ -530,6 +538,10 @@ public class TimeSheet {
      * name of the employee and the recipient of the sheet
      */
     private void createTitleInformation() {
+        if(sheet == null) {
+            return;
+        }
+
         Row upperTitle = sheet.createRow(MAIN_TITLE_ROW);
         CellRangeAddress adresses = new CellRangeAddress(MAIN_TITLE_ROW, MAIN_TITLE_ROW, FIRST_HEADER_COLUMN+2, FIRST_HEADER_COLUMN+7);
         sheet.addMergedRegion(adresses);
@@ -546,6 +558,10 @@ public class TimeSheet {
      * WE NO WORK FOR NO MONEY!!!!!!
      */
     private void addEmployeeInformation() {
+        if(sheet == null) {
+            return;
+        }
+
         Row row = sheet.createRow(EMPLOYEE_INFORMATION_ROW);
 
         CellRangeAddress address = new CellRangeAddress(EMPLOYEE_INFORMATION_ROW, EMPLOYEE_INFORMATION_ROW, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);
@@ -563,6 +579,10 @@ public class TimeSheet {
      * @param company company from a project or similar
      */
     private void addCompanyInformation(Company  company) {
+        if(sheet == null) {
+            return;
+        }
+
         Row row = sheet.createRow(RECIPIENT_INFORMATION);
 
         CellRangeAddress address = new CellRangeAddress(RECIPIENT_INFORMATION, RECIPIENT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);
