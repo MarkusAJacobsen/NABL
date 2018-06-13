@@ -279,6 +279,32 @@ public class FireStoreClient extends AbstractClient implements OnFailureListener
     }
 
     /**
+     * {@inheritDoc}
+     * @param uid String
+     */
+    @Override
+    public void getLogEntriesByUserId(String uid) {
+        CollectionReference collectionReference = this.db.collection(LOG_ENTRY_COLLECTION);
+        Query query = collectionReference.whereEqualTo(LOG_ENTRY_USER_ID, uid);
+
+        query.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            List<WorkDay> workDays = new ArrayList<>();
+
+            if (queryDocumentSnapshots != null) {
+                for (QueryDocumentSnapshot snap: queryDocumentSnapshots) {
+                    WorkDay workDay = snap.toObject(WorkDay.class);
+                    workDays.add(workDay);
+                }
+            }
+
+            this.setLastFetchedWorkdays(workDays);
+        });
+
+        query.get();
+
+    }
+
+    /**
      * The goal of this monstrosity, is to fetch the following hierachy
      * - Company
      *   - Clients

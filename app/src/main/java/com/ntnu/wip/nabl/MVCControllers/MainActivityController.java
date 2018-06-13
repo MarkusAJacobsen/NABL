@@ -5,23 +5,39 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ntnu.wip.nabl.Adapters.LogEntryAdapter1;
 import com.ntnu.wip.nabl.Authentication.FirestoreImpl.FirestoreAuthentication;
 import com.ntnu.wip.nabl.Authentication.IAuthentication;
 import com.ntnu.wip.nabl.MVCControllers.ManageTimeLogging.LoggingController;
 import com.ntnu.wip.nabl.MVCView.MainActivity.MainActivityView;
+import com.ntnu.wip.nabl.Models.WorkDay;
+import com.ntnu.wip.nabl.Network.FirestoreImpl.FireStoreClient;
+import com.ntnu.wip.nabl.Network.IClient;
 import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.SignOutObserver;
 import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Utils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class MainActivityController extends AppCompatActivity implements
                                                         MainActivityView.ChangeActivityListener,
                                                         IChangeScreen.Activity {
-MainActivityView mvcView;
-    IAuthentication auth = new FirestoreAuthentication();
+    private String uid;
+    private MainActivityView mvcView;
+    private IAuthentication auth = new FirestoreAuthentication();
+    private List<WorkDay> userLogEntries;
+    private boolean userLogEntriesPresent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +52,19 @@ MainActivityView mvcView;
         mvcView.registerListener(this);
 
         signIn();
-
+        uid = auth.getUId();
+        fetchUserLogEntries();
         setContentView(mvcView.getRootView());
+    }
+
+    /**
+     * When a returning from paused foreground activity
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mvcView.refreshEntryList();
     }
 
     /**
@@ -63,9 +90,30 @@ MainActivityView mvcView;
                signIn();
            }
         });
-
         auth.signOut(this);
+    }
 
+    private void fetchUserLogEntries() {
+        IClient client = new FireStoreClient(this);
+        client.getLogEntriesByUserId(uid);
+
+        Observer observer = ObserverFactory.create(ObserverFactory.USER_LOG_ENTRIES_INF);
+        observer.setSubject(client);
+        observer.setOnUpdateListener(this::handleUserEntries);
+    }
+
+    private void handleUserEntries(Object obj){
+        userLogEntries = (List<WorkDay>) obj;
+        sortWorkDays(userLogEntries);
+
+        ListView entries = new ListView(this);
+        Adapter entryAdapter = new LogEntryAdapter1(userLogEntries, this);
+        entries.setAdapter((LogEntryAdapter1) entryAdapter);
+        mvcView.addUserEntryList(entries);
+    }
+
+    private void sortWorkDays(List<WorkDay> resources) {
+        Collections.sort(resources, Comparator.comparing(WorkDay::getStartTime).reversed());
     }
 
     /**
@@ -101,6 +149,7 @@ MainActivityView mvcView;
                 signIn();
             } else {
                 Toast.makeText(this, "Hello " + auth.getFullName(), Toast.LENGTH_SHORT).show();
+                uid = auth.getUId();
             }
         }
     }
@@ -137,7 +186,7 @@ MainActivityView mvcView;
             default: break;
         }
 
-        if(activityClass != null){
+        if (activityClass != null){
             createAndLaunchNewActivity(activityClass);
         }
     }

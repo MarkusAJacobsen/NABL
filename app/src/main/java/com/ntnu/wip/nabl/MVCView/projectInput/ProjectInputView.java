@@ -55,7 +55,7 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
         NULL
     }
 
-    private List<TextView> textViews;
+    private List<TextView> inputRequiredFields;
 
 
     public ProjectInputView(LayoutInflater inflater, ViewGroup container) {
@@ -234,18 +234,18 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
 
     @Override
     public boolean checkValidity() {
-        boolean completeResult = true;
+        boolean emptyFieldsPresent = true;
 
-        for(TextView view : textViews) {
-            if(view.getText().toString().trim().equals("")) {
-                setWarningDrawable(view);
-                completeResult = false;
+        for(TextView fieldToCheck : inputRequiredFields) {
+            if(fieldToCheck.getText().toString().trim().equals("")) {
+                setWarningDrawable(fieldToCheck);
+                emptyFieldsPresent = false;
             } else {
-                tryToRemoveDrawable(view);
+                tryToRemoveDrawable(fieldToCheck);
             }
         }
 
-        return completeResult;
+        return emptyFieldsPresent;
     }
 
     @Override
@@ -341,13 +341,13 @@ public class ProjectInputView implements IProjectInputView, DatePickerDialog.OnD
     }
 
     private void configureTextViewList(){
-        textViews = new ArrayList<>();
-        textViews.add(mProjectId);
-        textViews.add(mProjectName);
-        textViews.add(mStreet);
-        textViews.add(mStreetNumber);
-        textViews.add(mCity);
-        textViews.add(mZipcode);
+        inputRequiredFields = new ArrayList<>();
+        inputRequiredFields.add(mProjectId);
+        inputRequiredFields.add(mProjectName);
+        inputRequiredFields.add(mStreet);
+        inputRequiredFields.add(mStreetNumber);
+        inputRequiredFields.add(mCity);
+        inputRequiredFields.add(mZipcode);
     }
 
     private void tryToRemoveDrawable(TextView view) {

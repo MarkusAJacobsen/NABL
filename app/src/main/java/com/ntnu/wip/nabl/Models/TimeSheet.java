@@ -2,6 +2,7 @@ package com.ntnu.wip.nabl.Models;
 
 import android.content.Context;
 
+import com.google.common.collect.Iterables;
 import com.ntnu.wip.nabl.R;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +71,8 @@ public class TimeSheet {
     private static final int RECIPIENT_INFORMATION = 4;
     private static final int PROJECT_INFORMATION = 5;
 
+    private static final String SEPARATOR = "-";
+
 
     private static final int ROWS_TO_SUM[] = {6, 7, 8, 9, 10, 11};
 
@@ -82,6 +87,8 @@ public class TimeSheet {
         this.user = user;
         this.company = company;
         this.workDays = workDays;
+
+        sortWorkDays();
         inizializeTimeSheet();
     }
 
@@ -112,6 +119,7 @@ public class TimeSheet {
         this.project = project;
         this.user = user;
         this.workDays = workDays;
+
         inizializeTimeSheet();
     }
 
@@ -121,8 +129,14 @@ public class TimeSheet {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
         workbook = new XSSFWorkbook();
         creationHelper = workbook.getCreationHelper();
-        sheet = workbook.createSheet(this.extractPeriod());
 
+        final String sheetName = extractPeriod();
+
+        if(sheetName == null) {
+            return;
+        }
+
+        sheet = workbook.createSheet(sheetName);
     }
 
     /**
@@ -239,6 +253,10 @@ public class TimeSheet {
      * @return row with nicely formatted headers
      */
     private Row workDayHeaderRow() {
+        if(sheet == null) {
+            return null;
+        }
+
         Row headerRow = sheet.createRow(HEADER_ROW_NUMBER);
         List<String> cellHeaders = createHeaderList();
 
@@ -387,17 +405,17 @@ public class TimeSheet {
      * Extract if this is only for a month or from a month to another
      * @return either ex: april or april-june
      */
-    public String extractPeriod() {
+    public String extractPeriod3() {
 
-        if (workDays.size() == 0) {
+       /* if (workDays.size() == 0) {
             return "NONE";
-        }
+        }*/
 
 
         WorkDay earliest = workDays.get(0); // Start with the first in the list
         WorkDay last = workDays.get(workDays.size()-1); // Last in list is probably last
 
-        if (workDays.size() == 0) {
+        if (workDays.isEmpty()) {
             last = workDays.get(0);
         }
         // Loop the workdays to see if the extraction is ordered
@@ -424,6 +442,33 @@ public class TimeSheet {
             return earliest.getDay().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
                     +" - " + last.getDay().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
         }
+    }
+
+    public String extractPeriod() {
+        if(workDays.isEmpty()) {
+            return null;
+        }
+
+        final WorkDay firstDay = Iterables.getFirst(workDays, null);
+        final WorkDay lastDay = Iterables.getLast(workDays);
+
+        final Calendar firstWorkDayCalendar = firstDay.getDay();
+        final Calendar lastWorkDayCalendar = lastDay.getDay();
+
+        final int firstMonth = firstWorkDayCalendar.get(Calendar.MONTH);
+        final int lastMonth = lastWorkDayCalendar.get(Calendar.MONTH);
+
+        String toBeReturned = firstWorkDayCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+
+        if(firstMonth != lastMonth) {
+            toBeReturned += SEPARATOR + lastWorkDayCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        }
+
+        return toBeReturned;
+    }
+
+    private void sortWorkDays() {
+        workDays.sort(Comparator.comparing(WorkDay::getDay));
     }
 
 
@@ -459,6 +504,10 @@ public class TimeSheet {
      * @return a row with formulas
      */
     private void createSumRow(int rowNumber) {
+        if(sheet == null) {
+            return;
+        }
+
         Row row = sheet.createRow(rowNumber+2);
         int columns = createHeaderList().size();
 
@@ -489,6 +538,10 @@ public class TimeSheet {
      * name of the employee and the recipient of the sheet
      */
     private void createTitleInformation() {
+        if(sheet == null) {
+            return;
+        }
+
         Row upperTitle = sheet.createRow(MAIN_TITLE_ROW);
         CellRangeAddress adresses = new CellRangeAddress(MAIN_TITLE_ROW, MAIN_TITLE_ROW, FIRST_HEADER_COLUMN+2, FIRST_HEADER_COLUMN+7);
         sheet.addMergedRegion(adresses);
@@ -505,6 +558,10 @@ public class TimeSheet {
      * WE NO WORK FOR NO MONEY!!!!!!
      */
     private void addEmployeeInformation() {
+        if(sheet == null) {
+            return;
+        }
+
         Row row = sheet.createRow(EMPLOYEE_INFORMATION_ROW);
 
         CellRangeAddress address = new CellRangeAddress(EMPLOYEE_INFORMATION_ROW, EMPLOYEE_INFORMATION_ROW, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);
@@ -522,6 +579,10 @@ public class TimeSheet {
      * @param company company from a project or similar
      */
     private void addCompanyInformation(Company  company) {
+        if(sheet == null) {
+            return;
+        }
+
         Row row = sheet.createRow(RECIPIENT_INFORMATION);
 
         CellRangeAddress address = new CellRangeAddress(RECIPIENT_INFORMATION, RECIPIENT_INFORMATION, FIRST_HEADER_COLUMN, FIRST_HEADER_COLUMN+8);

@@ -11,6 +11,7 @@
         android:layout_height="match_parent" >
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/mainInnerLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -27,7 +28,7 @@
                 app:srcCompat="@drawable/add_icon_1" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/defaultImage"
                 android:layout_width="306dp"
                 android:layout_height="249dp"
                 android:layout_marginBottom="32dp"

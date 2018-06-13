@@ -43,4 +43,37 @@ public class UtilsTest {
 
         Assert.assertEquals(expectedLength, actualId.length());
     }
+
+    @Test
+    public void addMissingZeroSuccessful() {
+        final String expected = "06";
+
+        final int testInteger = 6;
+
+        final String actual = Utils.addMissingZero(testInteger);
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addMissingZeroToNothingOtherThanConversion() {
+        final String expected = "111";
+
+        final int testInteger = 111;
+
+        final String actual = Utils.addMissingZero(testInteger);
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addMissingZeroNegativeNumbersDoNothingOtherThanConversion() {
+        final String expected = "-6";
+
+        final int testInteger = -6;
+
+        final String actual = Utils.addMissingZero(testInteger);
+
+        Assert.assertEquals(expected, actual);
+    }
 }
