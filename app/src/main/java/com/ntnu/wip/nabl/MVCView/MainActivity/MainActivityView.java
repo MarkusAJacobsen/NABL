@@ -31,6 +31,7 @@ public class MainActivityView implements IMainActivityView {
     private ActionBarDrawerToggle mDrawerToggle;
     private ActionBar mActionBar;
     private ConstraintLayout innerLayout;
+    private ListView logEntryListView;
 
     @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @BindView(R.id.left_drawer) ListView mDrawerList;
@@ -120,6 +121,8 @@ public class MainActivityView implements IMainActivityView {
 
         final ViewGroup.LayoutParams listViewParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         innerLayout.addView(entries, listViewParams);
+
+        logEntryListView = entries;
     }
 
     @Override
@@ -134,5 +137,12 @@ public class MainActivityView implements IMainActivityView {
                 listener.logHoursPressedInMainView();
             }
         });
+    }
+
+    @Override
+    public void refreshEntryList() {
+        if(logEntryListView != null) {
+            logEntryListView.invalidate();
+        }
     }
 }

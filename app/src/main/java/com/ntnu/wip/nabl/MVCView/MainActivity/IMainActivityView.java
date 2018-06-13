@@ -73,4 +73,9 @@ public interface IMainActivityView extends IAbstractMvcView {
      * Configure the log entry floating button on the screen
      */
     void configureLogButton();
+
+    /**
+     * Re-synch the listView component
+     */
+    void refreshEntryList();
 }

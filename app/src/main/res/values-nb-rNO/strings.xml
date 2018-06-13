@@ -108,5 +108,9 @@
     <string name="workspaceNotSat">Firma ikke spesifisert i innstillinger</string>
     <string name="hourLogSaved">Timesføring lagret</string>
     <string name="listEmpty">Ingenting å vise</string>
+    <string name="date">Dato</string>
+    <string name="Clock">Kl.</string>
+    <string name="totalHours">Total</string>
+    <string name="hourIndicator">t</string>
 
 </resources>

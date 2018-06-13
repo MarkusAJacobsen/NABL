@@ -228,4 +228,10 @@
     <string name="summaryTitle">Summary</string>
 
 
+    <string name="date">Date</string>
+    <string name="Clock">Clock</string>
+    <string name="totalHours">Total</string>
+    <string name="hourIndicator">h</string>
+
+
 </resources>

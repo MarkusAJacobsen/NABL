@@ -23,8 +23,11 @@ import com.ntnu.wip.nabl.Observers.Observer;
 import com.ntnu.wip.nabl.Observers.Observers.ObserverFactory;
 import com.ntnu.wip.nabl.Observers.Observers.SignOutObserver;
 import com.ntnu.wip.nabl.R;
+import com.ntnu.wip.nabl.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivityController extends AppCompatActivity implements
@@ -52,6 +55,16 @@ public class MainActivityController extends AppCompatActivity implements
         uid = auth.getUId();
         fetchUserLogEntries();
         setContentView(mvcView.getRootView());
+    }
+
+    /**
+     * When a returning from paused foreground activity
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mvcView.refreshEntryList();
     }
 
     /**
@@ -91,11 +104,16 @@ public class MainActivityController extends AppCompatActivity implements
 
     private void handleUserEntries(Object obj){
         userLogEntries = (List<WorkDay>) obj;
+        sortWorkDays(userLogEntries);
 
-       ListView entries = new ListView(this);
-       Adapter entryAdapter = new LogEntryAdapter1(userLogEntries, this);
-       entries.setAdapter((LogEntryAdapter1) entryAdapter);
-       mvcView.addUserEntryList(entries);
+        ListView entries = new ListView(this);
+        Adapter entryAdapter = new LogEntryAdapter1(userLogEntries, this);
+        entries.setAdapter((LogEntryAdapter1) entryAdapter);
+        mvcView.addUserEntryList(entries);
+    }
+
+    private void sortWorkDays(List<WorkDay> resources) {
+        Collections.sort(resources, Comparator.comparing(WorkDay::getStartTime).reversed());
     }
 
     /**

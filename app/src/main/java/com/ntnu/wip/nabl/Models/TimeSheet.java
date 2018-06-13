@@ -119,6 +119,7 @@ public class TimeSheet {
         this.project = project;
         this.user = user;
         this.workDays = workDays;
+
         inizializeTimeSheet();
     }
 
@@ -128,8 +129,14 @@ public class TimeSheet {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
         workbook = new XSSFWorkbook();
         creationHelper = workbook.getCreationHelper();
-        sheet = workbook.createSheet(this.extractPeriod());
 
+        final String sheetName = extractPeriod();
+
+        if(sheetName == null) {
+            return;
+        }
+
+        sheet = workbook.createSheet(sheetName);
     }
 
     /**

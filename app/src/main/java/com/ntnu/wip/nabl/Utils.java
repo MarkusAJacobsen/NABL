@@ -60,4 +60,21 @@ public final class Utils {
     public static String generateUniqueId(int length){
         return RandomStringUtils.random(length, true, true);
     }
+
+    /**
+     * Method for adding missing zero if parameter is below 10,
+     * will also convert the integer to a string
+     * Especially useful in date and time string representations
+     * @param toCheck int
+     * @return String
+     */
+    public static String addMissingZero(int toCheck) {
+        String toReturn;
+
+        if(toCheck < 10 && toCheck >= 0) {
+            return "0"+toCheck;
+        }
+
+        return String.valueOf(toCheck);
+    }
 }
