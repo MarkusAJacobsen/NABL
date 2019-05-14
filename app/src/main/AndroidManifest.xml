@@ -32,6 +32,6 @@
             android:windowSoftInputMode="stateHidden"/> <!-- To hide the keyboard when activity start -->
         <activity android:name=".MVCControllers.RegisterCompany" />
         <activity android:name=".MVCControllers.Settings" />
-        <activity android:name=".MVCControllers.Summary"></activity>
+        <activity android:name=".MVCControllers.Summary" />
     </application>
 </manifest>
